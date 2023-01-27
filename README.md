@@ -9,5 +9,6 @@ Steve John Abraham Jayaseelan, 6856694<br/>
 Adil Bedri, 6820344<br/>
 Fahad Khan, 6688998<br/>
 <br/>
-Description:<br/>
+Description:
+<br/>
 We intend to allow customers of a museum environment to be able to access information about certain exhibits and artifacts, while also allowing them to access more in depth resources for the topics and provide it all chronologically organized on the interactive timeline system.
