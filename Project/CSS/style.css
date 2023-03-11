@@ -1,3 +1,8 @@
 #submit-button-text {
-  margin: 50px 50px 50px 50px;
+  margin: 10px 10px 10px 10px;
+  font-size: 20px;
+}
+.question {
+  margin: 10px 10px 10px 10px;
+  padding-top: 10px;
 }
