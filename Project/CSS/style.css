@@ -32,7 +32,7 @@ input:focus{
     outline: none;
 }
 
-button{
+.searchbox button{
     position: absolute;
     top: 0;
     right: 0;
