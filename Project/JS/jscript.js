@@ -74,7 +74,7 @@ var renderNavBar = function () {
 	var aQuiz = document.createElement("a");
 	aQuiz.classList.add("nav-link");
 	aQuiz.innerHTML = "Quiz";
-	aQuiz.href = "#";
+	aQuiz.href = "quiz.html";
 
 	//assign the correct active list item in the navbar
 	var pageName = getPageName();
