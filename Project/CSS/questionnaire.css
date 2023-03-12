@@ -9,6 +9,9 @@
   padding-top: 10px;
   color: #FFFFFF;
 }
+#question-page h1 {
+  color: white;
+}
 #questionnaire-title {
   font-family: 'Inter';
 font-style: normal;
