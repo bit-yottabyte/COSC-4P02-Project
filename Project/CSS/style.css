@@ -2,14 +2,6 @@
     margin:50px;
 }
 
-.hugeimage{
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background-image: url('./museum.png');
-    background-size: cover;
-}
-
 .overlay{
     color: white;
     display: flex;
