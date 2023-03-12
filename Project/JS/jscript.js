@@ -38,18 +38,9 @@ var renderNavBar = function () {
 	var aTimeline = document.createElement("a");
 	aTimeline.classList.add("nav-link");
 	aTimeline.innerHTML = "Interactive Timeline";
-	aTimeline.href = "#";
+	aTimeline.href = "timeline.html";
 
-	//interactive timeline nav button
-	var liTimeline = document.createElement("li");
-	liTimeline.classList.add("nav-item");
-
-	var aTimeline = document.createElement("a");
-	aTimeline.classList.add("nav-link");
-	aTimeline.innerHTML = "Interactive Timeline";
-	aTimeline.href = "#";
-
-	//events timeline nav button
+	//events nav button
 	var liEvents = document.createElement("li");
 	liEvents.classList.add("nav-item");
 
@@ -58,7 +49,7 @@ var renderNavBar = function () {
 	aEvents.innerHTML = "Events";
 	aEvents.href = "events.html";
 
-	//questionnaire timeline nav button
+	//questionnaire nav button
 	var liQuestion = document.createElement("li");
 	liQuestion.classList.add("nav-item");
 
@@ -67,7 +58,7 @@ var renderNavBar = function () {
 	aQuestion.innerHTML = "Questionnaire";
 	aQuestion.href = "questionnaire.html";
 
-	//quiz timeline nav button
+	//quiz nav button
 	var liQuiz = document.createElement("li");
 	liQuiz.classList.add("nav-item");
 
