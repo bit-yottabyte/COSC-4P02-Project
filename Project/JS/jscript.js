@@ -38,7 +38,7 @@ var renderNavBar = function () {
 	var aTimeline = document.createElement("a");
 	aTimeline.classList.add("nav-link");
 	aTimeline.innerHTML = "Interactive Timeline";
-	aTimeline.href = "#";
+	aTimeline.href = "timeline.html";
 
 	//events nav button
 	var liEvents = document.createElement("li");
