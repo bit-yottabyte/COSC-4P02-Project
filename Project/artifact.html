@@ -10,12 +10,6 @@
         crossorigin="anonymous"></script>
 </head>
 <style>
-    body {
-        /* background-image: url('Images/background1.jpg');
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: 100% 130%; */
-    }
 
     .Art-Title {
         color: white;
@@ -32,25 +26,36 @@
 
     .description-box {
         margin-top: 5ch;
-        margin-bottom: 5ch;
+
     }
-    
+
+    .related-topics {
+        margin-top: 2ch;
+        margin-bottom: 2ch;
+        padding-left: 12%;
+    }
+
     #description {
 
         background-color: white;
-        
+
         opacity: 70%;
+        margin-left: 2ch;
 
     }
+    #description-1 {
+
+background-color: white;
+
+opacity: 70%;
+margin-left: 1ch;
+width: 100px;
+
+}
 </style>
 
 <body>
-    <!-- <nav class="navbar navbar-custom sticky-top ">
-        <a class="navbar-brand" href="#!">Sticky top</a>
-      </nav> -->
-
-    
-      <div class="container-fluid artifact-title">
+    <div class="container-fluid artifact-title">
         <div class="row">
             <div class="col-md-auto mx-auto mt-4">
                 <h1 class="Art-Title">Artifact Title</h1>
@@ -69,16 +74,24 @@
 
     <div class="container-fluid description-box">
         <div class="row">
-            <div class="w-75 p-5 mx-auto" id="description">
-                <p>Hellenfeifefieo</p>
-            </div> 
-        </div> 
+            <div class="col-md-6 w-75 p-5 mx-auto" id="description">
+                <p>Description</p>
+            </div>
+        </div>
     </div>
 
+    <div class="container-fluid related-topics">
+        <div class="row">
+            <div class="col-md-6 w-75 p-2" id="description">
+                <p>related topics</p>
+            </div>
 
+            <div class="col-md-6 p-2" id="description-1">
+                <p>find artifact</p>
+            </div>
 
-
-    
+        </div>
+    </div>
 
 </body>
 
