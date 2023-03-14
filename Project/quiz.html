@@ -20,18 +20,34 @@
         document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("option1").addEventListener("click", function() {
                 document.getElementById("check1").checked = true;
+                document.getElementById("option1").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option2").attributeStyleMap.clear();
+                document.getElementById("option3").attributeStyleMap.clear();
+                document.getElementById("option4").attributeStyleMap.clear();
             });
 
             document.getElementById("option2").addEventListener("click", function() {
                 document.getElementById("check2").checked = true;
+                document.getElementById("option2").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option1").attributeStyleMap.clear();
+                document.getElementById("option3").attributeStyleMap.clear();
+                document.getElementById("option4").attributeStyleMap.clear();
             });
 
             document.getElementById("option3").addEventListener("click", function() {
                 document.getElementById("check3").checked = true;
+                document.getElementById("option3").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option1").attributeStyleMap.clear();
+                document.getElementById("option2").attributeStyleMap.clear();
+                document.getElementById("option4").attributeStyleMap.clear();
             });
 
             document.getElementById("option4").addEventListener("click", function() {
                 document.getElementById("check4").checked = true;
+                document.getElementById("option4").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option1").attributeStyleMap.clear();
+                document.getElementById("option2").attributeStyleMap.clear();
+                document.getElementById("option3").attributeStyleMap.clear();
             });
         });
     </script>
@@ -67,7 +83,6 @@
         margin: 5px;
         height: 114px;
         border-radius: 10px;
-        border: 1px solid #fff;
         overflow: hidden;
         float: left;
         }
