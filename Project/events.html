@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="JS/jscript.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {		
+			getEvents();
+		});
+		var getEvents = function() {
+			//get data from database using $.ajax post request from jquery
+			data = {
+				"events":[
+					{"title":"Example1", "description":"Maecenas velit dui, venenatis nec fringilla in, interdum eget ex. Nulla sem est, finibus eget mattis eget, ornare a eros. Nulla facilisi. Sed vitae aliquam velit. Nam vel lectus lorem. Proin lobortis feugiat feugiat. Vivamus vel varius mauris. Suspendisse efficitur elit et eros consequat, a bibendum urna placerat.", "imageSource":"museum.png"},
+					{"title":"Example2", "description":"Mauris a enim quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam condimentum ut elit at aliquam. Cras velit ante, cursus in dictum at, porta at ex. Etiam at lectus sit amet ante malesuada dictum. Donec tincidunt quam tempus enim volutpat accumsan. Nullam feugiat, enim et iaculis efficitur, purus erat varius lacus, a porttitor metus magna vel leo. Morbi eleifend feugiat elementum. Sed vel urna vel lectus malesuada pellentesque. Praesent id finibus tortor, vel tempus tortor. Duis pharetra mauris magna, nec consectetur felis faucibus vitae.", "imageSource":"museum.png"},
+					{"title":"Example3", "description":"Duis aliquam odio porttitor tempus congue. ", "imageSource":"museum.png"}
+				]
+			}
+			
+			//loop each json object and render it in HTML
+			for(var i = 0; i < data.events.length; i++) {
+				
+				var divRow = document.createElement("div");
+				divRow.classList.add("row", "justify-content-center");
+				
+				var eventContainer = document.createElement("div");
+				eventContainer.classList.add("col-10");
+				eventContainer.setAttribute("style", "margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px");
+				
+				var image = document.createElement("IMG");
+				image.setAttribute("src", "images/" + data.events[i].imageSource);
+				image.setAttribute("height", "100vh");
+				image.setAttribute("width", "100vw");
+				image.setAttribute("alt", data.events[i].title);
+				image.setAttribute("style", "padding:2px; float: left");
+				
+				var textContainer = document.createElement("div");
+				textContainer.setAttribute("style", "width: 70vw; float: right");
+				
+				var title = document.createElement("h4");
+				title.innerHTML = data.events[i].title;
+				title.classList.add("text-center");
+				title.setAttribute("style", "border-bottom: 2px solid black");
+				
+				var description = document.createElement("p");
+				description.innerHTML = data.events[i].description;
+				
+				//assembly text container
+				textContainer.appendChild(title);
+				textContainer.appendChild(description);
+				
+				//assemble the current event container
+				eventContainer.appendChild(image);
+				eventContainer.appendChild(textContainer);
+				
+				divRow.appendChild(eventContainer);
+				document.getElementById("eventList").appendChild(divRow);
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1 class="text-center">Events</h1>
+	<div id="eventList"></div>
+</body
+</html>
