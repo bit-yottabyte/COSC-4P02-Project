@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="CSS/style.css" rel="stylesheet" />
+		<script src="JS/jscript.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      .event-details {
+        margin-top: 20px;
+        margin-bottom: 50px;
+       
+      }
+      .event-image {
+        margin-bottom: 20px;
+        display: block;
+        margin-left: left;
+        margin-right: auto;
+        width: 10cm;
+        height: 10cm;
+      }
+
+      .btn-register {
+        background-color: #010911;
+        color: #ffffff;
+        border-radius: 0;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      .btn-register:hover {
+        background-color: #9cb5d0;
+      }
+
+      .event-description {
+        margin-top: 30px;
+      }
+
+      .event-description-header {
+        font-weight: bold;
+        margin-top: 0;
+      }
+
+      .event-date-location {
+        margin-top: 20px;
+      }
+
+      .event-date-location-header {
+        font-weight: bold;
+        margin-top: 0;
+      }
+      .btn-register-col {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header header1">
+        <h1>Event Name</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <img class="event-image" src="eventimage.jpg" alt="Event Image">
+        </div>
+        <div class="col-sm-6 event-details">
+          <div class="event-date-location">
+            <h3 class="event-date-location-header">Date and Location:</h3>
+            <p>Date: <span>April 24, 2023</span></p>
+            <p>Location: <span>Wax Museum, Niagara</span></p>
+          </div>
+          <div class="event-description">
+            <h3 class="event-description-header">Event Description:</h3>
+            <p></p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5 col-sm-push-3 btn-register-col">
+          <a href="#" class="btn btn-register">Register Now</a>
+        </div>
