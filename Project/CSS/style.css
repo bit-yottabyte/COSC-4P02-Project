@@ -105,3 +105,12 @@ color: #FFFFFF;
 .labelQ {
   color: #FFFFFF;
 }
+#exampleFormControlTextarea1 {
+  width: 40%;
+}
+#Select1 {
+  width: 40%;
+}
+#question-page {
+  margin-left: 50px;
+}
