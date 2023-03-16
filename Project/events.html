@@ -7,13 +7,14 @@
 		document.addEventListener("DOMContentLoaded", function() {		
 			getEvents();
 		});
+		
 		var getEvents = function() {
 			//get data from database using $.ajax post request from jquery
 			data = {
 				"events":[
-					{"title":"Example1", "description":"Maecenas velit dui, venenatis nec fringilla in, interdum eget ex. Nulla sem est, finibus eget mattis eget, ornare a eros. Nulla facilisi. Sed vitae aliquam velit. Nam vel lectus lorem. Proin lobortis feugiat feugiat. Vivamus vel varius mauris. Suspendisse efficitur elit et eros consequat, a bibendum urna placerat.", "imageSource":"museum.png"},
-					{"title":"Example2", "description":"Mauris a enim quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam condimentum ut elit at aliquam. Cras velit ante, cursus in dictum at, porta at ex. Etiam at lectus sit amet ante malesuada dictum. Donec tincidunt quam tempus enim volutpat accumsan. Nullam feugiat, enim et iaculis efficitur, purus erat varius lacus, a porttitor metus magna vel leo. Morbi eleifend feugiat elementum. Sed vel urna vel lectus malesuada pellentesque. Praesent id finibus tortor, vel tempus tortor. Duis pharetra mauris magna, nec consectetur felis faucibus vitae.", "imageSource":"museum.png"},
-					{"title":"Example3", "description":"Duis aliquam odio porttitor tempus congue. ", "imageSource":"museum.png"}
+					{"eventId":"eventdetails.html", "title":"Example1", "description":"Maecenas velit dui, venenatis nec fringilla in, interdum eget ex. Nulla sem est, finibus eget mattis eget, ornare a eros. Nulla facilisi. Sed vitae aliquam velit. Nam vel lectus lorem. Proin lobortis feugiat feugiat. Vivamus vel varius mauris. Suspendisse efficitur elit et eros consequat, a bibendum urna placerat.", "imageSource":"museum.png"},
+					{"eventId":"eventdetails.html", "title":"Example2", "description":"Mauris a enim quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam condimentum ut elit at aliquam. Cras velit ante, cursus in dictum at, porta at ex. Etiam at lectus sit amet ante malesuada dictum. Donec tincidunt quam tempus enim volutpat accumsan. Nullam feugiat, enim et iaculis efficitur, purus erat varius lacus, a porttitor metus magna vel leo. Morbi eleifend feugiat elementum. Sed vel urna vel lectus malesuada pellentesque. Praesent id finibus tortor, vel tempus tortor. Duis pharetra mauris magna, nec consectetur felis faucibus vitae.", "imageSource":"museum.png"},
+					{"eventId":"eventdetails.html", "title":"Example3", "description":"Duis aliquam odio porttitor tempus congue. ", "imageSource":"museum.png"}
 				]
 			}
 			
@@ -22,10 +23,11 @@
 				
 				var divRow = document.createElement("div");
 				divRow.classList.add("row", "justify-content-center");
-				
-				var eventContainer = document.createElement("div");
+
+				var eventContainer = document.createElement("a");
 				eventContainer.classList.add("col-10");
-				eventContainer.setAttribute("style", "margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px");
+				eventContainer.setAttribute("style", "margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;");
+				eventContainer.href = data.events[i].eventId;
 				
 				var image = document.createElement("IMG");
 				image.setAttribute("src", "images/" + data.events[i].imageSource);
@@ -39,11 +41,12 @@
 				
 				var title = document.createElement("h4");
 				title.innerHTML = data.events[i].title;
-				title.classList.add("text-center");
+				title.classList.add("text-center", "remove-link-styling");
 				title.setAttribute("style", "border-bottom: 2px solid black");
 				
 				var description = document.createElement("p");
 				description.innerHTML = data.events[i].description;
+				description.classList.add("remove-link-styling");
 				
 				//assembly text container
 				textContainer.appendChild(title);
@@ -58,6 +61,12 @@
 			}
 		}
 	</script>
+	<style>
+		.remove-link-styling {
+			color: #000000 !important;
+    		text-decoration: none !important;
+		}
+	</style>
 </head>
 <body>
 	<h1 class="text-center">Events</h1>

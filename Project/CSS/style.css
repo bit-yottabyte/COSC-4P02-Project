@@ -91,9 +91,6 @@ button:hover i{
   padding-top: 10px;
   color: #FFFFFF;
 }
-#question-page h1 {
-  color: white;
-}
 #questionnaire-title {
   font-family: 'Inter';
 font-style: normal;
@@ -107,4 +104,13 @@ color: #FFFFFF;
 }
 .labelQ {
   color: #FFFFFF;
+}
+#exampleFormControlTextarea1 {
+  width: 40%;
+}
+#Select1 {
+  width: 40%;
+}
+#question-page {
+  margin-left: 50px;
 }
