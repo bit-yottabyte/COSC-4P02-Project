@@ -12,23 +12,49 @@
 			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 			crossorigin="anonymous"
 		/>
-    <!-- removing water mark -->
-    
-
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {		
+        getArtifacts();
+      });
+      
+      var getArtifacts = function() {
+        //get data from database using $.ajax post request from jquery
+        data = {
+          "artifacts":[
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
+            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"}
+          ]
+        }
+        
+        //loop each json object and render it in HTML
+        for(var i = 0; i < data.artifacts.length; i++) {
+          var artifactContainer = document.createElement("a");
+          artifactContainer.href = data.artifacts[i].artifactId;
+          
+          var image = document.createElement("IMG");
+          image.setAttribute("src", "images/" + data.artifacts[i].imageSource);
+          image.setAttribute("alt", data.artifacts[i].title);
+          
+          //assemble the current artifact container
+          artifactContainer.appendChild(image);
+          
+          document.getElementById("scrollBox").appendChild(artifactContainer);
+        }
+      }
+    </script>
 	</head>
   <body>
 
     <div class="overlay">
       <h1 class="maintitle">Interactive Timeline System</h1>
 
-
-        <div class="MagicScroll" data-options="mode: cover-flow; height: 275px;">
-          <a href="artifact.html"><img src="images/ExampleArtifact.png"></a>
-          <img src="images/ExampleArtifact.png">
-          <img src="images/ExampleArtifact.png">
-          <img src="images/ExampleArtifact.png">
-          <img src="images/ExampleArtifact.png">
-          <img src="images/ExampleArtifact.png">
+        <div id="scrollBox" class="MagicScroll" data-options="mode: cover-flow; height: 275px;">
         </div>
 
         <!-- Description of artifact -->
@@ -47,14 +73,3 @@
     </div>
   </body>
 </html>
-
-<script>
-  window.addEventListener("load", function() {
-    var waterMark = document.querySelectorAll('a');
-    console.log(waterMark);
-    for (var i = 0; i<waterMark.length; i++){
-      console.log(waterMark[i]);
-    }
-  waterMark.setAttribute("style", "visibility: hidden");
-  });
-</script>
