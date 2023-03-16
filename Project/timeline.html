@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!doctype html>
+<html lang="en">
+  <head>
+		<link href="CSS/style.css" rel="stylesheet" />
+    <link href="CSS/magicscroll.css" rel="stylesheet" />
+		<script src="JS/jscript.js"></script>
+    <script src="JS/magicscroll.js"></script>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+			crossorigin="anonymous"
+		/>
+    <!-- removing water mark -->
+    
+
+	</head>
+  <body>
+
+    <div class="overlay">
+      <h1 class="maintitle">Interactive Timeline System</h1>
+
+
+        <div class="MagicScroll" data-options="mode: cover-flow; height: 275px;">
+          <a href="artifact.html"><img src="images/ExampleArtifact.png"></a>
+          <img src="images/ExampleArtifact.png">
+          <img src="images/ExampleArtifact.png">
+          <img src="images/ExampleArtifact.png">
+          <img src="images/ExampleArtifact.png">
+          <img src="images/ExampleArtifact.png">
+        </div>
+
+        <!-- Description of artifact -->
+        <div class="container">
+          Artifact Description
+        </div>
+
+        <!-- Icons -->
+			<div class="iconstyle">
+				<a style="text-decoration: none" href="#" class="fa fa-instagram"></a>
+				<a style="text-decoration: none" href="#" class="fa fa-facebook"></a>
+				<a style="text-decoration: none" href="#" class="fa fa-telegram"></a>
+				<a style="text-decoration: none" href="#" class="fa fa-twitter"></a>
+			</div>
+
+    </div>
+  </body>
+</html>
+
+<script>
+  window.addEventListener("load", function() {
+    var waterMark = document.querySelectorAll('a');
+    console.log(waterMark);
+    for (var i = 0; i<waterMark.length; i++){
+      console.log(waterMark[i]);
+    }
+  waterMark.setAttribute("style", "visibility: hidden");
+  });
+</script>
