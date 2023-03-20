@@ -8,6 +8,8 @@ const username = "one";
 const password = "one";
 const Events = require("../models/events");
 const Artifacts = require("../models/artifacts");
+const Location = require("../models/location");
+const local_museum = require("../models/localmuseum");
 
 const uri =
 	"mongodb+srv://" +
@@ -40,6 +42,26 @@ app.post("/queryArtifacts", async (req, res) => {
 	try {
 		const artifacts = await Artifacts.find({});
 		res.json(artifacts);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+//endpoint to query the location collection
+app.post("/queryLocation", async (req, res) => {
+	try {
+		const location = await Location.find({});
+		res.json(location);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+//endpoint to query the location collection
+app.post("/queryLocalMuseum", async (req, res) => {
+	try {
+		const localmuseum = await local_museum.find({});
+		res.json(localmuseum);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
