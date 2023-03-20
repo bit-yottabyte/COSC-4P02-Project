@@ -9,6 +9,6 @@ const artifactSchema = new mongoose.Schema({
   image_source: String
 });
 
-const Artifacts = mongoose.model('Events', artifactSchema);
+const Artifacts = mongoose.model('Artifacts', artifactSchema);
 
 module.exports = Artifacts;
