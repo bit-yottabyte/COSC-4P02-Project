@@ -57,7 +57,7 @@ app.post("/queryLocation", async (req, res) => {
 	} finally {
 	}
 });
-//endpoint to query the location collection
+//endpoint to query the local museum collection
 app.post("/queryLocalMuseum", async (req, res) => {
 	try {
 		const localmuseum = await local_museum.find({});
