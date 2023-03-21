@@ -7,6 +7,6 @@ const localMuseumSchema = new mongoose.Schema({
 	name: String,
 });
 
-const Artifacts = mongoose.model("local_museum", localMuseumSchema);
+const Local_Museum = mongoose.model("local_museum", localMuseumSchema);
 
-module.exports = Artifacts;
+module.exports = Local_Museum;

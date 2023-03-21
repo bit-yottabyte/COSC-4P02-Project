@@ -10,6 +10,7 @@ const Events = require("../models/events");
 const Artifacts = require("../models/artifacts");
 const Location = require("../models/location");
 const local_museum = require("../models/localmuseum");
+const Quiz = require("../models/quiz");
 
 const uri =
 	"mongodb+srv://" +
@@ -62,6 +63,16 @@ app.post("/queryLocalMuseum", async (req, res) => {
 	try {
 		const localmuseum = await local_museum.find({});
 		res.json(localmuseum);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+//endpoint to query the quiz collection
+app.post("/queryQuiz", async (req, res) => {
+	try {
+		const quiz = await Quiz.find({});
+		res.json(quiz);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
