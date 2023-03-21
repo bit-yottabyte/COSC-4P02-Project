@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<script src="JS/jscript.js"></script>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<style>
+		.Art-Title {
+			color: white;
+			font-size: 60px;
+		}
 
-<head>
-    <script src="JS/jscript.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-</head>
-<style>
-    .Art-Title {
-        color: white;
-        font-size: 60px;
-    }
+		.artifact-title {
+			margin-top: 2ch;
+		}
 
-    .artifact-title {
-        margin-top: 2ch;
-    }
+		.navbar-custom {
+			background-color: #725d3f;
+		}
 
-    .navbar-custom {
-        background-color: #725D3F;
-    }
+		.description-box {
+			margin-top: 5ch;
+		}
 
-    .description-box {
-        margin-top: 5ch;
-
-    }
-
-    .related-topics {
-
-        margin-bottom: 2ch;
-        /* padding-left: 12%; */
-    }
+		.related-topics {
+			margin-bottom: 2ch;
+			/* padding-left: 12%; */
+		}
 
     #description {
 
         background-color: white;
-        border-radius: 5px;
         opacity: 70%;
         margin-bottom: 2ch;
         /* margin-left: 2ch; */
@@ -48,30 +50,26 @@
     #description-1 {
         text-align: center;
         background-color: white;
-        border-radius: 5px;
         margin-bottom: 2ch;
 
-        opacity: 70%;
-        margin-left: 1ch;
+			opacity: 70%;
+			margin-left: 1ch;
+		}
+	</style>
 
-
-
-    }
-</style>
-
-<body>
-    <div class="container-fluid artifact-title">
-        <div class="row">
-            <div class="col-md-auto mx-auto mt-4">
-                <h1 class="Art-Title">Artifact Title</h1>
-            </div>
-        </div>
-    </div>
+	<body>
+		<div class="container-fluid artifact-title">
+			<div class="row">
+				<div class="col-md-auto mx-auto mt-4">
+					<h1 class="Art-Title">Artifact Title</h1>
+				</div>
+			</div>
+		</div>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-auto mx-auto mt-2">
-                <img src="images/ExampleArtifact.png" style="width:250px;height:250px;" class="img-fluid" alt="Artifact Image">
+                <img src="https://via.placeholder.com/250x250" class="img-fluid" alt="Artifact Image">
             </div>
         </div>
     </div>
@@ -87,7 +85,7 @@
                     vel mi. Cras eget nulla vitae purus rutrum iaculis. Cras convallis posuere risus, quis sagittis
                     orci. Mauris eu sollicitudin ligula. Vivamus cursus, metus ac consequat bibendum, justo massa
                     aliquam ex, sed varius velit urna non tellus. Curabitur dapibus eros in auctor mollis. Aenean
-                    consequat metus eget tempor. Sed eu justo vel tellus feugiat varius sit amet eget
+                    consequat vejnnjjjnenatis metus eget tempor. Sed eu justo vel tellus feugiat varius sit amet eget
                     nulla. Mauris lobortis, dolor ac ultrices vestibulum, sapien justo dignissim sem, in
                     vhelloenenatis quam nunc in libero. Sed nec elementum turpis, at fringilla eros. Ut vestibulum,
                     massa sed iaculis rhoncus, felis tortor laoreet enim, id accumsan nulla velit ut tellus.
@@ -97,11 +95,11 @@
         </div>
     </div>
 
-    <div class="container-fluid related-topics">
-        <div class="row w-75 mx-auto">
-            <div class="col" id="description">
-                <p>related topics</p>
-            </div>
+		<div class="container-fluid related-topics">
+			<div class="row w-75 mx-auto">
+				<div class="col" id="description">
+					<p>related topics</p>
+				</div>
 
             <div class="col-md-auto" id="description-1">
                 <p>find artifacts</p>
@@ -109,5 +107,7 @@
 
         </div>
     </div>
+
 </body>
+
 </html>
