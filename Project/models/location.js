@@ -6,6 +6,6 @@ const locationSchema = new mongoose.Schema({
 	description: String,
 });
 
-const Artifacts = mongoose.model("Location", locationSchema);
+const Location = mongoose.model("Location", locationSchema);
 
-module.exports = Artifacts;
+module.exports = Location;
