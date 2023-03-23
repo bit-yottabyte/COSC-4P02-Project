@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-mongoose.set('debug', true);
 
 const quizSchema = new mongoose.Schema({
 	question_id: Number,
