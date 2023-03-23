@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,46 +5,48 @@
     <link href="CSS/magicscroll.css" rel="stylesheet" />
 		<script src="JS/jscript.js"></script>
     <script src="JS/magicscroll.js"></script>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-			crossorigin="anonymous"
-		/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
     <script>
       document.addEventListener("DOMContentLoaded", function() {		
         getArtifacts();
       });
       
       var getArtifacts = function() {
+        var allData = "";
+
         //get data from database using $.ajax post request from jquery
-        data = {
-          "artifacts":[
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"},
-            {"artifactId":"artifact.html", "imageSource":"../images/ExampleArtifact.png"}
-          ]
-        }
-        
-        //loop each json object and render it in HTML
-        for(var i = 0; i < data.artifacts.length; i++) {
-          var artifactContainer = document.createElement("a");
-          artifactContainer.href = data.artifacts[i].artifactId;
-          
-          var image = document.createElement("IMG");
-          image.setAttribute("src", "images/" + data.artifacts[i].imageSource);
-          image.setAttribute("alt", data.artifacts[i].title);
-          
-          //assemble the current artifact container
-          artifactContainer.appendChild(image);
-          
-          document.getElementById("scrollBox").appendChild(artifactContainer);
-        }
+        var data = $.ajax({
+					url: 'http://localhost:3000/queryAllArtifacts',
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+          async: false,
+					success: function(data) {
+            //on success render the returned data
+            console.log(data);
+
+            //loop each json object and render it in HTML
+            for(var i = 0; i < data.length; i++) {
+              var artifactContainer = document.createElement("a");
+              artifactContainer.href = data[i].artifact_id;
+              
+              var image = document.createElement("IMG");
+              image.setAttribute("src", "images/" + data[i].image_source);
+              image.setAttribute("alt", data[i].name);
+              
+              //assemble the current artifact container
+              artifactContainer.appendChild(image);
+              
+              document.getElementById("scrollBox").appendChild(artifactContainer);
+            }
+					},
+					error: function(xhr, status, error) {
+						//on failure to fetch the request write to console
+						console.error(status + ': ' + xhr.responseText);
+					}
+				});
       }
     </script>
 	</head>
