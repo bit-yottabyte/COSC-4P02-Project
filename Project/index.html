@@ -46,20 +46,16 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-				document
-					.getElementById("searchBox")
-					.addEventListener("keyup", function () {
-						onTypeArtifactQuery();
-					});
+			document.addEventListener("DOMContentLoaded", function() {
+				document.getElementById("nameInput").addEventListener("keyup", function() {
+					onTypeArtifactQuery();
+				});
 			});
 
 			var onTypeArtifactQuery = function () {
 				//get data from database using $.ajax post request from jquery
 				var data = $.ajax({
-					url:
-						"http://localhost:3000/queryArtifacts?name=" +
-						document.getElementById("searchBox").value,
+					url: 'http://localhost:3000/queryArtifacts?name=' + document.getElementById("nameInput").value,
 					type: "POST",
 					contentType: "application/json; charset=utf-8",
 					success: function (data) {
@@ -79,8 +75,8 @@
 			<h1 class="maintitle">Welcome to the Museum</h1>
 
 			<div class="searchbox">
-				<form class="search">
-					<input type="text" name="" placeholder="Search.." />
+				<form>
+					<input type="text" id="nameInput" name="" placeholder="Search.." />
 					<button type="submit">
 						<i class="fa fa-search" arial-hidden="true"></i>
 					</button>
