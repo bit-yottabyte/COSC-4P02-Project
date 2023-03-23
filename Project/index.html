@@ -42,6 +42,34 @@
 			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 			crossorigin="anonymous"
 		></script>
+			crossorigin="anonymous"></script>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				document.getElementById("searchBox").addEventListener("keyup", function() {
+					onTypeArtifactQuery();
+				});
+			});
+			
+			var onTypeArtifactQuery = function() {
+				//get data from database using $.ajax post request from jquery
+				var data = $.ajax({
+					url: 'http://localhost:3000/queryArtifacts?name=' + document.getElementById("searchBox").value,
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					success: function(data) {
+						//on success render the returned data
+						console.log(data);
+					},
+					error: function(xhr, status, error) {
+						//on failure to fetch the request write to console
+						console.error(status + ': ' + xhr.responseText);
+					}
+				});
+			}
+		</script>
 	</head>
 	<body>
 		<div class="overlay">
