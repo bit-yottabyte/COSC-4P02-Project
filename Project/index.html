@@ -51,7 +51,6 @@
 			});
 			
 			var onTypeArtifactQuery = function() {
-				console.log(document.getElementById("searchBox").value);
 				//get data from database using $.ajax post request from jquery
 				var data = $.ajax({
 					url: 'http://localhost:3000/queryArtifacts?name=' + document.getElementById("searchBox").value,

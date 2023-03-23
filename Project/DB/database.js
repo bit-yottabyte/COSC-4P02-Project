@@ -82,6 +82,7 @@ app.post("/queryLocation", async (req, res) => {
 	} finally {
 	}
 });
+
 //endpoint to query the local museum collection
 app.post("/queryLocalMuseum", async (req, res) => {
 	try {
@@ -92,10 +93,12 @@ app.post("/queryLocalMuseum", async (req, res) => {
 	} finally {
 	}
 });
+
 //endpoint to query the quiz collection
 app.post("/queryQuiz", async (req, res) => {
 	try {
-		const quiz = await Quiz.find({});
+		//query 15 quiz questions
+		const quiz = await Quiz.find({}).limit(15);
 		res.json(quiz);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
