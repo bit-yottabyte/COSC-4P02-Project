@@ -45,7 +45,7 @@
 
 		<script>
 			document.addEventListener("DOMContentLoaded", function() {
-				document.getElementById("searchBox").addEventListener("keyup", function() {
+				document.getElementById("nameInput").addEventListener("keyup", function() {
 					onTypeArtifactQuery();
 				});
 			});
@@ -53,7 +53,7 @@
 			var onTypeArtifactQuery = function() {
 				//get data from database using $.ajax post request from jquery
 				var data = $.ajax({
-					url: 'http://localhost:3000/queryArtifacts?name=' + document.getElementById("searchBox").value,
+					url: 'http://localhost:3000/queryArtifacts?name=' + document.getElementById("nameInput").value,
 					type: "POST",
 					contentType: "application/json; charset=utf-8",
 					success: function(data) {
@@ -74,7 +74,7 @@
 
 			<div class="searchbox">
 				<form>
-					<input type="text" id="searchBox" name="" placeholder="Search.." />
+					<input type="text" id="nameInput" name="" placeholder="Search.." />
 					<button type="submit">
 						<i class="fa fa-search" arial-hidden="true"></i>
 					</button>
