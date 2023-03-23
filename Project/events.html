@@ -17,7 +17,7 @@
 			var getEvents = function () {
 				//get data from database using $.ajax post request from jquery
 				var data = $.ajax({
-					url: "http://localhost:3000/queryEvents",
+					url: "http://localhost:3000/queryAllEvents",
 					type: "POST",
 					contentType: "application/json; charset=utf-8",
 					success: function (data) {
