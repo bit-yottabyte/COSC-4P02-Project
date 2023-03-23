@@ -11,6 +11,7 @@ const Artifacts = require("../models/artifacts");
 const Location = require("../models/location");
 const local_museum = require("../models/localmuseum");
 const Quiz = require("../models/quiz");
+const Questionnaire = require("../models/questionnaire");
 
 const uri =
 	"mongodb+srv://" +
@@ -32,6 +33,24 @@ app.post("/queryEvents", async (req, res) => {
 	try {
 		const events = await Events.find({});
 		res.json(events);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+app.use(express.urlencoded({ extended: true }));
+
+//endpoint to add to questionnaire collection
+app.post("/add", async (req, res) => {
+	try {
+		const newAnswer = new Questionnaire({
+			name: req.body.name,
+			email: req.body.email,
+			q3: req.body.dropdown,
+			q4: req.body.text,
+			q5: req.body.radio,
+		});
+		newAnswer.save();
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
