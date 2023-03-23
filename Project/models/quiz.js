@@ -12,6 +12,7 @@ const quizSchema = new mongoose.Schema({
 	artifact_id: Number,
 });
 
-const Quiz = mongoose.model("Quiz", quizSchema);
+//third parameter explicitly names the collection reference to "quiz" instead of "quizzes"
+const Quiz = mongoose.model("Quiz", quizSchema, "quiz");
 
 module.exports = Quiz;
