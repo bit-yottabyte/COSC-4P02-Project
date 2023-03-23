@@ -51,7 +51,7 @@ app.post("/add", async (req, res) => {
 			q5: req.body.radio,
 		});
 		newAnswer.save();
-		res.redirect(req.header("Referer") + "/Project/questionsubmit.html");
+		res.redirect("back" + "/Project/questionsubmit.html");
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -73,7 +73,9 @@ app.post("/queryAllArtifacts", async (req, res) => {
 app.post("/queryArtifacts", async (req, res) => {
 	try {
 		//find 10 most similar artifacts by matching name
-		const artifacts = await Artifacts.find({name: {$regex: req.query.name, $options: 'i'}}).limit(10);
+		const artifacts = await Artifacts.find({
+			name: { $regex: req.query.name, $options: "i" },
+		}).limit(10);
 		res.json(artifacts);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
