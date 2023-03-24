@@ -32,10 +32,10 @@ input:focus{
 }
 
 .searchbox button{
-    position: absolute;
-    top: 0;
+    display: inline;
+    position: relative;
+    top: 0px;
     right: 0;
-    width: 50px;
     height: 100%;
     border-radius: 50%;
     cursor: pointer;
@@ -46,6 +46,11 @@ input:focus{
 
 button:hover i{
     color: black;
+}
+
+form {
+  display: flex;
+  flex-direction:row;
 }
 
 
