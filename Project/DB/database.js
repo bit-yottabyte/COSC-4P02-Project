@@ -51,7 +51,6 @@ app.post("/add", async (req, res) => {
 			q5: req.body.radio,
 		});
 		newAnswer.save();
-		res.redirect("back" + "/Project/questionsubmit.html");
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
