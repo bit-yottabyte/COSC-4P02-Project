@@ -5,163 +5,192 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="{% 'CSS/style.css' %}" rel="stylesheet" type="text/css">
-    </head>
-	<body>
-        <style>
-            body {
-                background-image: url("images/093181798aef2fd1a1d84597de595dbe.jpg");
-                background-repeat: no-repeat;
-                background-size:cover;
-            }
-
-            .quiz-topic{
-                position: relative;
-                width: 1000px;
-                height: 79px;
-                /* left: 347px; */
-                top: 159px;
-                font-style: normal;
-                font-weight: 700;
-                font-size: 65px;
-                line-height: 79px;
-                /* identical to box height */
-                margin: auto;
-                text-align: center;
-                color: #000000;
-                mix-blend-mode: normal;
-            }
-
-            h1{
-                font-size: 70px;
-            }
-
-            .card{
-                position: absolute;
-                width: 1200px;
-                height: 172px;
-                left: 310px;
-                top: 271px;
-                background: #FFFFFF;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-                border-radius: 10px;
-                margin: 0 auto; /* Added */
-                float: none; /* Added */
-                
-                
-            }
-
-            input.checkbox {
-                width: 30px;
-                height: 30px;
-                left: 550px;
-                top: 10px;
-            }
-
-            .buttons-container{
-                position:relative;
-                top: 420px;
-                width: 1200px; 
-                height: 50px;
-                margin: auto;
-            }
-
-            /* div label input {margin-right: 100px;} */
-
-            .option{
-            position: relative;
-            margin: 4px;
-            width: 592px;
-            height: 114px;
-            border-radius: 10px;
-            border: 1px solid #fff;
-            overflow: hidden;
-            float: left;
-            }
-
-            .option label {
-            float: left; line-height: 3.0em;
-            width: 8.0em; height: 3.0em;
-            }
-
-            .option label span {
-            text-align: center;
-            padding: 3px 0;
-            display: block;
-            }
-
-            .option label input {
-            position: absolute;
-            /* display: none; */
-            color: #fff !important;
-            }
-            /* selects all of the text within the input element and changes the color of the text */
-            .option label input + span{color: #ffffff;}
-
-
-            /* This will declare how a selected input will look giving generic properties */
-            .option input:checked + span {
-                color: #ffffff;
-                text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
-            }
-
-
-            /*
-            This following statements selects each category individually that contains an input element that is a checkbox and is checked (or selected) and chabges the background color of the span element.
-            */
-
-            .option1 {background-color: #ff4800;}
-            .option2 {background-color: #1BB8F7;}
-            .option3 {background-color: #8400ff;}
-            .option4 {background-color: #82D44E;}
-        </style>
-        
-        <div class="quiz-topic">
-            <h1>Quiz on (Artifact name)</h1>
-        </div>
-        <div class="card" style="width: 70rem;">
-            <div class="text-center">
-              <h4 class="card-body">Question Description?</h4>
-            </div>
-          </div>
-            <div class="buttons-container">
-                <div class="option option1">
-                    <label>
-                       <input type="checkbox" class="checkbox" class="option" value="1" onclick = "selectOnlyThis(this.id)"><span>Option 1</span>
-                    </label>
-                 </div>
-                 
-                 <div class="option option2">
-                    <label>
-                       <input type="checkbox" class="checkbox" class="option" value="1" onclick="selectOnlyThis(this.id)"><span>Option 2</span>
-                    </label>
-                 </div>
-                 
-                 <div class="option option3">
-                    <label>
-                       <input type="checkbox" class="checkbox" class="option" value="1" onclick="selectOnlyThis(this.id)"><span>Option 3</span>
-                    </label>
-                 </div>
-                 
-                 <div class="option option4">
-                    <label>
-                       <input type="checkbox" class="checkbox" class="option" value="1" onclick="selectOnlyThis(this.id)"><span>Option 4</span>
-                    </label>
-                 </div>
-                 <!-- Optional JavaScript -->
-                <script type="text/JavaScript">
-                    $('.option').click(function() {
-                    $(this).siblings('input:checkbox').prop('checked', false);
-                    });
-                </script>
-            </div>
+    <script src="JS/jscript.js"></script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="CSS/style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("option1").addEventListener("click", function() {
+                document.getElementById("check1").checked = true;
+                document.getElementById("option1").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option2").attributeStyleMap.clear();
+                document.getElementById("option3").attributeStyleMap.clear();
+                document.getElementById("option4").attributeStyleMap.clear();
+            });
+
+            document.getElementById("option2").addEventListener("click", function() {
+                document.getElementById("check2").checked = true;
+                document.getElementById("option2").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option1").attributeStyleMap.clear();
+                document.getElementById("option3").attributeStyleMap.clear();
+                document.getElementById("option4").attributeStyleMap.clear();
+            });
+
+            document.getElementById("option3").addEventListener("click", function() {
+                document.getElementById("check3").checked = true;
+                document.getElementById("option3").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option1").attributeStyleMap.clear();
+                document.getElementById("option2").attributeStyleMap.clear();
+                document.getElementById("option4").attributeStyleMap.clear();
+            });
+
+            document.getElementById("option4").addEventListener("click", function() {
+                document.getElementById("check4").checked = true;
+                document.getElementById("option4").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
+                document.getElementById("option1").attributeStyleMap.clear();
+                document.getElementById("option2").attributeStyleMap.clear();
+                document.getElementById("option3").attributeStyleMap.clear();
+            });
+
+            getQuestionAnswers();
+        });
+
+        var getQuestionAnswers = function() {
+            //get data from database using $.ajax post request from jquery
+            var data = $.ajax({
+                url: 'http://localhost:3000/queryQuiz',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    //on success render the returned data
+                    console.log(data);
+                },
+                error: function(xhr, status, error) {
+                    //on failure to fetch the request write to console
+                    console.error(status + ': ' + xhr.responseText);
+                }
+            });
+        }
+    </script>
+
+    <style>
+        h1{
+            font-size: 70px;
+        }
+
+        .card{
+            width: 75vw;
+            height: 172px;
+            background: #FFFFFF;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            margin: 0 auto; /* Added */
+            float: none; /* Added */   
+            margin-bottom: 40px; 
+        }
+
+        input.checkbox {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        /* div label input {margin-right: 100px;} */
+
+        .option{
+        position: relative;
+        margin: 5px;
+        height: 114px;
+        border-radius: 10px;
+        overflow: hidden;
+        float: left;
+        }
+
+        .option:hover .btn:hover {
+            cursor: default;
+        }
+
+        .option label {
+        float: left;
+        width: 8.0em;
+        margin-bottom: 0px;
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        }
+
+        .option label span {
+        text-align: center;
+        padding: 3px 0;
+        display: block;
+        }
+
+        .option label input {
+        position: absolute;
+        /* display: none; */
+        color: #fff !important;
+        }
+        /* selects all of the text within the input element and changes the color of the text */
+        .option label input + span{color: #ffffff;}
+
+
+        /* This will declare how a selected input will look giving generic properties */
+        .option input:checked + span {
+            color: #ffffff;
+            text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
+        }
+
+
+        /*
+        This following statements selects each category individually that contains an input element that is a checkbox and is checked (or selected) and chabges the background color of the span element.
+        */
+
+        #option1 {background-color: #ff4800;}
+        #option2 {background-color: #1BB8F7;}
+        #option3 {background-color: #8400ff;}
+        #option4 {background-color: #82D44E;}
+    </style>
+    </head>
+	<body>        
+        <div class="text-center">
+            <h1>Quiz on (Artifact name)</h1>
+        </div>
+
+        <div class="card">
+            <div class="text-center">
+                <h4>Question Description?</h4>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div id="option1" class="option col-md-5">
+                <input class="btn-check checkbox" type="radio" name="options" id="check1" autocomplete="off">
+                <label class="btn">Option 1</label>
+            </div>
+        
+            <div id="option2" class="option col-md-5">
+                <input class="btn-check checkbox" type="radio" name="options" id="check2" autocomplete="off">
+                <label class="btn" for="check2">Option 2</label>
+            </div>
+        </div>
+        
+        <div class="row justify-content-md-center">
+            <div id="option3" class="option col-md-5">
+                <input class="btn-check checkbox" type="radio" name="options" id="check3" autocomplete="off">
+                <label class="btn" for="check3">Option 3</label>
+            </div>
+
+            <div id="option4" class="option col-md-5">
+                <input class="btn-check checkbox" type="radio" name="options" id="check4" autocomplete="off">
+                <label class="btn" for="check4">Option 4</label>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div id="btnSubmit" class=" text-center option col-md-5">
+                <button type="button" class="btn btn-success">Submit</button>
+            </div>
+        </div>
 	</body>
 </html>
