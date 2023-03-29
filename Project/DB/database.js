@@ -85,8 +85,8 @@ app.post("/queryArtifacts", async (req, res) => {
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
 	try {
-		const artifacts = await Artifacts.find({});
-		res.json(artifacts);
+		const artifact = await Artifacts.find({artifact_id: parseInt(req.query.id)});
+		res.json(artifact);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {

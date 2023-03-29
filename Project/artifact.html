@@ -13,6 +13,7 @@
 			integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 			crossorigin="anonymous"
 		></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	</head>
 	<style>
 		.Art-Title {
@@ -52,7 +53,45 @@
 			opacity: 70%;
 			margin-left: 1ch;
 		}
+
+		#artifactImage {
+			width: auto;
+			height: 250px;
+		}
 	</style>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			queryArtifactID();
+		});
+
+		var queryArtifactID = function () {
+			const urlParams = new URLSearchParams(window.location.search);
+			//get data from database using $.ajax post request from jquery
+			var data = $.ajax({
+				url: "http://localhost:3000/queryArtifactByID?id=" + urlParams.get("id"),
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				success: function (data) {
+					//on success render the returned data
+					console.log(data);
+
+					var description = document.getElementById("descriptionText");
+					description.innerHTML = data[0].description;
+
+					var artifactName = document.getElementById("artifactName");
+					artifactName.innerHTML = data[0].name;
+
+					var image = document.getElementById("artifactImage");
+					image.src = "Images/" + data[0].image_source;
+				},
+				error: function (xhr, status, error) {
+					//on failure to fetch the request write to console
+					console.error(status + ": " + xhr.responseText);
+				},
+			});
+		};
+	</script>
 
 	<body>
 		<div class="container-fluid artifact-title">
@@ -70,32 +109,22 @@
 						src="https://via.placeholder.com/250x250"
 						class="img-fluid"
 						alt="Artifact Image"
+						id="artifactImage"
 					/>
 				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class=" text-center col-12">
+				<h2 id="artifactName">No name loaded.</h2>
 			</div>
 		</div>
 
 		<div class="container-fluid description-box">
 			<div class="row w-75 mx-auto">
 				<div class="col-sm-12" id="description">
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. In interdum
-						dui mollis sem scelerisque, vestibulum tincidunt libero bibendum.
-						Nunc velit turpis, imperdiet sed fringilla in, consecteturnn in
-						sem.nnnnnnnvrvr Cras nunc risus, scelerisque bibendum sollicitudin
-						convallis, scelerisque vel mi. Cras eget nulla vitae purus rutrum
-						iaculis. Cras convallis posuere risus, quis sagittis orci. Mauris eu
-						sollicitudin ligula. Vivamus cursus, metus ac consequat bibendum,
-						justo massa aliquam ex, sed varius velit urna non tellus. Curabitur
-						dapibus eros in auctor mollis. Aenean consequat vejnnjjjnenatis
-						metus eget tempor. Sed eu justo vel tellus feugiat varius sit amet
-						eget nulla. Mauris lobortis, dolor ac ultrices vestibulum, sapien
-						justo dignissim sem, in vhelloenenatis quam nunc in libero. Sed nec
-						elementum turpis, at fringilla eros. Ut vestibulum, massa sed
-						iaculis rhoncus, felis tortor laoreet enim, id accumsan nulla velit
-						ut tellus. Proin blandit ligula quis dictum fringilla. Integer
-						efficitur ac diam vitae placerat.
-					</p>
+					<p id="descriptionText">No content loaded.</p>
 				</div>
 			</div>
 		</div>
@@ -103,7 +132,7 @@
 		<div class="container-fluid related-topics">
 			<div class="row w-75 mx-auto">
 				<div class="col" id="description">
-					<p>related topics</p>
+					<p id="related">related topics</p>
 				</div>
 
 				<div class="col-md-auto" id="description-1">
