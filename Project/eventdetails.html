@@ -6,6 +6,28 @@
 	  <script src="JS/jscript.js"></script>
     <script>
       
+      document.addEventListener("DOMContentLoaded",function(){
+        queryArtifactByID();
+      });
+
+      var queryArtifactByID=function(){
+        const urlParams=new URLSearchParams(window.location.search);
+
+        urlParams=$.ajax({
+          url: "http://localhost:3000/queryArtifactByID?id=" + urlParams.get("id"),
+				  type: "POST",
+				  contentType: "application/json; charset=utf-8",
+          success:function(data){
+
+            console.log(data);
+
+            
+          }
+
+
+        })
+      }
+
     </script>
     <style>
       .page-header
