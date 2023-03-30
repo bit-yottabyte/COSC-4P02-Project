@@ -52,7 +52,7 @@ app.post("/add", async (req, res) => {
 		});
 		newAnswer.save();
 		res.redirect(
-			"https://bit-yottabyte.github.io/COSC-4P02-Project/Project/questionsubmit .html"
+			"https://bit-yottabyte.github.io/COSC-4P02-Project/Project/questionsubmit.html"
 		);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
