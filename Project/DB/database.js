@@ -52,7 +52,7 @@ app.post("/add", async (req, res) => {
 		});
 		newAnswer.save();
 		res.redirect(
-			"https://bit-yottabyte.github.io/COSC-4P02-Project/Project/questionnaire.html"
+			"https://bit-yottabyte.github.io/COSC-4P02-Project/Project/questionsubmit .html"
 		);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
@@ -88,7 +88,9 @@ app.post("/queryArtifacts", async (req, res) => {
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
 	try {
-		const artifact = await Artifacts.find({artifact_id: parseInt(req.query.id)});
+		const artifact = await Artifacts.find({
+			artifact_id: parseInt(req.query.id),
+		});
 		res.json(artifact);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
