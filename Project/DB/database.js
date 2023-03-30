@@ -47,10 +47,13 @@ app.post("/add", async (req, res) => {
 			name: req.body.name,
 			email: req.body.email,
 			q3: req.body.dropdown,
-			q4: req.body.text,
+			q4: req.body.like,
 			q5: req.body.radio,
 		});
 		newAnswer.save();
+		res.redirect(
+			"https://bit-yottabyte.github.io/COSC-4P02-Project/Project/questionnaire.html"
+		);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
