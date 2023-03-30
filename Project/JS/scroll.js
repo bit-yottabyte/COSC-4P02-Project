@@ -3,14 +3,14 @@ jQuery(document).ready(function($){
   
   $('.slides').slick({
   centerMode: true,
-  slidesToShow: 5,
+  slidesToShow: 3,
   infinite: true,
     arrows: true,
     dots: false,
      slidesToScroll: 1,
     appendArrows: '.slider-nav',
-    prevArrow: '<button type="button" class="slick-prev"><span class="sr-text">Previous</span><img class="prev" aria-hidden="true" width="25px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
-    nextArrow: '<button type="button" class="slick-next"><span class="sr-text">Next</span><img class="next" aria-hidden="true" width="25px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
+    prevArrow: '<button type="button" class="slick-prev"><span class="sr-text">Previous</span><img class="prev" aria-hidden="true" width="50px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
+    nextArrow: '<button type="button" class="slick-next"><span class="sr-text">Next</span><img class="next" aria-hidden="true" width="50px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
     responsive: [
     {
       breakpoint: 1024,
