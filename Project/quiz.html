@@ -18,9 +18,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     
     <script>
+        var globalData;
+        var correctCounter = 0;
+        var questionIndex = 0;
+
         document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("option1").addEventListener("click", function() {
-                document.getElementById("check1").checked = true;
+                document.getElementById("check1").checked = true;                
                 document.getElementById("option1").setAttribute("style", "filter: brightness(0.7); box-shadow: inset 0px 5px 10px 0px white, 0px 5px 10px 0px white;");
                 document.getElementById("option2").attributeStyleMap.clear();
                 document.getElementById("option3").attributeStyleMap.clear();
@@ -52,6 +56,38 @@
             });
 
             getQuestionAnswers();
+
+            //put first question into page
+            var question = document.getElementById("question");
+            var option1 = document.getElementById("lblOption1");
+            var option2 = document.getElementById("lblOption2");
+            var option3 = document.getElementById("lblOption3");
+            var option4 = document.getElementById("lblOption4");
+
+            question.innerHTML = globalData[questionIndex].question;
+            option1.innerHTML = globalData[questionIndex].answer.answer_1;
+            option2.innerHTML = globalData[questionIndex].answer.answer_2;
+            option3.innerHTML = globalData[questionIndex].answer.answer_3;
+            option4.innerHTML = globalData[questionIndex].answer.answer_4;
+
+            document.getElementById("submit").addEventListener("click", function() {
+                if(document.getElementById("check1").checked == true) {
+                    console.log("nice");
+                    correctCounter += 1;
+                    document.getElementById("counter").innerHTML = correctCounter;
+                } else {
+                    console.log("wrong");
+                }
+
+                questionIndex += 1;
+
+                //load next question into page
+                question.innerHTML = globalData[questionIndex].question;
+                option1.innerHTML = globalData[questionIndex].answer.answer_1;
+                option2.innerHTML = globalData[questionIndex].answer.answer_2;
+                option3.innerHTML = globalData[questionIndex].answer.answer_3;
+                option4.innerHTML = globalData[questionIndex].answer.answer_4;
+            });
         });
 
         var getQuestionAnswers = function() {
@@ -60,6 +96,7 @@
                 url: 'http://localhost:3000/queryQuiz',
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
+                async: false,
                 success: function(data) {
                     //on success render the returned data
                     console.log(data);
@@ -69,6 +106,8 @@
                     console.error(status + ': ' + xhr.responseText);
                 }
             });
+
+            globalData = data.responseJSON;
         }
     </script>
 
@@ -159,38 +198,42 @@
 
         <div class="card">
             <div class="text-center">
-                <h4>Question Description?</h4>
+                <h4 id="question">Question Description?</h4>
             </div>
         </div>
 
         <div class="row justify-content-md-center">
             <div id="option1" class="option col-md-5">
                 <input class="btn-check checkbox" type="radio" name="options" id="check1" autocomplete="off">
-                <label class="btn">Option 1</label>
+                <label class="btn" id="lblOption1">Option 1</label>
             </div>
         
             <div id="option2" class="option col-md-5">
                 <input class="btn-check checkbox" type="radio" name="options" id="check2" autocomplete="off">
-                <label class="btn" for="check2">Option 2</label>
+                <label class="btn" for="check2" id="lblOption2">Option 2</label>
             </div>
         </div>
         
         <div class="row justify-content-md-center">
             <div id="option3" class="option col-md-5">
                 <input class="btn-check checkbox" type="radio" name="options" id="check3" autocomplete="off">
-                <label class="btn" for="check3">Option 3</label>
+                <label class="btn" for="check3" id="lblOption3">Option 3</label>
             </div>
 
             <div id="option4" class="option col-md-5">
                 <input class="btn-check checkbox" type="radio" name="options" id="check4" autocomplete="off">
-                <label class="btn" for="check4">Option 4</label>
+                <label class="btn" for="check4" id="lblOption4">Option 4</label>
             </div>
         </div>
 
         <div class="row justify-content-md-center">
             <div id="btnSubmit" class=" text-center option col-md-5">
-                <button type="button" class="btn btn-success">Submit</button>
+                <button type="button" id="submit" class="btn btn-success">Submit</button>
             </div>
+        </div>
+
+        <div class="row col-6">
+            <h2>score: </h2><h2 id="counter">0</h2>
         </div>
 	</body>
 </html>

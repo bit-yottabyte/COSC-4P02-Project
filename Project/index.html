@@ -69,18 +69,20 @@
 				});
 			};
 		</script>
+
+		<style>
+			
+		</style>
 	</head>
 	<body>
 		<div class="overlay">
 			<h1 class="maintitle">Welcome to the Museum</h1>
 
-			<div class="searchbox">
-				<form>
-					<input type="text" id="nameInput" name="" placeholder="Search.." />
-					<button type="submit">
-						<i class="fa fa-search" arial-hidden="true"></i>
-					</button>
-				</form>
+			<div class="input-group mb-3 col-3">
+				<input type="text" class="form-control" id="nameInput" placeholder="Search.." aria-label="Search.." aria-describedby="basic-addon2">
+				<div class="input-group-append">
+					<button class="btn btn-secondary" type="button"><i class="fa fa-search" arial-hidden="true"></i></button>
+				</div>
 			</div>
 
 			<div class="container">
