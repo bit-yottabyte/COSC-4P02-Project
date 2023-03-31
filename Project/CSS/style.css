@@ -3,23 +3,10 @@
 }
 
 .overlay{
-    color: white;
+    color: rgb(211, 211, 211);
     display: flex;
     align-items: center;
     flex-direction: column;
-}
-
-input:focus{
-    outline: none;
-}
-
-button:hover i{
-    color: black;
-}
-
-form {
-  display: flex;
-  flex-direction:row;
 }
 
 /* Museum description field */
