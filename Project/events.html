@@ -36,7 +36,7 @@
 								"style",
 								"margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;"
 							);
-							eventContainer.href = data[i].event_id;
+							eventContainer.href = "eventdetails.html?id=" + data[i].event_id;
 
 							var image = document.createElement("IMG");
 							image.setAttribute("src", "images/" + data[i].image_source);
