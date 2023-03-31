@@ -28,7 +28,24 @@
 		></script>
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
-		<title>Homepage</title>
+		<script>
+			function login(form) {
+				var loginInfo = {
+					uname: form.email.value,
+					passwd: form.password.value,
+				};
+				var req = $.ajax({
+					url: "http://localhost:3000/login",
+					type: "POST",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					data: loginInfo,
+					success: function (result) {
+						location.href = "../Project/index.html";
+					},
+				});
+			}
+		</script>
+		<title>Login</title>
 	</head>
 	<body>
 		<h1>Login</h1>
