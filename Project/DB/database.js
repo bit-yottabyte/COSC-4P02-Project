@@ -12,6 +12,7 @@ const Location = require("../models/location");
 const local_museum = require("../models/localmuseum");
 const Quiz = require("../models/quiz");
 const Questionnaire = require("../models/questionnaire");
+const User = require("../models/users");
 
 const uri =
 	"mongodb+srv://" +
@@ -47,10 +48,11 @@ app.post("/add", async (req, res) => {
 			name: req.body.name,
 			email: req.body.email,
 			q3: req.body.dropdown,
-			q4: req.body.text,
+			q4: req.body.like,
 			q5: req.body.radio,
 		});
 		newAnswer.save();
+		res.json(newAnswer);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -85,8 +87,10 @@ app.post("/queryArtifacts", async (req, res) => {
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
 	try {
-		const artifacts = await Artifacts.find({});
-		res.json(artifacts);
+		const artifact = await Artifacts.find({
+			artifact_id: parseInt(req.query.id),
+		});
+		res.json(artifact);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -125,6 +129,26 @@ app.post("/queryQuiz", async (req, res) => {
 		res.status(500).json({ message: error.message });
 	} finally {
 	}
+});
+
+app.post("/register", async (req, res) => {
+	var new_user = new User({
+		username: req.body.username,
+	});
+
+	new_user.password = new_user.generateHash(req.body.password);
+	new_user.save();
+	res.json(new_user);
+});
+
+app.post("/login", function (req, res) {
+	User.findOne({ username: req.body.username }, function (err, user) {
+		if (!user.validPassword(req.body.password)) {
+			//password did not match
+		} else {
+			// password matched. proceed forward
+		}
+	});
 });
 
 app.listen(3000, function () {
