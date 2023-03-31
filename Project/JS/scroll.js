@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
   
   $('.slides').slick({
   centerMode: true,
-  slidesToShow: 3,
+  slidesToShow: 5,
   infinite: true,
     arrows: true,
     dots: false,
@@ -46,11 +46,11 @@ $('.slides').on('beforeChange', function(event, { slideCount: count }, currentSl
   $('.slick-slide.prev1').prev('.slick-slide').addClass('prev2');
 });
 
- $('a[data-slide]').click(function(e) {
-   e.preventDefault();
-   var slideno = $(this).data('slide');
-   $('.slides').slick('slickGoTo', slideno - 1);
- });
+//  $('a[data-slide]').click(function(e) {
+//    e.preventDefault();
+//    var slideno = $(this).data('slide');
+//    $('.slides').slick('slickGoTo', slideno - 1);
+//  });
   
  
   
