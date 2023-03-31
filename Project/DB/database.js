@@ -142,9 +142,10 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", function (req, res) {
-	User.findOne({ username: req.body.username }, function (err, user) {
-		if (!user.validPassword(req.body.password)) {
+	User.findOne({ uname: req.body.uname }, function (err, user) {
+		if (!user.validPassword(req.body.passwd)) {
 			//password did not match
+			res.send("Failed to login");
 		} else {
 			// password matched. proceed forward
 		}
