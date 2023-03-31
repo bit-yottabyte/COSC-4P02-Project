@@ -12,6 +12,7 @@ const Location = require("../models/location");
 const local_museum = require("../models/localmuseum");
 const Quiz = require("../models/quiz");
 const Questionnaire = require("../models/questionnaire");
+const User = require("../models/users");
 
 const uri =
 	"mongodb+srv://" +
@@ -51,9 +52,7 @@ app.post("/add", async (req, res) => {
 			q5: req.body.radio,
 		});
 		newAnswer.save();
-		res.redirect(
-			"https://bit-yottabyte.github.io/COSC-4P02-Project/Project/questionnaire.html"
-		);
+		res.json(newAnswer);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -128,6 +127,26 @@ app.post("/queryQuiz", async (req, res) => {
 		res.status(500).json({ message: error.message });
 	} finally {
 	}
+});
+
+app.post("/register", async (req, res) => {
+	var new_user = new User({
+		username: req.body.username,
+	});
+
+	new_user.password = new_user.generateHash(req.body.password);
+	new_user.save();
+	res.json(new_user);
+});
+
+app.post("/login", function (req, res) {
+	User.findOne({ username: req.body.username }, function (err, user) {
+		if (!user.validPassword(req.body.password)) {
+			//password did not match
+		} else {
+			// password matched. proceed forward
+		}
+	});
 });
 
 app.listen(3000, function () {
