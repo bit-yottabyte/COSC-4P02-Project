@@ -4,36 +4,37 @@
     <link href="CSS/style.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	  <script src="JS/jscript.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
       
-      document.addEventListener("DOMContentLoaded",function(){
+      document.addEventListener("DOMContentLoaded", function(){
         queryArtifactByID();
       });
 
       var queryArtifactByID=function(){
-        const urlParams=new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.search);
 
-        urlParams=$.ajax({
-          url: "http://localhost:3000/queryArtifactByID?id=" + urlParams.get("id"),
+        var data = $.ajax({
+          url: "http://localhost:3000/queryEventByID?id=" + urlParams.get("id"),
 				  type: "POST",
 				  contentType: "application/json; charset=utf-8",
           success:function(data){
 
             console.log(data);
             
-            var pic=document.getElementById("eventpic");
-            pic.src= "Images/" + data[0].image_source;
+            var pic = document.getElementById("eventpic");
+            pic.src = "Images/" + data[0].image_source;
+
+            document.getElementById("eventName").innerHTML = data[0].name;
 
             var date=document.getElementById("date0");
             date.innerHTML=data[0].date;
 
             var location=document.getElementById("location0");
-            location.innerHTML=data[0].location;
+            location.innerHTML=data[0].location_id;
 
             var description=document.getElementById("description0");
             description.innerHTML=data[0].description;
-
-
           },
           error:function(xhr,status,error){
             console.error(status+":",xhr.responseText);
@@ -137,7 +138,7 @@
   <body>
     <div class="container">
       <div class="page-header header1">
-        <h1>Event Name</h1>
+        <h1 id="eventName">Event Name</h1>
       </div>
 
       <div class="row">
