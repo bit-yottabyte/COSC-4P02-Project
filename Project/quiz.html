@@ -70,12 +70,29 @@
             assignOptionsRandomly(options);
 
             document.getElementById("submit").addEventListener("click", function() {
+                if(document.getElementById("feedback").classList.contains("feedbackShown")) {
+                    return;
+                }
+
                 if(document.getElementById(("check" + (correctAnswer + 1))).checked == true) {
-                    console.log("nice");
+                    document.getElementById("feedback").innerHTML = "Correct";
+                    document.getElementById("feedback").classList.add("feedbackShown");
+                    document.getElementById("feedbackDiv").style.display ="flex";
+                    
+                    document.getElementById("feedback").classList.remove("feedbackHidden");
                     correctCounter += 1;
                     document.getElementById("counter").innerHTML = correctCounter;
                 } else {
-                    console.log("wrong");
+                    document.getElementById("feedback").innerHTML = "Incorrect";
+                    document.getElementById("feedback").classList.add("feedbackShown");
+                    document.getElementById("feedbackDiv").style.display ="flex";
+                    document.getElementById("feedback").classList.remove("feedbackHidden");
+                }
+            });
+
+            document.getElementById("feedbackSubmit").addEventListener("click", function() {
+                if(document.getElementById("feedback").classList.contains("feedbackHidden")) {
+                    return;
                 }
 
                 document.getElementById("option1").attributeStyleMap.clear();
@@ -88,6 +105,10 @@
                 //load next question into page
                 question.innerHTML = globalData[questionIndex].question;
                 assignOptionsRandomly(options);
+
+                document.getElementById("feedback").classList.add("feedbackHidden");
+                document.getElementById("feedbackDiv").style.display ="none";
+                document.getElementById("feedback").classList.remove("feedbackShown");
             });
         });
 
@@ -225,6 +246,11 @@
         #option2 {background-color: #1BB8F7;}
         #option3 {background-color: #8400ff;}
         #option4 {background-color: #82D44E;}
+
+        #feedbackSubmit {
+            margin-left: 15px;
+        }
+
     </style>
     </head>
 	<body>        
@@ -266,6 +292,11 @@
             <div id="btnSubmit" class=" text-center option col-md-5">
                 <button type="button" id="submit" class="btn btn-success">Submit</button>
             </div>
+        </div>
+
+        <div id="feedbackDiv" class="row justify-content-md-center bg-light">
+            <h2 id="feedback" class="feedbackHidden"></h2>
+            <button type="button" id="feedbackSubmit" class="btn btn-warning">Next Question</button>
         </div>
 
         <div class="row justify-content-md-center bg-light">
