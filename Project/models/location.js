@@ -6,6 +6,6 @@ const locationSchema = new mongoose.Schema({
 	description: String,
 });
 
-const Location = mongoose.model("Location", locationSchema);
+const Location = mongoose.model("Location", locationSchema, "location");
 
 module.exports = Location;

@@ -98,6 +98,17 @@ app.post("/queryArtifacts", async (req, res) => {
 	}
 });
 
+//endpoint to query the amount of artifacts
+app.post("/queryArtifactAmount", async (req, res) => {
+	try {
+		let result = await Artifacts.find();
+		res.json(result.length);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
 	try {
