@@ -13,6 +13,10 @@
         <script>
             document.addEventListener("DOMContentLoaded", function () {
 				getArtifactsAmount();
+                
+                document.getElementById("import").addEventListener("click", function() {
+                    
+                });
 			});
 
             var getArtifactsAmount = function() {
@@ -41,6 +45,6 @@
             <h3 id="artifactAmount"></h3>
         </div>
         
-        <button type="button">Import CSV</button>
+        <button type="button" id="import">Import CSV</button>
     </body>
 </html>
