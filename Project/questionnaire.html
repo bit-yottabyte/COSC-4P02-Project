@@ -75,20 +75,20 @@
 						location.href = "../Project/questionsubmit.html";
 					},
 				});
-				var getLoggedIn = function () {
-					var loggedIn = $.ajax({
-						url: "http://localhost:3000/checkLogin",
-						type: "POST",
-						crossDomain: true,
-						xhrFields: {
-							withCredentials: true,
-						},
-						success: function (result) {
-							console.log(result);
-						},
-					});
-				};
 			}
+			var getLoggedIn = function () {
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/checkLogin",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						console.log(result);
+					},
+				});
+			};
 		</script>
 		<title>Questionnaire</title>
 	</head>
