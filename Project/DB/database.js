@@ -158,9 +158,21 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
 	const user = await User.findOne({ uname: req.body.uname });
 	if (user === null) {
+		res.header("Access-Control-Allow-Credentials", true);
+		//replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io"
+		);
 		res.status(400).json({ message: "invalid user" });
 	} else if (!user.validPassword(req.body.passwd)) {
 		//password did not match
+		res.header("Access-Control-Allow-Credentials", true);
+		//replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io"
+		);
 		res.send("Failed to login");
 	} else {
 		// password matched. proceed forward
