@@ -43,17 +43,63 @@
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 			crossorigin="anonymous"
 		/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
 			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 			crossorigin="anonymous"
 		></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<title>Questionnaire</title>
+		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				getLoggedIn();
+			});
+			function hello(form) {
+				var hi = {
+					name: form.name.value,
+					email: form.email.value,
+					dropdown: form.dropdown.value,
+					like: form.like.value,
+					radio: form.like.value,
+				};
+				var he = $.ajax({
+					url: "http://localhost:3000/add",
+					type: "POST",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					data: hi,
+					success: function (result) {
+						location.href = "../Project/questionsubmit.html";
+					},
+				});
+				};
+			var getLoggedIn = function () {
+					var loggedIn = $.ajax({
+						url: "http://localhost:3000/checkLogin",
+						type: "POST",
+						crossDomain: true,
+						xhrFields: {
+							withCredentials: true,
+						},
+						success: function (result) {
+							console.log(result);
+						},
+					});
+
+			};
+		</script>
+		<title>Questionnaire</title>
 	</head>
 	<body>
+		<div class="overlay">
+			<h1 class="maintitle">Questionnaire</h1>
+		</div>
+
 		<section id="question-page">
-			<h1 id="questionnaire-title" class="text-center">Questionnaire</h1>
-			<form id="questionnaire" action="http://localhost:3000/add" method="post">
+			<form id="questionnaire">
 				<h4 class="question">Question 1: What is your name?</h4>
 				<div class="mb-3">
 					<label for="textarea1" class="form-label labelQ">Answer:</label>
@@ -168,7 +214,13 @@
 					<input class="btn btn-primary" type="button" name="butto" value="5" />
 				</div>
 				<h4 id="submit-button-text">Submit Button Below</h4>
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button
+					type="button"
+					onclick="hello(this.form)"
+					class="btn btn-primary"
+				>
+					Submit
+				</button>
 			</form>
 		</section>
 	</body>
