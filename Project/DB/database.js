@@ -147,22 +147,53 @@ app.post("/queryQuiz", async (req, res) => {
 
 app.post("/register", async (req, res) => {
 	var new_user = new User({
-		username: req.body.username,
+		uname: req.body.uname,
 	});
 
-	new_user.password = new_user.generateHash(req.body.password);
+	new_user.password = new_user.generateHash(req.body.passwd);
 	new_user.save();
 	res.json(new_user);
 });
 
-app.post("/login", function (req, res) {
-	User.findOne({ username: req.body.username }, function (err, user) {
-		if (!user.validPassword(req.body.password)) {
-			//password did not match
-		} else {
-			// password matched. proceed forward
-		}
-	});
+app.post("/login", async (req, res) => {
+	const user = await User.findOne({ uname: req.body.uname });
+	if (user === null) {
+		res.status(400).json({ message: "invalid user" });
+	} else if (!user.validPassword(req.body.passwd)) {
+		//password did not match
+		res.send("Failed to login");
+	} else {
+		// password matched. proceed forward
+		user.usid_1 = 1;
+		user.save();
+		res.header("Access-Control-Allow-Credentials", true);
+		//replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
+		res.cookie("user", req.body.uname, { sameSite: "none", secure: true });
+		res.cookie("sid", 1, { sameSite: "none", secure: true });
+		res.json({ username: req.body.uname, sid: 1 });
+	}
+});
+
+app.post("/checkLogin", async (req, res) => {
+	const cookie = req.headers.cookie;
+	const cookieArray = cookie.split("; ");
+	const cA = cookieArray[1].split("=");
+	const uName = cA[1];
+	const sid = cookieArray[1];
+	const user = await User.findOne({ uname: uName });
+	res.header("Access-Control-Allow-Credentials", true);
+	// replace with website
+	res.header("Access-Control-Allow-Origin", "https://bit-yottabyte.github.io/");
+	if (user === null) {
+		res.send("Not logged in" + uName);
+	} else {
+		// password matched. proceed forward
+		res.send("Logged in");
+	}
 });
 
 app.listen(3000, function () {
