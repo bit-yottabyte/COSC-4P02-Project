@@ -14,13 +14,9 @@
 			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 			crossorigin="anonymous"
 		/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-		<script
-			src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-			crossorigin="anonymous"
-		></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
 			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -31,17 +27,19 @@
 		<script>
 			function login(form) {
 				var loginInfo = {
-					uname: form.email.value,
+					uname: form.username.value,
 					passwd: form.password.value,
 				};
 				var req = $.ajax({
 					url: "http://localhost:3000/login",
 					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					data: loginInfo,
-					success: function (result) {
-						location.href = "../Project/index.html";
-					},
+					success: function (result) {},
 				});
 			}
 		</script>
@@ -50,11 +48,11 @@
 	<body>
 		<h1>Login</h1>
 		<form>
-			<label for="email">Email:</label>
-			<input type="email" name="email" />
+			<label for="username">Username:</label>
+			<input type="text" name="username" />
 			<label for="password">Password</label>
-			<input type="password" />
-			<button type="submit">Submit</button>
+			<input type="password" name="password" />
+			<button type="button" onclick="login(this.form)">Submit</button>
 		</form>
 		<button id="register">Register</button>
 		<script type="text/javascript">
