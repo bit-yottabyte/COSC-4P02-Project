@@ -75,7 +75,8 @@
 						location.href = "../Project/questionsubmit.html";
 					},
 				});
-				var getLoggedIn = function () {
+				};
+			var getLoggedIn = function () {
 					var loggedIn = $.ajax({
 						url: "http://localhost:3000/checkLogin",
 						type: "POST",
@@ -87,7 +88,6 @@
 							console.log(result);
 						},
 					});
-				};
 			}
 		</script>
 		<title>Questionnaire</title>
