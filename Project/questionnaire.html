@@ -53,7 +53,7 @@
 			crossorigin="anonymous"
 		></script>
 		<title>Questionnaire</title>
-		<link rel="icon" type="image/x-icon" href="Images/museum.png">
+		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				getLoggedIn();
@@ -75,20 +75,20 @@
 						location.href = "../Project/questionsubmit.html";
 					},
 				});
-				var geLoggedIn = function () {
-					var loggedIn = $.ajax({
-						url: "http://localhost:3000/checkLogin",
-						type: "POST",
-						crossDomain: true,
-						xhrFields: {
-							withCredentials: true,
-						},
-						success: function (result) {
-							console.log(result);
-						},
-					});
-				};
 			}
+			var getLoggedIn = function () {
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/checkLogin",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						console.log(result);
+					},
+				});
+			};
 		</script>
 		<title>Questionnaire</title>
 	</head>
