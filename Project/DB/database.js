@@ -29,6 +29,8 @@ db.once("open", function () {
 	console.log("Database connected");
 });
 
+app.use(express.urlencoded({ extended: true }));
+
 //endpoint to query the entire events collection
 app.post("/queryAllEvents", async (req, res) => {
 	try {
@@ -39,7 +41,19 @@ app.post("/queryAllEvents", async (req, res) => {
 	} finally {
 	}
 });
-app.use(express.urlencoded({ extended: true }));
+
+//endpoint to query the entire events collection
+app.post("/queryEventByID", async (req, res) => {
+	try {
+		const event = await Events.find({
+			event_id: parseInt(req.query.id),
+		});
+		res.json(event);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
 
 //endpoint to add to questionnaire collection
 app.post("/add", async (req, res) => {

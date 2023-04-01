@@ -3,56 +3,11 @@
 }
 
 .overlay{
-    color: white;
+    color: rgb(211, 211, 211);
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-
-/* search bar */
-.search {
-    border-radius: 20px;
-    border: 3px solid black;
-    position: relative;
-    margin-top:120px;
-}
-.searchbox input {
-    display: block;
-    border-radius: 20px;
-    font-size: 20px;
-    height: 100%;
-    width:100%;
-    padding: 8px 40px 8px 20px;
-    border: none;
-    box-shadow: black;
-}
-
-input:focus{
-    outline: none;
-}
-
-.searchbox button{
-    display: inline;
-    position: relative;
-    top: 0px;
-    right: 0;
-    height: 100%;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    font-size: 18px;
-    background-color: white;
-}
-
-button:hover i{
-    color: black;
-}
-
-form {
-  display: flex;
-  flex-direction:row;
-}
-
 
 /* Museum description field */
 .container {
@@ -84,4 +39,3 @@ form {
     color: white;
     margin-right: 15px;
 }
-
