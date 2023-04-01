@@ -170,7 +170,7 @@ app.post("/login", async (req, res) => {
 		//replace with website
 		res.header(
 			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io/"
+			"https://bit-yottabyte.github.io"
 		);
 		res.cookie("user", req.body.uname, { sameSite: "none", secure: true });
 		res.cookie("sid", 1, { sameSite: "none", secure: true });
@@ -187,7 +187,7 @@ app.post("/checkLogin", async (req, res) => {
 	const user = await User.findOne({ uname: uName });
 	res.header("Access-Control-Allow-Credentials", true);
 	// replace with website
-	res.header("Access-Control-Allow-Origin", "https://bit-yottabyte.github.io/");
+	res.header("Access-Control-Allow-Origin", "https://bit-yottabyte.github.io");
 	if (user === null) {
 		res.send("Not logged in" + uName);
 	} else {
