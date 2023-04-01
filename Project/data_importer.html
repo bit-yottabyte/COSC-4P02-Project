@@ -14,10 +14,59 @@
             document.addEventListener("DOMContentLoaded", function () {
 				getArtifactsAmount();
                 
-                document.getElementById("import").addEventListener("click", function() {
-                    
-                });
+                //read the file
+                const fileInput = document.getElementById('csv')
+                fileInput.addEventListener('change', handleFileSelect, false);
 			});
+
+            function handleFileSelect(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    const contents = event.target.result;
+                    processData(contents, "|");
+                };
+
+                reader.readAsText(file);
+            }
+
+            function processData(contents, delimiter) {
+                const cleanedContent = removeCommasFromEndOfLine(contents); //clean up csv from commas on end of each line
+                const lines = cleanedContent.split('\n');
+                const headers = lines[0].split(delimiter);
+                const data = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    const values = lines[i].split(delimiter);
+                    const obj = {};
+
+                    for (let j = 0; j < headers.length; j++) {
+                        obj[headers[j]] = values[j];
+                    }
+
+                    data.push(obj);
+                }
+
+                //do stuff with data here
+                console.log(data[0]);
+                console.log(data[1]);
+                console.log(data[2]);
+                console.log(data[3]);
+                console.log(data[4]);
+            }
+
+            function removeCommasFromEndOfLine(contents) {
+                const lines = contents.split('\n');
+
+                for (let i = 0; i < lines.length; i++) {
+                    lines[i] = lines[i].replace(/,*\s*$/gm, '');
+                }
+
+                const newContents = lines.join('\n');
+
+                return newContents;
+            }
 
             var getArtifactsAmount = function() {
                 var data = $.ajax({
@@ -45,6 +94,7 @@
             <h3 id="artifactAmount"></h3>
         </div>
         
-        <button type="button" id="import">Import CSV</button>
+        <p>Select local CSV File:</p>
+        <input id="csv" type="file" accept=".csv">
     </body>
 </html>
