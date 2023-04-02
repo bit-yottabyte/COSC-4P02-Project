@@ -109,11 +109,32 @@ app.post("/queryArtifactAmount", async (req, res) => {
 	}
 });
 
+//endpoint to query the amount of artifacts
+app.post("/insertArtifact", async (req, res) => {
+	try {
+		var newArtifact = new Artifacts({
+			name: req.body.name,
+			artifact_id: req.body.artifact_id,
+			event_id: -1,
+			location_id: -1,
+			date: req.body.date,
+			description: req.body.description,
+			image_source: req.body.image_source
+		});
+
+		const savedArtifact = await newArtifact.save();
+		res.json(savedArtifact);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
 	try {
 		const artifact = await Artifacts.find({
-			artifact_id: parseInt(req.query.id),
+			artifact_id: req.query.id,
 		});
 		res.json(artifact);
 	} catch (error) {

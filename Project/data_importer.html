@@ -35,9 +35,8 @@
                 const cleanedContent = removeCommasFromEndOfLine(contents); //clean up csv from commas on end of each line
                 const lines = cleanedContent.split('\n');
                 const headers = lines[0].split(delimiter);
-                const data = [];
 
-                for (let i = 1; i < lines.length; i++) {
+                for (let i = 1; i < 1000; i++) {
                     const values = lines[i].split(delimiter);
                     const obj = {};
 
@@ -45,15 +44,34 @@
                         obj[headers[j]] = values[j];
                     }
 
-                    data.push(obj);
-                }
+                    console.log(obj);
 
-                //do stuff with data here
-                console.log(data[0]);
-                console.log(data[1]);
-                console.log(data[2]);
-                console.log(data[3]);
-                console.log(data[4]);
+                    var dbDescription = obj.ObjectName + ". " + obj.GeneralDescription + ". " + obj.ContextFunction + ". " + obj.ContextTechnical;
+                    var dbTags = obj.subcategory1;
+                    var dbID = obj.artifactNumber;
+                    var dbName = obj.GeneralDescription + " - " + obj.Manufacturer;
+                    var dbImage = obj.image;
+                    var dbBeginDate = obj.BeginDate;
+
+                    $.ajax({
+                        url: "http://localhost:3000/insertArtifact",
+                        type: "POST",
+                        async: false,
+                        data: {
+                            name: dbName,
+                            artifact_id: dbID,
+                            description: dbDescription,
+                            image_source: dbImage,
+                            date: dbBeginDate
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(status + ": " + xhr.responseText);
+                        },
+                    });
+                }
             }
 
             function removeCommasFromEndOfLine(contents) {
@@ -75,7 +93,7 @@
 					contentType: "application/json; charset=utf-8",
 					success: function (data) {
 						//on success render the returned data
-						console.log(data);
+						//console.log(data);
                         document.getElementById("artifactAmount").innerHTML = data;
 					},
 					error: function (xhr, status, error) {
