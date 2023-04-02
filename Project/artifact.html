@@ -83,7 +83,7 @@
 					artifactName.innerHTML = data[0].name;
 
 					var image = document.getElementById("artifactImage");
-					image.src = "Images/" + data[0].image_source;
+					image.src = data[0].image_source;
 				},
 				error: function (xhr, status, error) {
 					//on failure to fetch the request write to console
