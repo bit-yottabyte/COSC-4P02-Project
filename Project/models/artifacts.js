@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const artifactSchema = new mongoose.Schema({
   name: String,
+  artifact_id: String,
   event_id: Number,
   location_id: Number,
   date: Date,
