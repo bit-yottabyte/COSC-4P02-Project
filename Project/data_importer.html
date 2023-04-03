@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+        <link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+		/>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+				getArtifactsAmount();
+                
+                //read the file
+                const fileInput = document.getElementById('csv')
+                fileInput.addEventListener('change', handleFileSelect, false);
+			});
+
+            function handleFileSelect(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    const contents = event.target.result;
+                    processData(contents, "|");
+                };
+
+                reader.readAsText(file);
+            }
+
+            function processData(contents, delimiter) {
+                const cleanedContent = removeCommasFromEndOfLine(contents); //clean up csv from commas on end of each line
+                const lines = cleanedContent.split('\n');
+                const headers = lines[0].split(delimiter);
+
+                for (let i = 1; i < 1000; i++) {
+                    const values = lines[i].split(delimiter);
+                    const obj = {};
+
+                    for (let j = 0; j < headers.length; j++) {
+                        obj[headers[j]] = values[j];
+                    }
+
+                    console.log(obj);
+
+                    var dbDescription = obj.ObjectName + ". " + obj.GeneralDescription + ". " + obj.ContextFunction + ". " + obj.ContextTechnical;
+                    var dbTags = obj.subcategory1;
+                    var dbID = obj.artifactNumber;
+                    var dbName = obj.GeneralDescription + " - " + obj.Manufacturer;
+                    var dbImage = obj.image;
+                    var dbBeginDate = obj.BeginDate;
+
+                    $.ajax({
+                        url: "http://localhost:3000/insertArtifact",
+                        type: "POST",
+                        async: false,
+                        data: {
+                            name: dbName,
+                            artifact_id: dbID,
+                            description: dbDescription,
+                            image_source: dbImage,
+                            date: dbBeginDate
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(status + ": " + xhr.responseText);
+                        },
+                    });
+                }
+            }
+
+            function removeCommasFromEndOfLine(contents) {
+                const lines = contents.split('\n');
+
+                for (let i = 0; i < lines.length; i++) {
+                    lines[i] = lines[i].replace(/,*\s*$/gm, '');
+                }
+
+                const newContents = lines.join('\n');
+
+                return newContents;
+            }
+
+            var getArtifactsAmount = function() {
+                var data = $.ajax({
+					url: "http://localhost:3000/queryArtifactAmount",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						//on success render the returned data
+						//console.log(data);
+                        document.getElementById("artifactAmount").innerHTML = data;
+					},
+					error: function (xhr, status, error) {
+						//on failure to fetch the request write to console
+						console.error(status + ": " + xhr.responseText);
+					},
+				});
+            }
+
+        </script>
+    </head>
+    <body>
+        <h1>Upload csv to mongodb</h1>
+        <div class="row col-12">
+            <h3>Current amount of artifacts in database: &nbsp;</h3>
+            <h3 id="artifactAmount"></h3>
+        </div>
+        
+        <p>Select local CSV File:</p>
+        <input id="csv" type="file" accept=".csv">
+    </body>
+</html>

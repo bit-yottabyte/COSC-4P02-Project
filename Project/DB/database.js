@@ -12,6 +12,7 @@ const Location = require("../models/location");
 const local_museum = require("../models/localmuseum");
 const Quiz = require("../models/quiz");
 const Questionnaire = require("../models/questionnaire");
+const User = require("../models/users");
 
 const uri =
 	"mongodb+srv://" +
@@ -28,6 +29,8 @@ db.once("open", function () {
 	console.log("Database connected");
 });
 
+app.use(express.urlencoded({ extended: true }));
+
 //endpoint to query the entire events collection
 app.post("/queryAllEvents", async (req, res) => {
 	try {
@@ -38,7 +41,19 @@ app.post("/queryAllEvents", async (req, res) => {
 	} finally {
 	}
 });
-app.use(express.urlencoded({ extended: true }));
+
+//endpoint to query the entire events collection
+app.post("/queryEventByID", async (req, res) => {
+	try {
+		const event = await Events.find({
+			event_id: parseInt(req.query.id),
+		});
+		res.json(event);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
 
 //endpoint to add to questionnaire collection
 app.post("/add", async (req, res) => {
@@ -47,10 +62,11 @@ app.post("/add", async (req, res) => {
 			name: req.body.name,
 			email: req.body.email,
 			q3: req.body.dropdown,
-			q4: req.body.text,
+			q4: req.body.like,
 			q5: req.body.radio,
 		});
 		newAnswer.save();
+		res.json(newAnswer);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -82,10 +98,44 @@ app.post("/queryArtifacts", async (req, res) => {
 	}
 });
 
+//endpoint to query the amount of artifacts
+app.post("/queryArtifactAmount", async (req, res) => {
+	try {
+		let result = await Artifacts.find();
+		res.json(result.length);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+//endpoint to query the amount of artifacts
+app.post("/insertArtifact", async (req, res) => {
+	try {
+		var newArtifact = new Artifacts({
+			name: req.body.name,
+			artifact_id: req.body.artifact_id,
+			event_id: -1,
+			location_id: -1,
+			date: req.body.date,
+			description: req.body.description,
+			image_source: req.body.image_source
+		});
+
+		const savedArtifact = await newArtifact.save();
+		res.json(savedArtifact);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
 	try {
-		const artifact = await Artifacts.find({artifact_id: parseInt(req.query.id)});
+		const artifact = await Artifacts.find({
+			artifact_id: req.query.id,
+		});
 		res.json(artifact);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
@@ -124,6 +174,69 @@ app.post("/queryQuiz", async (req, res) => {
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
+	}
+});
+
+app.post("/register", async (req, res) => {
+	var new_user = new User({
+		uname: req.body.uname,
+	});
+
+	new_user.password = new_user.generateHash(req.body.passwd);
+	new_user.save();
+	res.json(new_user);
+});
+
+app.post("/login", async (req, res) => {
+	const user = await User.findOne({ uname: req.body.uname });
+	if (user === null) {
+		res.header("Access-Control-Allow-Credentials", true);
+		//replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io"
+		);
+		res.status(400).json({ message: "invalid user" });
+	} else if (!user.validPassword(req.body.passwd)) {
+		//password did not match
+		res.header("Access-Control-Allow-Credentials", true);
+		//replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io"
+		);
+		res.send("Failed to login");
+	} else {
+		// password matched. proceed forward
+		user.usid_1 = 1;
+		user.save();
+		res.header("Access-Control-Allow-Credentials", true);
+		//replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io"
+		);
+		res.cookie("user", req.body.uname, { sameSite: "none", secure: true });
+		res.cookie("sid", 1, { sameSite: "none", secure: true });
+		res.json({ username: req.body.uname, sid: 1 });
+	}
+});
+
+app.post("/checkLogin", async (req, res) => {
+	const cookie = req.headers.cookie;
+	const cookieArray = cookie.split("; ");
+	const cA = cookieArray[1].split("=");
+	const uName = cA[1];
+	const sid = cookieArray[1];
+	const user = await User.findOne({ uname: uName });
+	res.header("Access-Control-Allow-Credentials", true);
+	// replace with website
+	res.header("Access-Control-Allow-Origin", "https://bit-yottabyte.github.io");
+	if (user === null) {
+		res.send("Not logged in" + uName);
+	} else {
+		// password matched. proceed forward
+		res.send("Logged in");
 	}
 });
 
