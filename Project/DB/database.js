@@ -116,7 +116,7 @@ app.post("/insertArtifact", async (req, res) => {
 			name: req.body.name,
 			artifact_id: req.body.artifact_id,
 			event_id: -1,
-			location_id: -1,
+			location_id: req.body.location_id,
 			date: req.body.date,
 			description: req.body.description,
 			image_source: req.body.image_source
