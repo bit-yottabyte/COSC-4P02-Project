@@ -45,10 +45,10 @@
 
 							var image = document.createElement("IMG");
 							image.setAttribute("src", "images/" + data[i].image_source);
-							image.setAttribute("height", "100vh");
+							image.setAttribute("height", "100%");
 							image.setAttribute("width", "100vw");
 							image.setAttribute("alt", data[i].name);
-							image.setAttribute("style", "padding:2px; float: left");
+							image.setAttribute("style", "padding:2px; float: left; object-fit: scale-down;");
 
 							var textContainer = document.createElement("div");
 							textContainer.setAttribute("style", "width: 70vw; float: right");
