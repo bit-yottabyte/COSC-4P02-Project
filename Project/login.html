@@ -25,6 +25,9 @@
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
 		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				getLoggedIn();
+			});
 			function login(form) {
 				var loginInfo = {
 					uname: form.username.value,
@@ -42,6 +45,38 @@
 					success: function (result) {},
 				});
 			}
+			var getLoggedIn = function () {
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/checkLogin",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						if (result != "Not logged in") {
+							var button = document.createElement("button");
+							button.setAttribute("onclick", "logout()");
+							button.textContent = "Logout";
+							document.getElementById("login").appendChild(button);
+							console.log(result);
+						}
+					},
+				});
+			};
+			function logout() {
+				var logout = $.ajax({
+					url: "http://localhost:3000/logout",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						console.log(result);
+					},
+				});
+			}
 		</script>
 		<title>Login</title>
 	</head>
@@ -55,6 +90,7 @@
 			<button type="button" onclick="login(this.form)">Submit</button>
 		</form>
 		<button id="register">Register</button>
+		<div id="login"></div>
 		<script type="text/javascript">
 			document.getElementById("register").onclick = function () {
 				location.href = "../Project/register.html";

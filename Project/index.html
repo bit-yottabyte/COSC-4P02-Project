@@ -59,6 +59,15 @@
 					success: function (data) {
 						//on success render the returned data
 						console.log(data);
+
+						var container = document.getElementById("queryContainer");
+						
+						//clear all previous results
+						container.innerHTML = "";
+
+						for (var i = 0; i < data.length; i++) {
+							renderQueryResult(data[i].artifact_id, data[i].image_source, data[i].name, data[i].description, container);
+						}
 					},
 					error: function (xhr, status, error) {
 						//on failure to fetch the request write to console
@@ -66,12 +75,55 @@
 					},
 				});
 			};
+
+			function renderQueryResult(id, imagePath, name, description, parent) {
+				var holder = document.createElement("a");
+				holder.classList.add("row");
+				holder.href = "artifact.html?id=" + id;
+				holder.setAttribute("style","margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;");
+
+				var holderImage = document.createElement("div");
+				holderImage.classList.add("col-3");
+				var image = document.createElement("img");
+				image.setAttribute("src", imagePath);
+				image.setAttribute("height", "100%");
+				image.setAttribute("width", "100%");
+				holderImage.appendChild(image);
+
+				var holderName = document.createElement("div");
+				holderName.classList.add("col-4");
+				var nameP = document.createElement("p");
+				nameP.innerHTML = name;
+				nameP.classList.add("remove-link-styling");
+				holderName.appendChild(nameP);
+
+				var holderDescription = document.createElement("div");
+				holderDescription.classList.add("col-4");
+				var descriptionP = document.createElement("p");
+				descriptionP.innerHTML = description;
+				descriptionP.classList.add("remove-link-styling");
+				holderDescription.appendChild(descriptionP);
+
+				holder.appendChild(holderImage);
+				holder.appendChild(holderName);
+				holder.appendChild(holderDescription);
+				parent.appendChild(holder);
+			}
 		</script>
-		<style></style>
+		<style>
+			.remove-link-styling {
+				color: #000000 !important;
+				text-decoration: none !important;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="overlay">
 			<h1 class="maintitle">Welcome to the Museum</h1>
+		</div>
+
+		<div class="container">
+			Brief Museum description..
 		</div>
 
 		<div class="row justify-content-center">
@@ -92,9 +144,8 @@
 			</div>
 		</div>
 
-		<div class="container">
-			<!-- Content here -->
-			Brief Museum description..
+		<div class="row justify-content-center">
+			<div id="queryContainer" class="col-9"></div>
 		</div>
 
 		<!-- Icons -->
