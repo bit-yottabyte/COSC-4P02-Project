@@ -177,16 +177,6 @@ app.post("/queryQuiz", async (req, res) => {
 	}
 });
 
-app.post("/register", async (req, res) => {
-	var new_user = new User({
-		uname: req.body.uname,
-	});
-
-	new_user.password = new_user.generateHash(req.body.passwd);
-	new_user.save();
-	res.json(new_user);
-});
-
 app.post("/login", async (req, res) => {
 	const user = await User.findOne({ uname: req.body.uname });
 	if (user === null) {
