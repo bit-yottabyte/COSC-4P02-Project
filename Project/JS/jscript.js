@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 	renderNavBar();
 	renderBackground();
@@ -28,6 +27,7 @@ var renderNavBar = function () {
 	makeNavChild("Events", "events.html", ul);
 	makeNavChild("Questionnaire", "questionnaire.html", ul);
 	makeNavChild("Quiz", "quiz.html", ul);
+	makeNavChild("Login", "login.html", ul);
 
 	document.body.insertBefore(nav, document.body.firstChild);
 
@@ -55,13 +55,19 @@ function makeNavChild(label, linksTo, ulElement) {
 	ulElement.appendChild(li);
 	li.appendChild(a);
 
-	if(getPageName().toLowerCase() == label.toLowerCase()) {
+	if (getPageName().toLowerCase() == label.toLowerCase()) {
 		a.classList.add("active");
 		a.setAttribute("style", "border-bottom: 2px solid #4287f5");
-	} else if(getPageName().toLowerCase() == "index" && label.toLowerCase() == "home") {
+	} else if (
+		getPageName().toLowerCase() == "index" &&
+		label.toLowerCase() == "home"
+	) {
 		a.classList.add("active");
 		a.setAttribute("style", "border-bottom: 2px solid #4287f5");
-	} else if(getPageName().toLowerCase() == "timeline" && label.toLowerCase() == "interactive timeline") {
+	} else if (
+		getPageName().toLowerCase() == "timeline" &&
+		label.toLowerCase() == "interactive timeline"
+	) {
 		a.classList.add("active");
 		a.setAttribute("style", "border-bottom: 2px solid #4287f5");
 	}

@@ -54,11 +54,13 @@
 						withCredentials: true,
 					},
 					success: function (result) {
-						var button = document.createElement("button");
-						button.setAttribute("onclick", "logout()");
-						button.innerHTML("Logout");
-						document.getElementById("login").appendChild(button);
-						console.log(result);
+						if (result != "Not logged in") {
+							var button = document.createElement("button");
+							button.setAttribute("onclick", "logout()");
+							button.textContent = "Logout";
+							document.getElementById("login").appendChild(button);
+							console.log(result);
+						}
 					},
 				});
 			};
