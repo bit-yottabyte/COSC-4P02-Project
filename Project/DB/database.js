@@ -207,8 +207,10 @@ app.post("/login", async (req, res) => {
 		);
 		res.send("Failed to login");
 	} else {
+		//1 is placeholder
+		const usid = 1;
 		// password matched. proceed forward
-		user.usid_1 = 1;
+		user.usid_1 = usid;
 		user.save();
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace with website
@@ -217,26 +219,69 @@ app.post("/login", async (req, res) => {
 			"https://bit-yottabyte.github.io"
 		);
 		res.cookie("user", req.body.uname, { sameSite: "none", secure: true });
-		res.cookie("sid", 1, { sameSite: "none", secure: true });
-		res.json({ username: req.body.uname, sid: 1 });
+		res.cookie("sid", usid, { sameSite: "none", secure: true });
+		res.json({ username: req.body.uname, sid: usid });
 	}
 });
 
 app.post("/checkLogin", async (req, res) => {
 	const cookie = req.headers.cookie;
-	const cookieArray = cookie.split("; ");
-	const cA = cookieArray[1].split("=");
-	const uName = cA[1];
-	const sid = cookieArray[1];
-	const user = await User.findOne({ uname: uName });
+	if (cookie === undefined) {
+		res.header("Access-Control-Allow-Credentials", true);
+		// replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io"
+		);
+		res.send("not logged in");
+	} else {
+		const cookieArray = cookie.split("; ");
+		const cA = cookieArray[0].split("=");
+		const uName = cA[1];
+		const sidA = cookieArray[1].split("=");
+		const sid = sidA[1];
+		const user = await User.findOne({ uname: uName, usid_1: sid });
+		res.header("Access-Control-Allow-Credentials", true);
+		// replace with website
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io"
+		);
+		if (user === null) {
+			res.send("Not logged in");
+		} else {
+			// password matched. proceed forward
+			res.send("Logged in");
+		}
+	}
+});
+
+app.post("/logout", async (req, res) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	// replace with website
 	res.header("Access-Control-Allow-Origin", "https://bit-yottabyte.github.io");
+	const cookie = req.headers.cookie;
+	const cookieArray = cookie.split("; ");
+	const cA = cookieArray[0].split("=");
+	const uName = cA[1];
+	const sidA = cookieArray[1].split("=");
+	const sid = sidA[1];
+	const user = await User.findOne({ uname: uName });
+	res.clearCookie("user");
+	res.clearCookie("sid");
 	if (user === null) {
-		res.send("Not logged in" + uName);
+		res.send("error");
 	} else {
-		// password matched. proceed forward
-		res.send("Logged in");
+		await User.updateOne(
+			{ uname: uName, usid_1: sid },
+			{ $unset: { usid_1: "" } }
+		);
+		const log = await User.findOne({ uname: uName, usid_1: sid });
+		if (log === null) {
+			res.send("Logged out");
+		} else {
+			res.send("Um ok");
+		}
 	}
 });
 
