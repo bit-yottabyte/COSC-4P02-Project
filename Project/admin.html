@@ -38,7 +38,25 @@
 		></script>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+    <script>
+			document.addEventListener("DOMContentLoaded", function () {
+				getLoggedIn();
+			});
+			var getLoggedIn = function () {
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/checkLogin",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						console.log(result);
+            //input page if logged in
+					},
+				});
+			};
+		</script>
 		<style></style>
 	</head>
 	<body>
@@ -48,15 +66,50 @@
 
 		<div class="container">
 			<!-- Content here -->
-			Brief Museum description..
-		</div>
-
-		<!-- Icons -->
-		<div class="iconstyle">
-			<a style="text-decoration: none" href="#" class="fa fa-instagram"></a>
-			<a style="text-decoration: none" href="#" class="fa fa-facebook"></a>
-			<a style="text-decoration: none" href="#" class="fa fa-telegram"></a>
-			<a style="text-decoration: none" href="#" class="fa fa-twitter"></a>
+			<h4>Add artifact</h4>
+      <section id="question-page">
+        <form id="questionnaire">
+          <div class="mb-3">
+            <label for="textarea1" class="form-label labelQ">Name:</label>
+            <textarea
+              class="form-control"
+              id="textarea1"
+              name="name"
+              rows="1"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label labelQ">Date:</label>
+            <input type="date" id="date" name="date" />
+          </div>
+          <div class="mb-3">
+            <label for="textarea1" class="form-label labelQ">Description:</label>
+            <textarea
+              class="form-control"
+              id="textarea1"
+              name="description"
+              rows="1"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label labelQ"
+              >Image Source:</label
+            >
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="3"
+              name="image"
+            ></textarea>
+          </div>
+          <h4 id="submit-button-text">Submit Button Below</h4>
+          <button
+            type="button"
+            onclick="hello(this.form)"
+            class="btn btn-primary"
+          >
+            Submit
+          </button>
 		</div>
 	</body>
 </html>
