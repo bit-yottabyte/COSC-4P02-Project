@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 	<head>
 		<!-- Bootstrap CSS -->
 		<link
@@ -17,7 +18,7 @@
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
 		<title>Admin Page</title>
-		<link rel="icon" type="image/x-icon" href="Images/museum.png">
+		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -38,13 +39,13 @@
 		></script>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script>
+		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				getLoggedIn();
 			});
 			var getLoggedIn = function () {
 				var loggedIn = $.ajax({
-					url: "http://localhost:3000/checkLogin",
+					url: "http://localhost:3000/checkAdmin",
 					type: "POST",
 					crossDomain: true,
 					xhrFields: {
@@ -52,64 +53,123 @@
 					},
 					success: function (result) {
 						console.log(result);
-            //input page if logged in
+						if (result == "Logged in") {
+							var divOverall = document.createElement("div");
+							var divOverlay = document.createElement("div");
+							divOverlay.classList.add("overlay");
+							var h1 = document.createElement("h1");
+							h1.classList.add("maintitle");
+							h1.innerHTML = "Admin Page";
+							divOverlay.appendChild(h1);
+
+							var divContainer = document.createElement("div");
+							divContainer.classList.add("container");
+							var formHeader = document.createElement("h4");
+							formHeader.innerHTML = "Add artifact";
+							var form = document.createElement("form");
+							form.setAttribute("id", "addArtifact");
+
+							var divQ1 = document.createElement("div");
+							divQ1.classList.add("mb-3");
+							var label1 = document.createElement("label");
+							label1.classList.add("form-label", "labelQ");
+							label1.setAttribute("for", "textarea1");
+							label1.innerHTML = "Name:";
+							var textArea1 = document.createElement("textarea");
+							textArea1.classList.add("form-control");
+							textArea1.setAttribute("id", "textarea1");
+							textArea1.setAttribute("name", "name");
+							textArea1.setAttribute("rows", "1");
+							divQ1.appendChild(label1);
+							divQ1.appendChild(textArea1);
+
+							var divQ2 = document.createElement("div");
+							divQ2.classList.add("mb-3");
+							var label2 = document.createElement("label");
+							label2.classList.add("form-label", "labelQ");
+							label2.setAttribute("for", "date");
+							label2.innerHTML = "Date:";
+							var dateInput = document.createElement("input");
+							dateInput.classList.add("form-control");
+							dateInput.setAttribute("id", "date");
+							dateInput.setAttribute("name", "date");
+							dateInput.setAttribute("type", "date");
+							divQ2.appendChild(label2);
+							divQ2.appendChild(dateInput);
+
+							var divQ3 = document.createElement("div");
+							divQ3.classList.add("mb-3");
+							var label3 = document.createElement("label");
+							label3.classList.add("form-label", "labelQ");
+							label3.setAttribute("for", "textarea2");
+							label3.innerHTML = "Description:";
+							var textarea2 = document.createElement("textarea");
+							textarea2.classList.add("form-control");
+							textarea2.setAttribute("id", "textarea2");
+							textarea2.setAttribute("name", "description");
+							textarea2.setAttribute("rows", "3");
+							divQ3.appendChild(label3);
+							divQ3.appendChild(textarea2);
+
+							var divQ4 = document.createElement("div");
+							divQ4.classList.add("mb-3");
+							var label4 = document.createElement("label");
+							label4.classList.add("form-label", "labelQ");
+							label4.setAttribute("for", "textarea3");
+							label4.innerHTML = "Image Source:";
+							var textarea3 = document.createElement("textarea");
+							textarea3.classList.add("form-control");
+							textarea3.setAttribute("id", "textarea3");
+							textarea3.setAttribute("name", "image");
+							textarea3.setAttribute("rows", "1");
+							divQ4.appendChild(label4);
+							divQ4.appendChild(textarea3);
+
+							divSubmit = document.createElement("div");
+							h4Submit = document.createElement("h4");
+							h4Submit.setAttribute("id", "submit-button-text");
+							h4Submit.innerHTML = "Submit Button Below";
+							submitButton = document.createElement("button");
+							submitButton.classList.add("btn", "btn-primary");
+							submitButton.setAttribute("type", "button");
+							submitButton.setAttribute("onclick", "addArtifact(this.form)");
+							submitButton.innerHTML = "Submit";
+							divSubmit.appendChild(h4Submit);
+							divSubmit.appendChild(submitButton);
+
+							divContainer.appendChild(formHeader);
+							divContainer.appendChild(form);
+							form.appendChild(divQ1);
+							form.appendChild(divQ2);
+							form.appendChild(divQ3);
+							form.appendChild(divQ4);
+							form.appendChild(divSubmit);
+
+							divOverall.appendChild(divOverlay);
+							divOverall.appendChild(divContainer);
+							document.getElementById("admin").appendChild(divOverall);
+						}
+					},
+					error: function (xhr, status, error) {
+						errorMessage = document.createElement("h1");
+						errorMessage.innerHTML = error + ": " + status;
+						document.getElementById("admin").appendChild(errorMessage);
 					},
 				});
 			};
+
+			function addArtifact(form) {
+				var hi = {
+					name: form.name.value,
+					date: form.date.value,
+					description: form.description.value,
+					image: form.image.value,
+				};
+			}
 		</script>
 		<style></style>
 	</head>
 	<body>
-		<div class="overlay">
-			<h1 class="maintitle">Admin Page</h1>
-		</div>
-
-		<div class="container">
-			<!-- Content here -->
-			<h4>Add artifact</h4>
-      <section id="question-page">
-        <form id="questionnaire">
-          <div class="mb-3">
-            <label for="textarea1" class="form-label labelQ">Name:</label>
-            <textarea
-              class="form-control"
-              id="textarea1"
-              name="name"
-              rows="1"
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label labelQ">Date:</label>
-            <input type="date" id="date" name="date" />
-          </div>
-          <div class="mb-3">
-            <label for="textarea1" class="form-label labelQ">Description:</label>
-            <textarea
-              class="form-control"
-              id="textarea1"
-              name="description"
-              rows="1"
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label labelQ"
-              >Image Source:</label
-            >
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              name="image"
-            ></textarea>
-          </div>
-          <h4 id="submit-button-text">Submit Button Below</h4>
-          <button
-            type="button"
-            onclick="hello(this.form)"
-            class="btn btn-primary"
-          >
-            Submit
-          </button>
-		</div>
+		<div id="admin"></div>
 	</body>
 </html>
