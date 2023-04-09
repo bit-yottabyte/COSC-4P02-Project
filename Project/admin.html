@@ -150,6 +150,11 @@
 							document.getElementById("admin").appendChild(divOverall);
 						}
 					},
+					error: function (xhr, status, error) {
+						errorMessage = document.createElement("h1");
+						errorMessage.innerHTML = error + ": " + status;
+						document.getElementById("admin").appendChild(errorMessage);
+					},
 				});
 			};
 
