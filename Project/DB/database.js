@@ -119,7 +119,8 @@ app.post("/insertArtifact", async (req, res) => {
 			location_id: req.body.location_id,
 			date: req.body.date,
 			description: req.body.description,
-			image_source: req.body.image_source
+			image_source: req.body.image_source,
+			artifact_tag: req.body.artifact_tag
 		});
 
 		const savedArtifact = await newArtifact.save();
