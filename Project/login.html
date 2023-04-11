@@ -42,7 +42,9 @@
 					},
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					data: loginInfo,
-					success: function (result) {},
+					success: function (result) {
+						location.href = "../Project/admin.html";
+					},
 				});
 			}
 			var getLoggedIn = function () {
@@ -74,6 +76,7 @@
 					},
 					success: function (result) {
 						console.log(result);
+						location.href = "../Project/login.html";
 					},
 				});
 			}
