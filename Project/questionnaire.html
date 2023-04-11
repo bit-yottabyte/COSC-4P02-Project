@@ -58,9 +58,6 @@
 		<title>Questionnaire</title>
 		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-				getLoggedIn();
-			});
 			function hello(form) {
 				var hi = {
 					name: form.name.value,
@@ -79,19 +76,6 @@
 					},
 				});
 			}
-			var getLoggedIn = function () {
-				var loggedIn = $.ajax({
-					url: "http://localhost:3000/checkLogin",
-					type: "POST",
-					crossDomain: true,
-					xhrFields: {
-						withCredentials: true,
-					},
-					success: function (result) {
-						console.log(result);
-					},
-				});
-			};
 		</script>
 		<title>Questionnaire</title>
 	</head>
