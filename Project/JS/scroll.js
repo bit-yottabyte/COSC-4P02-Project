@@ -9,8 +9,8 @@ jQuery(document).ready(function($){
     dots: false,
      slidesToScroll: 1,
     appendArrows: '.slider-nav',
-    prevArrow: '<button type="button" class="slick-prev"><span class="sr-text">Previous</span><img class="prev" aria-hidden="true" width="25px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
-    nextArrow: '<button type="button" class="slick-next"><span class="sr-text">Next</span><img class="next" aria-hidden="true" width="25px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
+    prevArrow: '<button type="button" class="slick-prev"><span class="sr-text">Previous</span><img class="prev" aria-hidden="true" width="50px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
+    nextArrow: '<button type="button" class="slick-next"><span class="sr-text">Next</span><img class="next" aria-hidden="true" width="50px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
     responsive: [
     {
       breakpoint: 1024,
@@ -46,11 +46,11 @@ $('.slides').on('beforeChange', function(event, { slideCount: count }, currentSl
   $('.slick-slide.prev1').prev('.slick-slide').addClass('prev2');
 });
 
- $('a[data-slide]').click(function(e) {
-   e.preventDefault();
-   var slideno = $(this).data('slide');
-   $('.slides').slick('slickGoTo', slideno - 1);
- });
+//  $('a[data-slide]').click(function(e) {
+//    e.preventDefault();
+//    var slideno = $(this).data('slide');
+//    $('.slides').slick('slickGoTo', slideno - 1);
+//  });
   
  
   
