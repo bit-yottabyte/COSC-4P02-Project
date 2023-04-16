@@ -131,6 +131,19 @@ app.post("/insertArtifact", async (req, res) => {
 	}
 });
 
+//endpoint to query the artifacts collection based on Tag
+app.post("/queryArtifactByTag", async (req, res) => {
+	try {
+	  const artifact = await Artifacts.find({
+		artifact_tag: req.query.tag,
+	  });
+	  res.json(artifact);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+  });
+
+
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
 	try {

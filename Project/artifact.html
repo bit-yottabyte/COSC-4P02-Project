@@ -63,6 +63,7 @@
 		queryArtifactID();
 	});
 
+
 	var queryArtifactID = function () {
 		const urlParams = new URLSearchParams(window.location.search);
 		//get data from database using $.ajax post request from jquery
@@ -92,13 +93,13 @@
 
 				var relatedTopic = document.getElementById("relatedTopic");
 				relatedTopic.innerHTML = data[0].artifact_tag;
-			},
-			error: function (xhr, status, error) {
-				//on failure to fetch the request write to console
-				console.error(status + ": " + xhr.responseText);
+
+				const encodedTag = encodeURIComponent(data[0].artifact_tag);
+				relatedTopic.href = "index.html?tag=" + encodedTag;
+			
 			},
 		});
-	};
+	}
 </script>
 
 <body>
@@ -135,7 +136,7 @@
 	<div class="container-fluid related-topics">
 		<div class="row w-75 mx-auto">
 			<div class="col-sm-8" id="description">
-				<a href="index.html" id="relatedTopic" class="related">related topics</a>
+				<a id="relatedTopic" class="related">related topics</a>
 			</div>
 
 			<div class="col" id="description-1">
