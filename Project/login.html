@@ -45,6 +45,11 @@
 					success: function (result) {
 						location.href = "../Project/admin.html";
 					},
+					error: function () {
+						var errorMessage = document.createElement("h4");
+						errorMessage.innerHTML = "Invalid username or password";
+						document.getElementById("login").appendChild(errorMessage);
+					},
 				});
 			}
 			var getLoggedIn = function () {
