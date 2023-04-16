@@ -29,11 +29,11 @@
 
 	<script>
 
-		var queryArtifactByTag = function () {
+		var queryArtifactByTag = function (tag) {
 			//get data from database using $.ajax post request from jquery
 			var data = $.ajax({
 				url:
-					"http://localhost:3000/queryArtifactByTag?tag=Stamps%20%26%20coins",
+					"http://localhost:3000/queryArtifactByTag?tag=" + tag,
 				type: "POST",
 				contentType: "application/json; charset=utf-8",
 				success: function (data) {
@@ -60,10 +60,10 @@
 		document.addEventListener("DOMContentLoaded", function () {
 			var currentUrl = window.location.href;
 			var tagIndex = currentUrl.indexOf('?tag='); 
-			
+
 			if (tagIndex !== -1) { 
 				var tag = currentUrl.substring(tagIndex + 5); 
-				queryArtifactByTag();
+				queryArtifactByTag(tag);
 			}
 
 			document
