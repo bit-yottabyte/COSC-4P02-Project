@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const uuid = require("uuid");
 app.use(cors());
 
 const username = "one";
@@ -120,7 +121,7 @@ app.post("/insertArtifact", async (req, res) => {
 			date: req.body.date,
 			description: req.body.description,
 			image_source: req.body.image_source,
-			artifact_tag: req.body.artifact_tag
+			artifact_tag: req.body.artifact_tag,
 		});
 
 		const savedArtifact = await newArtifact.save();
@@ -212,7 +213,7 @@ app.post("/login", async (req, res) => {
 		res.send("Failed to login");
 	} else {
 		//1 is placeholder
-		const usid = 1;
+		const usid = uuid.v4();
 		// password matched. proceed forward
 		user.usid_1 = usid;
 		user.save();
@@ -237,7 +238,7 @@ app.post("/checkLogin", async (req, res) => {
 			"Access-Control-Allow-Origin",
 			"https://bit-yottabyte.github.io"
 		);
-		res.send("not logged in");
+		res.send("Not logged in");
 	} else {
 		const cookieArray = cookie.split("; ");
 		const cA = cookieArray[0].split("=");
