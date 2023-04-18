@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -10,9 +11,9 @@
 		<script src="JS/jscript.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<link href="CSS/style.css" rel="stylesheet" />
-
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Events</title>
-		<link rel="icon" type="image/x-icon" href="Images/museum.png">
+		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
@@ -48,7 +49,10 @@
 							image.setAttribute("height", "100%");
 							image.setAttribute("width", "100vw");
 							image.setAttribute("alt", data[i].name);
-							image.setAttribute("style", "padding:2px; float: left; object-fit: scale-down;");
+							image.setAttribute(
+								"style",
+								"padding:2px; float: left; object-fit: scale-down;"
+							);
 
 							var textContainer = document.createElement("div");
 							textContainer.setAttribute("style", "width: 70vw; float: right");
