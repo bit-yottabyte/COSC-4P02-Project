@@ -152,7 +152,7 @@
 					},
 					error: function (xhr, status, error) {
 						errorMessage = document.createElement("h1");
-						errorMessage.innerHTML = error + ": " + status;
+						errorMessage.innerHTML = xhr.status + ": " + error;
 						document.getElementById("admin").appendChild(errorMessage);
 					},
 				});
