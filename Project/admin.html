@@ -152,6 +152,7 @@
 					},
 					error: function (xhr, status, error) {
 						errorMessage = document.createElement("h1");
+						errorMessage.setAttribute("id", "error-message");
 						errorMessage.innerHTML = xhr.status + ": " + error;
 						document.getElementById("admin").appendChild(errorMessage);
 					},
