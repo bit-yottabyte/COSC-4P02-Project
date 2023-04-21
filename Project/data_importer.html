@@ -36,7 +36,7 @@
                 const lines = cleanedContent.split('\n');
                 const headers = lines[0].split(delimiter);
 
-                for (let i = 1; i < 1000; i++) {
+                for (let i = 1; i < 500; i++) {
                     const values = lines[i].split(delimiter);
                     const obj = {};
 
@@ -52,25 +52,31 @@
                     var dbName = obj.GeneralDescription + " - " + obj.Manufacturer;
                     var dbImage = obj.image;
                     var dbBeginDate = obj.BeginDate;
-
-                    $.ajax({
-                        url: "http://localhost:3000/insertArtifact",
-                        type: "POST",
-                        async: false,
-                        data: {
-                            name: dbName,
-                            artifact_id: dbID,
-                            description: dbDescription,
-                            image_source: dbImage,
-                            date: dbBeginDate
-                        },
-                        success: function (data) {
-                            console.log(data);
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(status + ": " + xhr.responseText);
-                        },
-                    });
+                    var dbRandLocation = Math.floor(Math.random() * (5 - 1 + 1) + 1)
+                    
+                    //make sure information exists
+                    if(dbImage && dbName && dbDescription && dbTags && dbID) {
+                        $.ajax({
+                            url: "http://localhost:3000/insertArtifact",
+                            type: "POST",
+                            async: false,
+                            data: {
+                                name: dbName,
+                                artifact_id: dbID,
+                                description: dbDescription,
+                                image_source: dbImage,
+                                date: dbBeginDate,
+                                location_id: dbRandLocation,
+                                artifact_tag: dbTags
+                            },
+                            success: function (data) {
+                                console.log(data);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(status + ": " + xhr.responseText);
+                            },
+                        });
+                    }
                 }
             }
 

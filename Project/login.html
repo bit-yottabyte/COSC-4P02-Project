@@ -25,6 +25,9 @@
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
 		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				getLoggedIn();
+			});
 			function login(form) {
 				var loginInfo = {
 					uname: form.username.value,
@@ -39,7 +42,47 @@
 					},
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					data: loginInfo,
-					success: function (result) {},
+					success: function (result) {
+						location.href = "../Project/admin.html";
+					},
+					error: function () {
+						var errorMessage = document.createElement("h4");
+						errorMessage.innerHTML = "Invalid username or password";
+						document.getElementById("login").appendChild(errorMessage);
+					},
+				});
+			}
+			var getLoggedIn = function () {
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/checkLogin",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						if (result != "Not logged in") {
+							var button = document.createElement("button");
+							button.setAttribute("onclick", "logout()");
+							button.textContent = "Logout";
+							document.getElementById("login").appendChild(button);
+							console.log(result);
+						}
+					},
+				});
+			};
+			function logout() {
+				var logout = $.ajax({
+					url: "http://localhost:3000/logout",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						console.log(result);
+						location.href = "../Project/login.html";
+					},
 				});
 			}
 		</script>
@@ -54,11 +97,6 @@
 			<input type="password" name="password" />
 			<button type="button" onclick="login(this.form)">Submit</button>
 		</form>
-		<button id="register">Register</button>
-		<script type="text/javascript">
-			document.getElementById("register").onclick = function () {
-				location.href = "../Project/register.html";
-			};
-		</script>
+		<div id="login"></div>
 	</body>
 </html>

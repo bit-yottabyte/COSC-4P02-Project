@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="CSS/style.css" rel="stylesheet" />
 		<style></style>
 		<script src="JS/jscript.js"></script>
@@ -15,8 +16,16 @@
 			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 			crossorigin="anonymous"
 		></script>
+		<script>
+			function index() {
+				location.href = "../Project/index.html";
+			}
+		</script>
 	</head>
 	<body>
-		<h4>Thank you for submitting the form!</h4>
+		<div class="container">
+			<h4>Thank you for submitting the form!</h4>
+			<button onclick="index()">Go Back to Home</button>
+		</div>
 	</body>
 </html>

@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
 	uname: String,
-	usid_1: Number,
+	usid_1: String,
 	password: String,
 });
 // hash the password

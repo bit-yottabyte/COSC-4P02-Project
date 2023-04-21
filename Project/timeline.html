@@ -1,97 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css'>
-    <link rel="stylesheet" href="CSS/scroll.css">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+		/>
+		<link rel="stylesheet" href="CSS/scroll.css" />
 		<link href="CSS/style.css" rel="stylesheet" />
 		<script src="JS/jscript_timeline.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+		/>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-    <title>Interactive Timeline</title>
-		<link rel="icon" type="image/x-icon" href="Images/museum.png">
+		<title>Interactive Timeline</title>
+		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {		
-        getArtifacts();
-      });
-      
-      var getArtifacts = function() {
-        var allData = "";
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				getArtifacts();
+			});
 
-        //get data from database using $.ajax post request from jquery
-        var data = $.ajax({
-					url: 'http://localhost:3000/queryAllArtifacts',
+			var getArtifacts = function () {
+				var allData = "";
+
+				//get data from database using $.ajax post request from jquery
+				var data = $.ajax({
+					url: "http://localhost:3000/queryAllArtifacts",
 					type: "POST",
 					contentType: "application/json; charset=utf-8",
-          async: false,
-					success: function(data) {
-            //on success render the returned data
-            console.log(data);
+					async: false,
+					success: function (data) {
+						//on success render the returned data
+						console.log(data);
 
-            //loop each json object and render it in HTML
-            for(var i = 0; i < data.length; i++) {
-              var container = document.getElementById("coverContainer");
+						//loop each json object and render it in HTML
+						for (var i = 0; i < data.length; i++) {
+							var container = document.getElementById("coverContainer");
 
-              var outerDiv = document.createElement("div");
-              outerDiv.classList.add("slide");
+							var outerDiv = document.createElement("div");
+							outerDiv.classList.add("slide");
 
-              var innerDiv = document.createElement("div");
-              innerDiv.classList.add("slide-inner");
+							var innerDiv = document.createElement("div");
+							innerDiv.classList.add("slide-inner");
 
-              var a = document.createElement("a");
-              a.href = "artifact.html?id=" + data[i].artifact_id;
-              a.dataset.slide = i + 1;
+							var a = document.createElement("a");
+							console.log(data[i].artifact_id);
+							a.href = "artifact.html?id=" + data[i].artifact_id;
+							a.dataset.slide = i + 1;
 
-              var img = document.createElement("img");
-              img.alt = data[i].description;
-              img.src = "Images/" + data[i].image_source;
+							var img = document.createElement("img");
+							img.alt = data[i].description;
+							img.src = data[i].image_source;
 
-              a.appendChild(img);
+							a.appendChild(img);
 
-              var h2 = document.createElement("h2");
-              h2.classList.add("slide-title", "text-white");
-              h2.innerHTML = data[i].name;
+							var h2 = document.createElement("h2");
+							h2.classList.add("slide-title", "text-white");
+							h2.innerHTML = data[i].name;
 
-              var p = document.createElement("p");
-              p.classList.add("slide-description", "text-white");
-              p.innerHTML = data[i].description;
+							var p = document.createElement("p");
+							p.classList.add("slide-description", "text-white");
+							p.innerHTML = data[i].description;
 
-              innerDiv.appendChild(a);
-              innerDiv.appendChild(h2);
-              innerDiv.appendChild(p);
-              outerDiv.appendChild(innerDiv);
-              container.appendChild(outerDiv);
-            }
+							innerDiv.appendChild(a);
+							innerDiv.appendChild(h2);
+							innerDiv.appendChild(p);
+							outerDiv.appendChild(innerDiv);
+							container.appendChild(outerDiv);
+						}
 					},
-					error: function(xhr, status, error) {
+					error: function (xhr, status, error) {
 						//on failure to fetch the request write to console
-						console.error(status + ': ' + xhr.responseText);
-					}
+						console.error(status + ": " + xhr.responseText);
+					},
 				});
-      }
-    </script>
+			};
+		</script>
 
-    <style>
-      #allArtifacts {
-        margin-left: 20%;
-      }
+		<style>
+			#allArtifacts {
+				margin-left: 20%;
+			}
 
-      #main {
-        display: inline-block;
-        min-width: 100%;
-      }
+			#main {
+				display: inline-block;
+				min-width: 100%;
+			}
 
-      .overlay {
-        width: 100%;
-      }
-    </style>
+			.overlay {
+				width: 100%;
+			}
+		</style>
 	</head>
-  <body>
-    <div class="row" id="main">
-    </div>
+	<body>
+		<div class="row" id="main"></div>
 
     <div class="row">
       <div class="overlay text-center">
@@ -104,18 +112,9 @@
         </div>
       </div>
     </div>
-
-    <!-- Icons -->
-    <div class="iconstyle">
-      <a style="text-decoration: none" href="#" class="fa fa-instagram"></a>
-      <a style="text-decoration: none" href="#" class="fa fa-facebook"></a>
-      <a style="text-decoration: none" href="#" class="fa fa-telegram"></a>
-      <a style="text-decoration: none" href="#" class="fa fa-twitter"></a>
-    </div>
-
   
   </body>
 </html>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="JS/scroll.js"></script>
