@@ -78,17 +78,23 @@
 
                 if(document.getElementById(("check" + (correctAnswer + 1))).checked == true) {
                     document.getElementById("feedback").innerHTML = "Correct";
+                    document.getElementById("feedback").classList.add("bg-success");
+                    document.getElementById("feedback").classList.add("rounded");
                     document.getElementById("feedback").classList.add("feedbackShown");
                     document.getElementById("feedbackDiv").style.display ="flex";
                     
                     document.getElementById("feedback").classList.remove("feedbackHidden");
+                    document.getElementById("feedback").classList.remove("bg-danger");
                     correctCounter += 1;
                     document.getElementById("counter").innerHTML = correctCounter;
                 } else {
                     document.getElementById("feedback").innerHTML = "Incorrect";
                     document.getElementById("feedback").classList.add("feedbackShown");
+                    document.getElementById("feedback").classList.add("bg-danger");
+                    document.getElementById("feedback").classList.add("rounded");
                     document.getElementById("feedbackDiv").style.display ="flex";
                     document.getElementById("feedback").classList.remove("feedbackHidden");
+                    document.getElementById("feedback").classList.remove("bg-success");
                 }
             });
 
@@ -246,7 +252,12 @@
         #option4 {background-color: #82D44E;}
 
         #feedbackSubmit {
+            margin-bottom: 8px;
             margin-left: 15px;
+        }
+
+        #score{ 
+            padding-right: 5px;
         }
 
     </style>
@@ -292,13 +303,13 @@
             </div>
         </div>
 
-        <div id="feedbackDiv" class="row justify-content-md-center bg-light">
-            <h2 id="feedback" class="feedbackHidden"></h2>
-            <button type="button" id="feedbackSubmit" class="btn btn-warning">Next Question</button>
+        <div class="row justify-content-md-center">
+            <h2 id="score" class="bg-light rounded-left">score: </h2><h2 class="bg-light rounded-right" id="counter">0</h2>
         </div>
 
-        <div class="row justify-content-md-center bg-light">
-            <h2>score: </h2><h2 id="counter">0</h2>
+        <div id="feedbackDiv" style="display: none;" class="row justify-content-md-center">
+            <h2 id="feedback" class="feedbackHidden"></h2>
+            <button type="button" id="feedbackSubmit" class="btn btn-warning"><b>Next Question</b></button>
         </div>
 	</body>
 </html>

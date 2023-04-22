@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -14,7 +16,7 @@
 	<style>
 		.Art-Title {
 			color: white;
-			font-size: 60px;
+			font-size: 50px;
 		}
 
 		.artifact-title {
@@ -34,19 +36,24 @@
 			/* padding-left: 12%; */
 		}
 
-		#description {
+		#description-1 {
 			background-color: white;
 			opacity: 70%;
 			margin-bottom: 2ch;
-			/* margin-left: 2ch; */
+			margin-left: 1ch;
+			text-align: center;
 		}
 
-		#description, #date {
+		#description,
+		#date {
 			text-align: center;
 			background-color: white;
 			margin-bottom: 2ch;
-
 			opacity: 70%;
+		}
+
+		#date {
+			margin-left: 1ch;
 		}
 
 		#artifactImage {
@@ -55,41 +62,49 @@
 		}
 	</style>
 
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			queryArtifactID();
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		queryArtifactID();
+	});
+
+
+	var queryArtifactID = function () {
+		const urlParams = new URLSearchParams(window.location.search);
+		//get data from database using $.ajax post request from jquery
+		var data = $.ajax({
+			url: "http://localhost:3000/queryArtifactByID?id=" + urlParams.get("id"),
+			type: "POST",
+			contentType: "application/json; charset=utf-8",
+			success: function (data) {
+				//on success render the returned data
+				console.log(data);
+
+				var description = document.getElementById("descriptionText");
+				description.innerHTML = data[0].description;
+
+				var artifactName = document.getElementById("artifactName");
+				artifactName.innerHTML = data[0].name;
+
+				if (data[0].date == null) document.getElementById("dateText").innerHTML = "Date Unknown";
+				else {
+					var t = data[0].date.substring(0, data[0].date.indexOf('T'));
+					var date = document.getElementById("dateText").innerHTML = t;
+				}
+
+
+				var image = document.getElementById("artifactImage");
+				image.src = data[0].image_source;
+
+				var relatedTopic = document.getElementById("relatedTopic");
+				relatedTopic.innerHTML = data[0].artifact_tag;
+
+				const encodedTag = encodeURIComponent(data[0].artifact_tag);
+				relatedTopic.href = "index.html?tag=" + encodedTag;
+			
+			},
 		});
-
-		var queryArtifactID = function () {
-			const urlParams = new URLSearchParams(window.location.search);
-			//get data from database using $.ajax post request from jquery
-			var data = $.ajax({
-				url: "http://localhost:3000/queryArtifactByID?id=" + urlParams.get("id"),
-				type: "POST",
-				contentType: "application/json; charset=utf-8",
-				success: function (data) {
-					//on success render the returned data
-					console.log(data);
-
-					var description = document.getElementById("descriptionText");
-					description.innerHTML = data[0].description;
-
-					var artifactName = document.getElementById("artifactName");
-					artifactName.innerHTML = data[0].name;
-
-					var date = document.getElementById("dateText").innerHTML = data[0].date;
-
-					var image = document.getElementById("artifactImage");
-					image.src = data[0].image_source;
-				},
-				error: function (xhr, status, error) {
-					//on failure to fetch the request write to console
-					console.error(status + ": " + xhr.responseText);
-				},
-			});
-		};
-	</script>
-
+	}
+</script>
 	<body>
 		<div class="overlay">
 			<h1 class="maintitle">Artifact Information</h1>
@@ -108,9 +123,10 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<div class=" text-center col-12">
-				<h2 id="artifactName">No name loaded.</h2>
+		<div class="row w-75 mx-auto">
+
+			<div class="text-center col-12">
+				<h2 id="artifactName" class="Art-Title">No name loaded.</h2>
 			</div>
 		</div>
 
@@ -119,7 +135,7 @@
 				<div class="col-sm-8" id="description">
 					<p id="descriptionText">No content loaded.</p>
 				</div>
-				<div class="col-sm-4" id="date">
+				<div class="col" id="date">
 					<p id="dateText">No content loaded.</p>
 				</div>
 			</div>
@@ -127,11 +143,11 @@
 
 		<div class="container-fluid related-topics">
 			<div class="row w-75 mx-auto">
-				<div class="col" id="description">
-					<p id="related">related topics</p>
+				<div class="col-sm-8" id="description">
+					<a href="index.html" id="relatedTopic" class="related">related topics</a>
 				</div>
 
-				<div class="col-md-auto" id="description-1">
+				<div class="col" id="description-1">
 					<p>find artifacts</p>
 				</div>
 			</div>

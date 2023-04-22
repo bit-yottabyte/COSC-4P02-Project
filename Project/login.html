@@ -25,6 +25,9 @@
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
 		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				getLoggedIn();
+			});
 			function login(form) {
 				var loginInfo = {
 					uname: form.username.value,
@@ -39,7 +42,51 @@
 					},
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					data: loginInfo,
-					success: function (result) {},
+					success: function (result) {
+						if (result != "Failed to login") {
+							location.href = "../Project/admin.html";
+						} else {
+							document.getElementById("error").innerHTML =
+								"Invalid username or password";
+						}
+					},
+					error: function () {
+						document.getElementById("error").innerHTML =
+							"Invalid username or password";
+					},
+				});
+			}
+			var getLoggedIn = function () {
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/checkLogin",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						if (result != "Not logged in") {
+							var button = document.createElement("button");
+							button.setAttribute("onclick", "logout()");
+							button.textContent = "Logout";
+							document.getElementById("login").appendChild(button);
+							console.log(result);
+						}
+					},
+				});
+			};
+			function logout() {
+				var logout = $.ajax({
+					url: "http://localhost:3000/logout",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						console.log(result);
+						location.href = "../Project/login.html";
+					},
 				});
 			}
 		</script>
@@ -49,16 +96,13 @@
 		<h1>Login</h1>
 		<form>
 			<label for="username">Username:</label>
-			<input type="text" name="username" />
+			<input type="text" name="username" /><br />
 			<label for="password">Password</label>
 			<input type="password" name="password" />
 			<button type="button" onclick="login(this.form)">Submit</button>
 		</form>
-		<button id="register">Register</button>
-		<script type="text/javascript">
-			document.getElementById("register").onclick = function () {
-				location.href = "../Project/register.html";
-			};
-		</script>
+		<div id="login">
+			<h4 id="error"></h4>
+		</div>
 	</body>
 </html>
