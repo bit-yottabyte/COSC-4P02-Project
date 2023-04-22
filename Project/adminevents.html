@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Bootstrap CSS -->
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+		/>
+
+		<link rel="stylesheet" href="CSS/style.css" />
+		<script src="JS/jscript.js"></script>
+		<title>Admin Page Events</title>
+		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script
+			src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+			crossorigin="anonymous"
+		></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				getLoggedIn();
+			});
+			var getLoggedIn = function () {
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/checkAdmin",
+					type: "POST",
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true,
+					},
+					success: function (result) {
+						console.log(result);
+						if (result == "Logged in") {
+							var divOverall = document.createElement("div");
+							var divOverlay = document.createElement("div");
+							divOverlay.classList.add("overlay");
+							var h1 = document.createElement("h1");
+							h1.classList.add("maintitle");
+							h1.innerHTML = "Admin Page";
+							divOverlay.appendChild(h1);
+
+							var divContainer = document.createElement("div");
+							divContainer.classList.add("container");
+							var formHeader = document.createElement("h4");
+							formHeader.innerHTML = "Add event";
+							var form = document.createElement("form");
+							form.setAttribute("id", "addEvent");
+
+							var divQ1 = document.createElement("div");
+							divQ1.classList.add("mb-3");
+							var label1 = document.createElement("label");
+							label1.classList.add("form-label", "labelQ");
+							label1.setAttribute("for", "textarea1");
+							label1.innerHTML = "Name:";
+							var textArea1 = document.createElement("textarea");
+							textArea1.classList.add("form-control");
+							textArea1.setAttribute("id", "textarea1");
+							textArea1.setAttribute("name", "name");
+							textArea1.setAttribute("rows", "1");
+							divQ1.appendChild(label1);
+							divQ1.appendChild(textArea1);
+
+							var divQ2 = document.createElement("div");
+							divQ2.classList.add("mb-3");
+							var label2 = document.createElement("label");
+							label2.classList.add("form-label", "labelQ");
+							label2.setAttribute("for", "date");
+							label2.innerHTML = "Date:";
+							var dateInput = document.createElement("input");
+							dateInput.classList.add("form-control");
+							dateInput.setAttribute("id", "date");
+							dateInput.setAttribute("name", "date");
+							dateInput.setAttribute("type", "date");
+							divQ2.appendChild(label2);
+							divQ2.appendChild(dateInput);
+
+							var divQ3 = document.createElement("div");
+							divQ3.classList.add("mb-3");
+							var label3 = document.createElement("label");
+							label3.classList.add("form-label", "labelQ");
+							label3.setAttribute("for", "textarea2");
+							label3.innerHTML = "Location:";
+							var textarea2 = document.createElement("textarea");
+							textarea2.classList.add("form-control");
+							textarea2.setAttribute("id", "textarea2");
+							textarea2.setAttribute("name", "location");
+							textarea2.setAttribute("rows", "1");
+							divQ3.appendChild(label3);
+							divQ3.appendChild(textarea2);
+
+							var divQ4 = document.createElement("div");
+							divQ4.classList.add("mb-3");
+							var label4 = document.createElement("label");
+							label4.classList.add("form-label", "labelQ");
+							label4.setAttribute("for", "textarea3");
+							label4.innerHTML = "Description";
+							var textarea3 = document.createElement("textarea");
+							textarea3.classList.add("form-control");
+							textarea3.setAttribute("id", "textarea3");
+							textarea3.setAttribute("name", "description");
+							textarea3.setAttribute("rows", "4");
+							divQ4.appendChild(label4);
+							divQ4.appendChild(textarea3);
+
+							divSubmit = document.createElement("div");
+							h4Submit = document.createElement("h4");
+							h4Submit.setAttribute("id", "submit-button-text");
+							h4Submit.innerHTML = "Submit Button Below";
+							submitButton = document.createElement("button");
+							submitButton.classList.add("btn", "btn-primary");
+							submitButton.setAttribute("type", "button");
+							submitButton.setAttribute("onclick", "addArtifact(this.form)");
+							submitButton.innerHTML = "Submit";
+							divSubmit.appendChild(h4Submit);
+							divSubmit.appendChild(submitButton);
+
+							divContainer.appendChild(formHeader);
+							divContainer.appendChild(form);
+							form.appendChild(divQ1);
+							form.appendChild(divQ2);
+							form.appendChild(divQ3);
+							form.appendChild(divQ4);
+							form.appendChild(divSubmit);
+
+							divOverall.appendChild(divOverlay);
+							divOverall.appendChild(divContainer);
+							document.getElementById("admin").appendChild(divOverall);
+						}
+					},
+					error: function (xhr, status, error) {
+						divContainer = document.createElement("div");
+						divContainer.classList.add("container");
+						errorMessage = document.createElement("h1");
+						errorMessage.classList.add("text-center");
+						errorMessage.setAttribute("id", "error-message");
+						errorMessage.innerHTML = xhr.status + ": " + error;
+						divContainer.appendChild(errorMessage);
+						document.getElementById("admin").appendChild(divContainer);
+					},
+				});
+			};
+
+			function addArtifact(form) {
+				var hi = {
+					name: form.name.value,
+					date: form.date.value,
+					description: form.description.value,
+					image: form.image.value,
+					tag: form.tag.value,
+				};
+			}
+		</script>
+		<style></style>
+	</head>
+	<body>
+		<div id="admin"></div>
+	</body>
+</html>
