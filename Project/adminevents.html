@@ -91,20 +91,6 @@
 							divQ2.appendChild(label2);
 							divQ2.appendChild(dateInput);
 
-							var divQ3 = document.createElement("div");
-							divQ3.classList.add("mb-3");
-							var label3 = document.createElement("label");
-							label3.classList.add("form-label", "labelQ");
-							label3.setAttribute("for", "textarea2");
-							label3.innerHTML = "Location:";
-							var textarea2 = document.createElement("textarea");
-							textarea2.classList.add("form-control");
-							textarea2.setAttribute("id", "textarea2");
-							textarea2.setAttribute("name", "location");
-							textarea2.setAttribute("rows", "1");
-							divQ3.appendChild(label3);
-							divQ3.appendChild(textarea2);
-
 							var divQ4 = document.createElement("div");
 							divQ4.classList.add("mb-3");
 							var label4 = document.createElement("label");
@@ -149,7 +135,6 @@
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
 							form.appendChild(divQ2);
-							form.appendChild(divQ3);
 							form.appendChild(divQ4);
 							form.appendChild(divQ5);
 							form.appendChild(divSubmit);

@@ -58,11 +58,12 @@ app.post("/queryEventByID", async (req, res) => {
 
 //endpoint to add to questionnaire collection
 app.post("/addEvent", async (req, res) => {
+	var numEvents = await Events.count();
 	try {
 		const newEvent = new Events({
 			name: req.body.name,
-			event_id: 5,
-			location_id: req.body.location,
+			event_id: numEvents,
+			location_id: 1,
 			date: req.body.date,
 			description: req.body.description,
 			image_source: req.body.image,
