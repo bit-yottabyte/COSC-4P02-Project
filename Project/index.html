@@ -41,42 +41,6 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-				document
-					.getElementById("nameInput")
-					.addEventListener("keyup", function () {
-						onTypeArtifactQuery();
-					});
-
-
-<head>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-
-	<!-- Add icon library -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-	<link rel="stylesheet" href="CSS/style.css" />
-	<script src="JS/jscript.js"></script>
-	<title>Homepage</title>
-	<link rel="icon" type="image/x-icon" href="Images/museum.png">
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
 	<script>
 
 		var queryArtifactByTag = function (tag) {
@@ -160,7 +124,7 @@
 			holder.setAttribute("style", "margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;");
 
 			var holderImage = document.createElement("div");
-			holderImage.classList.add("col-3");
+			holderImage.classList.add("col-2");
 			var image = document.createElement("img");
 			image.setAttribute("src", imagePath);
 			image.setAttribute("height", "100%");
@@ -175,7 +139,8 @@
 			holderName.appendChild(nameP);
 
 			var holderDescription = document.createElement("div");
-			holderDescription.classList.add("col-4");
+			holderDescription.classList.add("col-5");
+			holderDescription.setAttribute("style", "height: 10vh; overflow-x: hidden; overflow-y: hidden;");
 			var descriptionP = document.createElement("p");
 			descriptionP.innerHTML = description;
 			descriptionP.classList.add("remove-link-styling");
@@ -195,38 +160,46 @@
 	</style>
 </head>
 
-<body>
-	<div class="overlay">
-		<h1 class="maintitle">Welcome to the Museum</h1>
-	</div>
+	<body>
+		<div class="overlay">
+			<h1 class="maintitle">Welcome to the Museum</h1>
+		</div>
 
-	<div class="container">
-		Brief Museum description..
-	</div>
+		<div class="container">
+			Brief Museum description..
+		</div>
 
-	<div class="row justify-content-center">
-		<div class="input-group mb-3 col-3">
-			<input type="text" class="form-control" id="nameInput" placeholder="Search.." aria-label="Search.."
-				aria-describedby="basic-addon2" />
-			<div class="input-group-append">
-				<button class="btn btn-secondary" type="button">
-					<i class="fa fa-search" arial-hidden="true"></i>
-				</button>
+		<div class="row justify-content-center">
+			<div class="input-group col-sm-2 col-md-4 mb-3">
+				<input type="text" class="form-control" id="nameInput" placeholder="Search.." aria-label="Search.."
+					aria-describedby="basic-addon2" />
+				<div class="input-group-append">
+					<button class="btn btn-secondary" type="button">
+						<i class="fa fa-search" arial-hidden="true"></i>
+					</button>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row justify-content-center">
-		<div id="queryContainer" class="col-9"></div>
-	</div>
+		<div class="row justify-content-center">
+			<div class="col-9">
+				<div class="row">
+					<div class="col-2" style="background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px; border: 1px solid #000000">
+						<a>Image</a>
+					</div>
+					<div class="col-4" style="background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px; border: 1px solid #000000">
+						<a>Name</a>
+					</div>
+					<div class="col-6" style="background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px; border: 1px solid #000000">
+						<a>Description</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	<!-- Icons -->
-	<div class="iconstyle">
-		<a style="text-decoration: none" href="#" class="fa fa-instagram"></a>
-		<a style="text-decoration: none" href="#" class="fa fa-facebook"></a>
-		<a style="text-decoration: none" href="#" class="fa fa-telegram"></a>
-		<a style="text-decoration: none" href="#" class="fa fa-twitter"></a>
-	</div>
-</body>
+		<div class="row justify-content-center">
+			<div id="queryContainer" style="height: 58vh; overflow:scroll; overflow-x: hidden;" class="col-9"></div>
+		</div>
+	</body>
 
 </html>
