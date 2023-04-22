@@ -119,6 +119,20 @@
 							divQ4.appendChild(label4);
 							divQ4.appendChild(textarea3);
 
+							var divQ5 = document.createElement("div");
+							divQ5.classList.add("mb-3");
+							var label5 = document.createElement("label");
+							label5.classList.add("form-label", "labelQ");
+							label5.setAttribute("for", "textarea4");
+							label5.innerHTML = "Image Source:";
+							var textarea4 = document.createElement("textarea");
+							textarea4.classList.add("form-control");
+							textarea4.setAttribute("id", "textarea4");
+							textarea4.setAttribute("name", "image");
+							textarea4.setAttribute("rows", "1");
+							divQ5.appendChild(label5);
+							divQ5.appendChild(textarea4);
+
 							divSubmit = document.createElement("div");
 							h4Submit = document.createElement("h4");
 							h4Submit.setAttribute("id", "submit-button-text");
@@ -126,7 +140,7 @@
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
-							submitButton.setAttribute("onclick", "addArtifact(this.form)");
+							submitButton.setAttribute("onclick", "addEvent(this.form)");
 							submitButton.innerHTML = "Submit";
 							divSubmit.appendChild(h4Submit);
 							divSubmit.appendChild(submitButton);
@@ -137,6 +151,7 @@
 							form.appendChild(divQ2);
 							form.appendChild(divQ3);
 							form.appendChild(divQ4);
+							form.appendChild(divQ5);
 							form.appendChild(divSubmit);
 
 							divOverall.appendChild(divOverlay);
@@ -157,14 +172,21 @@
 				});
 			};
 
-			function addArtifact(form) {
+			function addEvent(form) {
 				var hi = {
 					name: form.name.value,
 					date: form.date.value,
-					description: form.description.value,
+					location: form.location.value,
 					image: form.image.value,
-					tag: form.tag.value,
+					description: form.description.value,
 				};
+				var he = $.ajax({
+					url: "http://localhost:3000/addEvent",
+					type: "POST",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					data: hi,
+					success: function (result) {},
+				});
 			}
 		</script>
 		<style></style>

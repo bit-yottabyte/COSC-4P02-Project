@@ -57,6 +57,25 @@ app.post("/queryEventByID", async (req, res) => {
 });
 
 //endpoint to add to questionnaire collection
+app.post("/addEvent", async (req, res) => {
+	try {
+		const newEvent = new Events({
+			name: req.body.name,
+			event_id: 5,
+			location_id: req.body.location,
+			date: req.body.date,
+			description: req.body.description,
+			image_source: req.body.image,
+		});
+		newEvent.save();
+		res.json(newEvent);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+//endpoint to add to questionnaire collection
 app.post("/add", async (req, res) => {
 	try {
 		const newAnswer = new Questionnaire({
