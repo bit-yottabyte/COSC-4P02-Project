@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 	renderNavBar();
 	renderBackground();
@@ -23,87 +22,12 @@ var renderNavBar = function () {
 	);
 	div.appendChild(ul);
 
-	//home nav button
-	var liHome = document.createElement("li");
-	liHome.classList.add("nav-item");
-
-	var aHome = document.createElement("a");
-	aHome.classList.add("nav-link");
-	aHome.innerHTML = "Home";
-	aHome.href = "index.html";
-
-	//interactive timeline nav button
-	var liTimeline = document.createElement("li");
-	liTimeline.classList.add("nav-item");
-
-	var aTimeline = document.createElement("a");
-	aTimeline.classList.add("nav-link");
-	aTimeline.innerHTML = "Interactive Timeline";
-	aTimeline.href = "timeline.html";
-
-	//events nav button
-	var liEvents = document.createElement("li");
-	liEvents.classList.add("nav-item");
-
-	var aEvents = document.createElement("a");
-	aEvents.classList.add("nav-link");
-	aEvents.innerHTML = "Events";
-	aEvents.href = "events.html";
-
-	//questionnaire nav button
-	var liQuestion = document.createElement("li");
-	liQuestion.classList.add("nav-item");
-
-	var aQuestion = document.createElement("a");
-	aQuestion.classList.add("nav-link");
-	aQuestion.innerHTML = "Questionnaire";
-	aQuestion.href = "questionnaire.html";
-
-	//quiz nav button
-	var liQuiz = document.createElement("li");
-	liQuiz.classList.add("nav-item");
-
-	var aQuiz = document.createElement("a");
-	aQuiz.classList.add("nav-link");
-	aQuiz.innerHTML = "Quiz";
-	aQuiz.href = "quiz.html";
-
-	//assign the correct active list item in the navbar
-	var pageName = getPageName();
-	switch (pageName) {
-		case "home":
-			aHome.classList.add("active");
-			aHome.setAttribute("style", "border-bottom: 2px solid #4287f5");
-			break;
-		case "timeline":
-			aTimeline.classList.add("active");
-			aTimeline.setAttribute("style", "border-bottom: 2px solid #4287f5");
-			break;
-		case "events":
-			aEvents.classList.add("active");
-			aEvents.setAttribute("style", "border-bottom: 2px solid #4287f5");
-			break;
-		case "questionnaire":
-			aQuestion.classList.add("active");
-			aQuestion.setAttribute("style", "border-bottom: 2px solid #4287f5");
-			break;
-		case "quiz":
-			aQuiz.classList.add("active");
-			aQuiz.setAttribute("style", "border-bottom: 2px solid #4287f5");
-			break;
-	}
-
-	//add the created elements to the navbar element
-	ul.appendChild(liHome);
-	liHome.appendChild(aHome);
-	ul.appendChild(liTimeline);
-	liTimeline.appendChild(aTimeline);
-	ul.appendChild(liEvents);
-	liEvents.appendChild(aEvents);
-	ul.appendChild(liQuestion);
-	liQuestion.appendChild(aQuestion);
-	ul.appendChild(liQuiz);
-	liQuiz.appendChild(aQuiz);
+	makeNavChild("Home", "index.html", ul);
+	makeNavChild("Interactive Timeline", "timeline.html", ul);
+	makeNavChild("Events", "events.html", ul);
+	makeNavChild("Questionnaire", "questionnaire.html", ul);
+	makeNavChild("Quiz", "quiz.html", ul);
+	makeNavChild("Login", "login.html", ul);
 
 	document.body.insertBefore(nav, document.body.firstChild);
 
@@ -117,6 +41,37 @@ var renderNavBar = function () {
 		liItems[i].classList.add("col-12");
 	}
 };
+
+function makeNavChild(label, linksTo, ulElement) {
+	//home nav button
+	var li = document.createElement("li");
+	li.classList.add("nav-item");
+
+	var a = document.createElement("a");
+	a.classList.add("nav-link", "text-white");
+	a.innerHTML = label;
+	a.href = linksTo;
+
+	ulElement.appendChild(li);
+	li.appendChild(a);
+
+	if (getPageName().toLowerCase() == label.toLowerCase()) {
+		a.classList.add("active");
+		a.setAttribute("style", "border-bottom: 2px solid #4287f5");
+	} else if (
+		getPageName().toLowerCase() == "index" &&
+		label.toLowerCase() == "home"
+	) {
+		a.classList.add("active");
+		a.setAttribute("style", "border-bottom: 2px solid #4287f5");
+	} else if (
+		getPageName().toLowerCase() == "timeline" &&
+		label.toLowerCase() == "interactive timeline"
+	) {
+		a.classList.add("active");
+		a.setAttribute("style", "border-bottom: 2px solid #4287f5");
+	}
+}
 
 var renderBackground = function () {
 	document.body.setAttribute("style", "overflow-x: hidden");

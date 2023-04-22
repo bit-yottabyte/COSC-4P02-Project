@@ -1,12 +1,7 @@
-<html lang="en">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, shrink-to-fit=no"
-		/>
+<!DOCTYPE html>
 
+	<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Bootstrap CSS -->
 		<link
 			rel="stylesheet"
@@ -24,6 +19,7 @@
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
 		<title>Homepage</title>
+		<link rel="icon" type="image/x-icon" href="Images/museum.png">
 
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -45,58 +41,165 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-		<script>
-			document.addEventListener("DOMContentLoaded", function() {
-				document.getElementById("nameInput").addEventListener("keyup", function() {
-					onTypeArtifactQuery();
-				});
+	<script>
+
+		var queryArtifactByTag = function (tag) {
+			//get data from database using $.ajax post request from jquery
+			var data = $.ajax({
+				url:
+					"http://localhost:3000/queryArtifactByTag?tag=" + tag,
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				success: function (data) {
+					//on success render the returned data
+					console.log(data);
+
+					var container = document.getElementById("queryContainer");
+
+					//clear all previous results
+					container.innerHTML = "";
+
+					for (var i = 0; i < data.length; i++) {
+						renderQueryResult(data[i].artifact_id, data[i].image_source, data[i].name, data[i].description, container);
+					}
+				},
+
+				error: function (xhr, status, error) {
+					//on failure to fetch the request write to console
+					console.error(status + ": " + xhr.responseText);
+				},
+
 			});
+		};
 
-			var onTypeArtifactQuery = function () {
-				//get data from database using $.ajax post request from jquery
-				var data = $.ajax({
-					url: 'http://localhost:3000/queryArtifacts?name=' + document.getElementById("nameInput").value,
-					type: "POST",
-					contentType: "application/json; charset=utf-8",
-					success: function (data) {
-						//on success render the returned data
-						console.log(data);
-					},
-					error: function (xhr, status, error) {
-						//on failure to fetch the request write to console
-						console.error(status + ": " + xhr.responseText);
-					},
+		document.addEventListener("DOMContentLoaded", function () {
+			var currentUrl = window.location.href;
+			var tagIndex = currentUrl.indexOf('?tag='); 
+
+			if (tagIndex !== -1) { 
+				var tag = currentUrl.substring(tagIndex + 5); 
+				queryArtifactByTag(tag);
+			}
+
+			document
+				.getElementById("nameInput")
+				.addEventListener("keyup", function () {
+					onTypeArtifactQuery();
+
 				});
-			};
-		</script>
+		});
 
-		<style>
-			
-		</style>
-	</head>
+		var onTypeArtifactQuery = function () {
+			//get data from database using $.ajax post request from jquery
+			var data = $.ajax({
+				url:
+					"http://localhost:3000/queryArtifacts?name=" +
+					document.getElementById("nameInput").value,
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				success: function (data) {
+					//on success render the returned data
+					console.log(data);
+
+					var container = document.getElementById("queryContainer");
+
+					//clear all previous results
+					container.innerHTML = "";
+
+					for (var i = 0; i < data.length; i++) {
+						renderQueryResult(data[i].artifact_id, data[i].image_source, data[i].name, data[i].description, container);
+					}
+				},
+				error: function (xhr, status, error) {
+					//on failure to fetch the request write to console
+					console.error(status + ": " + xhr.responseText);
+				},
+			});
+		};
+
+		function renderQueryResult(id, imagePath, name, description, parent) {
+			var holder = document.createElement("a");
+			holder.classList.add("row");
+			holder.href = "artifact.html?id=" + id;
+			holder.setAttribute("style", "margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;");
+
+			var holderImage = document.createElement("div");
+			holderImage.classList.add("col-2");
+			var image = document.createElement("img");
+			image.setAttribute("src", imagePath);
+			image.setAttribute("height", "100%");
+			image.setAttribute("width", "100%");
+			holderImage.appendChild(image);
+
+			var holderName = document.createElement("div");
+			holderName.classList.add("col-4");
+			var nameP = document.createElement("p");
+			nameP.innerHTML = name;
+			nameP.classList.add("remove-link-styling");
+			holderName.appendChild(nameP);
+
+			var holderDescription = document.createElement("div");
+			holderDescription.classList.add("col-5");
+			holderDescription.setAttribute("style", "height: 10vh; overflow-x: hidden; overflow-y: hidden;");
+			var descriptionP = document.createElement("p");
+			descriptionP.innerHTML = description;
+			descriptionP.classList.add("remove-link-styling");
+			holderDescription.appendChild(descriptionP);
+
+			holder.appendChild(holderImage);
+			holder.appendChild(holderName);
+			holder.appendChild(holderDescription);
+			parent.appendChild(holder);
+		}
+	</script>
+	<style>
+		.remove-link-styling {
+			color: #000000 !important;
+			text-decoration: none !important;
+		}
+	</style>
+</head>
+
 	<body>
 		<div class="overlay">
 			<h1 class="maintitle">Welcome to the Museum</h1>
+		</div>
 
-			<div class="input-group mb-3 col-3">
-				<input type="text" class="form-control" id="nameInput" placeholder="Search.." aria-label="Search.." aria-describedby="basic-addon2">
+		<div class="container">
+			Brief Museum description..
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="input-group col-sm-2 col-md-4 mb-3">
+				<input type="text" class="form-control" id="nameInput" placeholder="Search.." aria-label="Search.."
+					aria-describedby="basic-addon2" />
 				<div class="input-group-append">
-					<button class="btn btn-secondary" type="button"><i class="fa fa-search" arial-hidden="true"></i></button>
+					<button class="btn btn-secondary" type="button">
+						<i class="fa fa-search" arial-hidden="true"></i>
+					</button>
 				</div>
 			</div>
+		</div>
 
-			<div class="container">
-				<!-- Content here -->
-				Brief Museum description..
-			</div>
-
-			<!-- Icons -->
-			<div class="iconstyle">
-				<a style="text-decoration: none" href="#" class="fa fa-instagram"></a>
-				<a style="text-decoration: none" href="#" class="fa fa-facebook"></a>
-				<a style="text-decoration: none" href="#" class="fa fa-telegram"></a>
-				<a style="text-decoration: none" href="#" class="fa fa-twitter"></a>
+		<div class="row justify-content-center">
+			<div class="col-9">
+				<div class="row">
+					<div class="col-2" style="background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px; border: 1px solid #000000">
+						<a>Image</a>
+					</div>
+					<div class="col-4" style="background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px; border: 1px solid #000000">
+						<a>Name</a>
+					</div>
+					<div class="col-6" style="background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px; border: 1px solid #000000">
+						<a>Description</a>
+					</div>
+				</div>
 			</div>
 		</div>
+
+		<div class="row justify-content-center">
+			<div id="queryContainer" style="height: 58vh; overflow:scroll; overflow-x: hidden;" class="col-9"></div>
+		</div>
 	</body>
+
 </html>
