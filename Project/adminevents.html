@@ -10,15 +10,9 @@
 			crossorigin="anonymous"
 		/>
 
-		<!-- Add icon library -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
-
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
-		<title>Admin Page</title>
+		<title>Admin Page Events</title>
 		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 
 		<!-- Optional JavaScript -->
@@ -65,9 +59,9 @@
 							var divContainer = document.createElement("div");
 							divContainer.classList.add("container");
 							var formHeader = document.createElement("h4");
-							formHeader.innerHTML = "Add artifact";
+							formHeader.innerHTML = "Add event";
 							var form = document.createElement("form");
-							form.setAttribute("id", "addArtifact");
+							form.setAttribute("id", "addEvent");
 
 							var divQ1 = document.createElement("div");
 							divQ1.classList.add("mb-3");
@@ -97,31 +91,17 @@
 							divQ2.appendChild(label2);
 							divQ2.appendChild(dateInput);
 
-							var divQ3 = document.createElement("div");
-							divQ3.classList.add("mb-3");
-							var label3 = document.createElement("label");
-							label3.classList.add("form-label", "labelQ");
-							label3.setAttribute("for", "textarea2");
-							label3.innerHTML = "Description:";
-							var textarea2 = document.createElement("textarea");
-							textarea2.classList.add("form-control");
-							textarea2.setAttribute("id", "textarea2");
-							textarea2.setAttribute("name", "description");
-							textarea2.setAttribute("rows", "3");
-							divQ3.appendChild(label3);
-							divQ3.appendChild(textarea2);
-
 							var divQ4 = document.createElement("div");
 							divQ4.classList.add("mb-3");
 							var label4 = document.createElement("label");
 							label4.classList.add("form-label", "labelQ");
 							label4.setAttribute("for", "textarea3");
-							label4.innerHTML = "Image Source:";
+							label4.innerHTML = "Description";
 							var textarea3 = document.createElement("textarea");
 							textarea3.classList.add("form-control");
 							textarea3.setAttribute("id", "textarea3");
-							textarea3.setAttribute("name", "image");
-							textarea3.setAttribute("rows", "1");
+							textarea3.setAttribute("name", "description");
+							textarea3.setAttribute("rows", "4");
 							divQ4.appendChild(label4);
 							divQ4.appendChild(textarea3);
 
@@ -130,11 +110,11 @@
 							var label5 = document.createElement("label");
 							label5.classList.add("form-label", "labelQ");
 							label5.setAttribute("for", "textarea4");
-							label5.innerHTML = "Tags:";
+							label5.innerHTML = "Image Source:";
 							var textarea4 = document.createElement("textarea");
 							textarea4.classList.add("form-control");
 							textarea4.setAttribute("id", "textarea4");
-							textarea4.setAttribute("name", "tags");
+							textarea4.setAttribute("name", "image");
 							textarea4.setAttribute("rows", "1");
 							divQ5.appendChild(label5);
 							divQ5.appendChild(textarea4);
@@ -146,7 +126,7 @@
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
-							submitButton.setAttribute("onclick", "addArtifact(this.form)");
+							submitButton.setAttribute("onclick", "addEvent(this.form)");
 							submitButton.innerHTML = "Submit";
 							divSubmit.appendChild(h4Submit);
 							divSubmit.appendChild(submitButton);
@@ -155,7 +135,6 @@
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
 							form.appendChild(divQ2);
-							form.appendChild(divQ3);
 							form.appendChild(divQ4);
 							form.appendChild(divQ5);
 							form.appendChild(divSubmit);
@@ -178,14 +157,21 @@
 				});
 			};
 
-			function addArtifact(form) {
+			function addEvent(form) {
 				var hi = {
 					name: form.name.value,
 					date: form.date.value,
-					description: form.description.value,
+					location: form.location.value,
 					image: form.image.value,
-					tag: form.tag.value,
+					description: form.description.value,
 				};
+				var he = $.ajax({
+					url: "http://localhost:3000/addEvent",
+					type: "POST",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					data: hi,
+					success: function (result) {},
+				});
 			}
 		</script>
 		<style></style>
