@@ -216,13 +216,19 @@ app.post("/login", async (req, res) => {
 	if (user === null) {
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
 		res.status(400).json({ message: "invalid user" });
 	} else if (!user.validPassword(req.body.passwd)) {
 		//password did not match
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
 		res.send("Failed to login");
 	} else {
 		//1 is placeholder
@@ -232,7 +238,10 @@ app.post("/login", async (req, res) => {
 		user.save();
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
 		res.cookie("user", req.body.uname, { sameSite: "none", secure: true });
 		res.cookie("sid", usid, { sameSite: "none", secure: true });
 		res.json({ username: req.body.uname, sid: usid });
@@ -244,7 +253,10 @@ app.post("/checkLogin", async (req, res) => {
 	if (cookie === undefined) {
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
 		res.send("Not logged in");
 	} else {
 		const cookieArray = cookie.split("; ");
@@ -255,7 +267,10 @@ app.post("/checkLogin", async (req, res) => {
 		const user = await User.findOne({ uname: uName, usid_1: sid });
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
 		if (user === null) {
 			res.send("Not logged in");
 		} else {
@@ -270,7 +285,10 @@ app.post("/checkAdmin", async (req, res) => {
 	if (cookie === undefined) {
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
 		res.status(403).json({ message: "Denied Access" });
 	} else {
 		const cookieArray = cookie.split("; ");
@@ -281,7 +299,10 @@ app.post("/checkAdmin", async (req, res) => {
 		const user = await User.findOne({ uname: uName, usid_1: sid });
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://bit-yottabyte.github.io/"
+		);
 		if (user === null) {
 			res.status(403).json({ message: "Denied Access" });
 		} else {
@@ -294,7 +315,7 @@ app.post("/checkAdmin", async (req, res) => {
 app.post("/logout", async (req, res) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	//replace website with domain you use if needed
-	res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+	res.header("Access-Control-Allow-Origin", "https://bit-yottabyte.github.io/");
 	const cookie = req.headers.cookie;
 	const cookieArray = cookie.split("; ");
 	const cA = cookieArray[0].split("=");
