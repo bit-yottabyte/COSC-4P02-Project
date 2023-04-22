@@ -43,12 +43,16 @@
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					data: loginInfo,
 					success: function (result) {
-						location.href = "../Project/admin.html";
+						if (result != "Failed to login") {
+							location.href = "../Project/admin.html";
+						} else {
+							document.getElementById("error").innerHTML =
+								"Invalid username or password";
+						}
 					},
 					error: function () {
-						var errorMessage = document.createElement("h4");
-						errorMessage.innerHTML = "Invalid username or password";
-						document.getElementById("login").appendChild(errorMessage);
+						document.getElementById("error").innerHTML =
+							"Invalid username or password";
 					},
 				});
 			}
@@ -97,6 +101,8 @@
 			<input type="password" name="password" />
 			<button type="button" onclick="login(this.form)">Submit</button>
 		</form>
-		<div id="login"></div>
+		<div id="login">
+			<h4 id="error"></h4>
+		</div>
 	</body>
 </html>
