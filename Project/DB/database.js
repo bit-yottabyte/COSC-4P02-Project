@@ -111,7 +111,7 @@ app.post("/queryArtifacts", async (req, res) => {
 		//find 10 most similar artifacts by matching name
 		const artifacts = await Artifacts.find({
 			name: { $regex: req.query.name, $options: "i" },
-		}).limit(10);
+		}).limit(15);
 		res.json(artifacts);
 	} catch (error) {
 		res.status(500).json({ message: error.message });

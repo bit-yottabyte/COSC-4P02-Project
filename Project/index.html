@@ -42,7 +42,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 	<script>
-
 		var queryArtifactByTag = function (tag) {
 			//get data from database using $.ajax post request from jquery
 			var data = $.ajax({
@@ -52,12 +51,20 @@
 				contentType: "application/json; charset=utf-8",
 				success: function (data) {
 					//on success render the returned data
-					console.log(data);
+					//console.log(data);
 
 					var container = document.getElementById("queryContainer");
 
 					//clear all previous results
 					container.innerHTML = "";
+
+					if(data.length > 0) {
+						document.getElementById("headerStuff").style.display = "block";
+						document.getElementById("contentStuff").style.display = "block";
+					} else {
+						document.getElementById("headerStuff").style.display = "none";
+						document.getElementById("contentStuff").style.display = "none";
+					}
 
 					for (var i = 0; i < data.length; i++) {
 						renderQueryResult(data[i].artifact_id, data[i].image_source, data[i].name, data[i].description, container);
@@ -74,22 +81,35 @@
 
 		document.addEventListener("DOMContentLoaded", function () {
 			var currentUrl = window.location.href;
-			var tagIndex = currentUrl.indexOf('?tag='); 
+			var tagIndex = currentUrl.indexOf('?tag=');
+			
+			document.getElementById("headerStuff").style.display = "none";
+			document.getElementById("contentStuff").style.display = "none";
 
 			if (tagIndex !== -1) { 
 				var tag = currentUrl.substring(tagIndex + 5); 
 				queryArtifactByTag(tag);
 			}
 
-			document
-				.getElementById("nameInput")
-				.addEventListener("keyup", function () {
-					onTypeArtifactQuery();
+			document.getElementById("nameInput").addEventListener("keyup", function () {
+				onTypeArtifactQuery();
+			});
+		});
 
-				});
+		window.addEventListener("load", (event) => {
+			onTypeArtifactQuery();
 		});
 
 		var onTypeArtifactQuery = function () {
+			if(document.getElementById("nameInput").value == false) {
+				document.getElementById("headerStuff").style.display = "none";
+				document.getElementById("contentStuff").style.display = "none";
+
+				var container = document.getElementById("queryContainer");
+				container.innerHTML = "";
+				return;
+			}
+
 			//get data from database using $.ajax post request from jquery
 			var data = $.ajax({
 				url:
@@ -99,12 +119,20 @@
 				contentType: "application/json; charset=utf-8",
 				success: function (data) {
 					//on success render the returned data
-					console.log(data);
+					//console.log(data);
 
 					var container = document.getElementById("queryContainer");
 
 					//clear all previous results
 					container.innerHTML = "";
+
+					if(data.length > 0) {
+						document.getElementById("headerStuff").style.display = "flex";
+						document.getElementById("contentStuff").style.display = "flex";
+					} else {
+						document.getElementById("headerStuff").style.display = "none";
+						document.getElementById("contentStuff").style.display = "none";
+					}
 
 					for (var i = 0; i < data.length; i++) {
 						renderQueryResult(data[i].artifact_id, data[i].image_source, data[i].name, data[i].description, container);
@@ -166,7 +194,7 @@
 		</div>
 
 		<div class="container">
-			Brief Museum description..
+			<h4>4P02 Project</h4>
 		</div>
 
 		<div class="row justify-content-center">
@@ -181,7 +209,7 @@
 			</div>
 		</div>
 
-		<div class="row justify-content-center">
+		<div class="row justify-content-center" id="headerStuff">
 			<div class="col-9">
 				<div class="row">
 					<div class="col-2" style="background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px; border: 1px solid #000000">
@@ -197,8 +225,8 @@
 			</div>
 		</div>
 
-		<div class="row justify-content-center">
-			<div id="queryContainer" style="height: 58vh; overflow:scroll; overflow-x: hidden;" class="col-9"></div>
+		<div class="row justify-content-center" id="contentStuff">
+			<div id="queryContainer" style="height: 56vh; overflow:scroll; overflow-x: hidden;" class="col-9"></div>
 		</div>
 	</body>
 
