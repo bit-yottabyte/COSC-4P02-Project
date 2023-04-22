@@ -13,6 +13,7 @@ var renderNavBar = function () {
 
 	var ul = document.createElement("ul");
 	ul.classList.add(
+
 		"navbar-nav",
 		"nav-fill",
 		"w-100",
@@ -93,6 +94,5 @@ function getPageName() {
 		url = url.substr(0, index - 1);
 		basename = getBaseName(url);
 	}
-
 	return basename ? basename : "";
 }
