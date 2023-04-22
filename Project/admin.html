@@ -61,89 +61,27 @@
 							h1.classList.add("maintitle");
 							h1.innerHTML = "Admin Page";
 							divOverlay.appendChild(h1);
-
 							var divContainer = document.createElement("div");
 							divContainer.classList.add("container");
-							var formHeader = document.createElement("h4");
-							formHeader.innerHTML = "Add artifact";
-							var form = document.createElement("form");
-							form.setAttribute("id", "addArtifact");
+							artifactButton = document.createElement("button");
+							artifactButton.classList.add("btn", "btn-primary");
+							artifactButton.setAttribute("type", "button");
+							artifactButton.setAttribute(
+								"onclick",
+								"location.href='../Project/adminartifacts.html'"
+							);
+							artifactButton.innerHTML = "Artifact Page";
+							eventButton = document.createElement("button");
+							eventButton.classList.add("btn", "btn-primary");
+							eventButton.setAttribute("type", "button");
+							eventButton.setAttribute(
+								"onclick",
+								"location.href='../Project/adminevents.html'"
+							);
+							eventButton.innerHTML = "Event Page";
 
-							var divQ1 = document.createElement("div");
-							divQ1.classList.add("mb-3");
-							var label1 = document.createElement("label");
-							label1.classList.add("form-label", "labelQ");
-							label1.setAttribute("for", "textarea1");
-							label1.innerHTML = "Name:";
-							var textArea1 = document.createElement("textarea");
-							textArea1.classList.add("form-control");
-							textArea1.setAttribute("id", "textarea1");
-							textArea1.setAttribute("name", "name");
-							textArea1.setAttribute("rows", "1");
-							divQ1.appendChild(label1);
-							divQ1.appendChild(textArea1);
-
-							var divQ2 = document.createElement("div");
-							divQ2.classList.add("mb-3");
-							var label2 = document.createElement("label");
-							label2.classList.add("form-label", "labelQ");
-							label2.setAttribute("for", "date");
-							label2.innerHTML = "Date:";
-							var dateInput = document.createElement("input");
-							dateInput.classList.add("form-control");
-							dateInput.setAttribute("id", "date");
-							dateInput.setAttribute("name", "date");
-							dateInput.setAttribute("type", "date");
-							divQ2.appendChild(label2);
-							divQ2.appendChild(dateInput);
-
-							var divQ3 = document.createElement("div");
-							divQ3.classList.add("mb-3");
-							var label3 = document.createElement("label");
-							label3.classList.add("form-label", "labelQ");
-							label3.setAttribute("for", "textarea2");
-							label3.innerHTML = "Description:";
-							var textarea2 = document.createElement("textarea");
-							textarea2.classList.add("form-control");
-							textarea2.setAttribute("id", "textarea2");
-							textarea2.setAttribute("name", "description");
-							textarea2.setAttribute("rows", "3");
-							divQ3.appendChild(label3);
-							divQ3.appendChild(textarea2);
-
-							var divQ4 = document.createElement("div");
-							divQ4.classList.add("mb-3");
-							var label4 = document.createElement("label");
-							label4.classList.add("form-label", "labelQ");
-							label4.setAttribute("for", "textarea3");
-							label4.innerHTML = "Image Source:";
-							var textarea3 = document.createElement("textarea");
-							textarea3.classList.add("form-control");
-							textarea3.setAttribute("id", "textarea3");
-							textarea3.setAttribute("name", "image");
-							textarea3.setAttribute("rows", "1");
-							divQ4.appendChild(label4);
-							divQ4.appendChild(textarea3);
-
-							divSubmit = document.createElement("div");
-							h4Submit = document.createElement("h4");
-							h4Submit.setAttribute("id", "submit-button-text");
-							h4Submit.innerHTML = "Submit Button Below";
-							submitButton = document.createElement("button");
-							submitButton.classList.add("btn", "btn-primary");
-							submitButton.setAttribute("type", "button");
-							submitButton.setAttribute("onclick", "addArtifact(this.form)");
-							submitButton.innerHTML = "Submit";
-							divSubmit.appendChild(h4Submit);
-							divSubmit.appendChild(submitButton);
-
-							divContainer.appendChild(formHeader);
-							divContainer.appendChild(form);
-							form.appendChild(divQ1);
-							form.appendChild(divQ2);
-							form.appendChild(divQ3);
-							form.appendChild(divQ4);
-							form.appendChild(divSubmit);
+							divContainer.appendChild(artifactButton);
+							divContainer.appendChild(eventButton);
 
 							divOverall.appendChild(divOverlay);
 							divOverall.appendChild(divContainer);
@@ -169,6 +107,7 @@
 					date: form.date.value,
 					description: form.description.value,
 					image: form.image.value,
+					tag: form.tag.value,
 				};
 			}
 		</script>

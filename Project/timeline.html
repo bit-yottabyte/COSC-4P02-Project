@@ -8,7 +8,7 @@
 		/>
 		<link rel="stylesheet" href="CSS/scroll.css" />
 		<link href="CSS/style.css" rel="stylesheet" />
-		<script src="JS/jscript_timeline.js"></script>
+		<script src="JS/jscript.js"></script>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -24,6 +24,14 @@
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				getArtifacts();
+
+				document.getElementById("coverContainer").addEventListener("wheel", function() {
+					if(event.wheelDeltaY > 0) {
+						document.getElementsByClassName("next")[0].click();
+					} else {
+						document.getElementsByClassName("prev")[0].click();
+					}
+				});
 			});
 
 			var getArtifacts = function () {
@@ -101,19 +109,18 @@
 	<body>
 		<div class="row" id="main"></div>
 
-    <div class="row">
-      <div class="overlay text-center">
-          <h1 class="maintitle">Interactive Timeline System</h1>
-      </div>
-      <div class="area">
-        <div class="slider">
-          <div class="slides" id="coverContainer"></div>
-          <div class="slider-nav"></div>
-        </div>
-      </div>
-    </div>
-  
-  </body>
+		<div class="row">
+		<div class="overlay text-center">
+			<h1 class="maintitle">Interactive Timeline System</h1>
+		</div>
+		<div class="area">
+			<div class="slider">
+			<div class="slides" id="coverContainer"></div>
+			<div class="slider-nav"></div>
+			</div>
+		</div>
+		</div>
+  	</body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>

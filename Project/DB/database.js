@@ -57,6 +57,26 @@ app.post("/queryEventByID", async (req, res) => {
 });
 
 //endpoint to add to questionnaire collection
+app.post("/addEvent", async (req, res) => {
+	var numEvents = await Events.count();
+	try {
+		const newEvent = new Events({
+			name: req.body.name,
+			event_id: numEvents,
+			location_id: 1,
+			date: req.body.date,
+			description: req.body.description,
+			image_source: req.body.image,
+		});
+		newEvent.save();
+		res.json(newEvent);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+//endpoint to add to questionnaire collection
 app.post("/add", async (req, res) => {
 	try {
 		const newAnswer = new Questionnaire({
@@ -91,7 +111,7 @@ app.post("/queryArtifacts", async (req, res) => {
 		//find 10 most similar artifacts by matching name
 		const artifacts = await Artifacts.find({
 			name: { $regex: req.query.name, $options: "i" },
-		}).limit(10);
+		}).limit(15);
 		res.json(artifacts);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
@@ -135,15 +155,14 @@ app.post("/insertArtifact", async (req, res) => {
 //endpoint to query the artifacts collection based on Tag
 app.post("/queryArtifactByTag", async (req, res) => {
 	try {
-	  const artifact = await Artifacts.find({
-		artifact_tag: req.query.tag,
-	  });
-	  res.json(artifact);
+		const artifact = await Artifacts.find({
+			artifact_tag: req.query.tag,
+		});
+		res.json(artifact);
 	} catch (error) {
-	  res.status(500).json({ message: error.message });
+		res.status(500).json({ message: error.message });
 	}
-  });
-
+});
 
 //endpoint to query the artifacts collection based on matching name input
 app.post("/queryArtifactByID", async (req, res) => {
@@ -183,7 +202,7 @@ app.post("/queryLocalMuseum", async (req, res) => {
 //endpoint to query the quiz collection
 app.post("/queryQuiz", async (req, res) => {
 	try {
-		//query 15 quiz questions0
+		//query 15 quiz questions
 		const quiz = await Quiz.find({}).limit(15);
 		res.json(quiz);
 	} catch (error) {
@@ -197,19 +216,13 @@ app.post("/login", async (req, res) => {
 	if (user === null) {
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io"
-		);
+		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 		res.status(400).json({ message: "invalid user" });
 	} else if (!user.validPassword(req.body.passwd)) {
 		//password did not match
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io"
-		);
+		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 		res.send("Failed to login");
 	} else {
 		//1 is placeholder
@@ -219,12 +232,17 @@ app.post("/login", async (req, res) => {
 		user.save();
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io"
-		);
-		res.cookie("user", req.body.uname, { sameSite: "none", secure: true });
-		res.cookie("sid", usid, { sameSite: "none", secure: true });
+		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		res.cookie("user", req.body.uname, {
+			sameSite: "none",
+			secure: true,
+			overwrite: true,
+		});
+		res.cookie("sid", usid, {
+			sameSite: "none",
+			secure: true,
+			overwrite: true,
+		});
 		res.json({ username: req.body.uname, sid: usid });
 	}
 });
@@ -234,10 +252,7 @@ app.post("/checkLogin", async (req, res) => {
 	if (cookie === undefined) {
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io"
-		);
+		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 		res.send("Not logged in");
 	} else {
 		const cookieArray = cookie.split("; ");
@@ -248,10 +263,7 @@ app.post("/checkLogin", async (req, res) => {
 		const user = await User.findOne({ uname: uName, usid_1: sid });
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io"
-		);
+		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 		if (user === null) {
 			res.send("Not logged in");
 		} else {
@@ -266,10 +278,7 @@ app.post("/checkAdmin", async (req, res) => {
 	if (cookie === undefined) {
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io"
-		);
+		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 		res.status(403).json({ message: "Denied Access" });
 	} else {
 		const cookieArray = cookie.split("; ");
@@ -280,10 +289,7 @@ app.post("/checkAdmin", async (req, res) => {
 		const user = await User.findOne({ uname: uName, usid_1: sid });
 		res.header("Access-Control-Allow-Credentials", true);
 		//replace website with domain you use if needed
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://bit-yottabyte.github.io"
-		);
+		res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 		if (user === null) {
 			res.status(403).json({ message: "Denied Access" });
 		} else {
@@ -296,7 +302,7 @@ app.post("/checkAdmin", async (req, res) => {
 app.post("/logout", async (req, res) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	//replace website with domain you use if needed
-	res.header("Access-Control-Allow-Origin", "https://bit-yottabyte.github.io");
+	res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
 	const cookie = req.headers.cookie;
 	const cookieArray = cookie.split("; ");
 	const cA = cookieArray[0].split("=");

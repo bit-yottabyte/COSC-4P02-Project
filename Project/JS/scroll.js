@@ -52,9 +52,4 @@ $('.slides').on('beforeChange', function(event, { slideCount: count }, currentSl
 //    $('.slides').slick('slickGoTo', slideno - 1);
 //  });
   
- 
-  
-
-
-  
   });
