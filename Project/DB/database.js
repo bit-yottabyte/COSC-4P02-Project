@@ -89,6 +89,30 @@ app.post("/addEvent", async (req, res) => {
 	}
 });
 
+app.post("/updateEvent", async (req, res) => {
+	try {
+		var event = await Events.findOne({ event_id: req.body.id });
+		if (event != null) {
+			await Events.updateOne(
+				{
+					event_id: req.body.id,
+				},
+				{
+					name: req.body.name,
+					date: req.body.date,
+					description: req.body.description,
+					image_source: req.body.image,
+				}
+			);
+		}
+		event = await Events.findOne({ event_id: req.body.id });
+		res.json(event);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to add to questionnaire collection
 app.post("/deleteEvent", async (req, res) => {
 	try {
@@ -188,6 +212,20 @@ app.post("/queryArtifactByTag", async (req, res) => {
 		res.json(artifact);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
+	}
+});
+
+//endpoint to add to questionnaire collection
+app.post("/deleteArtifact", async (req, res) => {
+	try {
+		var artifact = await Artifacts.findOne({ artifact_id: req.body.eventID });
+		if (artifact != null) {
+			await Artifacts.deleteOne({ artifact_id: req.body.eventID });
+		}
+		res.json(artifact);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
 	}
 });
 

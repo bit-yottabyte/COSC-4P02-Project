@@ -311,7 +311,7 @@
 				editButton.classList.add("btn", "btn-primary", "eButton");
 				editButton.innerHTML = "Edit Event";
 				editButton.setAttribute("type", "button");
-				editButton.setAttribute("onclick", "editEvent(id)");
+				editButton.setAttribute("onclick", "editEvent(" + id + ")");
 
 				var deleteButton = document.createElement("button");
 				deleteButton.classList.add("btn", "btn-primary", "eButton");
@@ -342,7 +342,9 @@
 					},
 				});
 			}
-			function editEvent() {}
+			function editEvent(id) {
+				location.href = "../Project/admineditEvents.html?id=" + id;
+			}
 		</script>
 		<style></style>
 	</head>
