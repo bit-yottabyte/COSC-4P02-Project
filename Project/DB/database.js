@@ -145,6 +145,16 @@ app.post("/add", async (req, res) => {
 	}
 });
 
+app.post("/getAnswers", async (req, res) => {
+	try {
+		const answers = await Questionnaire.find({});
+		res.json(answers);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to query the entire artifacts collection
 app.post("/queryAllArtifacts", async (req, res) => {
 	try {
@@ -208,7 +218,7 @@ app.post("/addArtifact", async (req, res) => {
 	try {
 		var newArtifact = new Artifacts({
 			name: req.body.name,
-			artifact_id: req.body.id,
+			artifact_id: uuid.v4(),
 			event_id: -1,
 			location_id: 2,
 			date: req.body.date,
@@ -350,11 +360,13 @@ app.post("/login", async (req, res) => {
 			sameSite: "none",
 			secure: true,
 			overwrite: true,
+			maxAge: 1 * 60 * 60 * 1000,
 		});
 		res.cookie("sid", usid, {
 			sameSite: "none",
 			secure: true,
 			overwrite: true,
+			maxAge: 1 * 60 * 60 * 1000,
 		});
 		res.json({ username: req.body.uname, sid: usid });
 	}
