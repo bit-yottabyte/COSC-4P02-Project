@@ -131,15 +131,14 @@
 							divQ5.appendChild(textarea4);
 
 							divSubmit = document.createElement("div");
-							h4Submit = document.createElement("h4");
-							h4Submit.setAttribute("id", "submit-button-text");
-							h4Submit.innerHTML = "Submit Button Below";
+							h4Message = document.createElement("h4");
+							h4Message.setAttribute("id", "submit-message");
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
 							submitButton.setAttribute("onclick", "addEvent(this.form)");
 							submitButton.innerHTML = "Submit";
-							divSubmit.appendChild(h4Submit);
+							divSubmit.appendChild(h4Message);
 							divSubmit.appendChild(submitButton);
 
 							divContainer.appendChild(formHeader);
@@ -240,13 +239,23 @@
 					image: form.image.value,
 					description: form.description.value,
 				};
-				var he = $.ajax({
-					url: "http://localhost:3000/addEvent",
-					type: "POST",
-					contentType: "application/x-www-form-urlencoded; charset=utf-8",
-					data: hi,
-					success: function (result) {},
-				});
+				if (
+					hi.name != "" &&
+					hi.date != "" &&
+					hi.description != "" &&
+					hi.image != ""
+				) {
+					var he = $.ajax({
+						url: "http://localhost:3000/addEvent",
+						type: "POST",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						data: hi,
+						success: function (result) {},
+					});
+				} else {
+					document.getElementById("submit-message").innerHTML =
+						"Fill the form out fully";
+				}
 			}
 
 			var onTypeArtifactQuery = function () {

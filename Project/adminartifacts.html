@@ -148,15 +148,14 @@
 							divQ5.appendChild(textarea4);
 
 							divSubmit = document.createElement("div");
-							h4Submit = document.createElement("h4");
-							h4Submit.setAttribute("id", "submit-button-text");
-							h4Submit.innerHTML = "Submit Button Below";
+							h4Message = document.createElement("h4");
+							h4Message.setAttribute("id", "submit-message");
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
 							submitButton.setAttribute("onclick", "addArtifact(this.form)");
 							submitButton.innerHTML = "Submit";
-							divSubmit.appendChild(h4Submit);
+							divSubmit.appendChild(h4Message);
 							divSubmit.appendChild(submitButton);
 
 							divContainer.appendChild(formHeader);
@@ -266,11 +265,30 @@
 			function addArtifact(form) {
 				var hi = {
 					name: form.name.value,
+					id: "34",
 					date: form.date.value,
 					description: form.description.value,
 					image: form.image.value,
-					tag: form.tag.value,
+					tag: form.tags.value,
 				};
+				if (
+					hi.name != "" &&
+					hi.date != "" &&
+					hi.description != "" &&
+					hi.image != "" &&
+					hi.tag != ""
+				) {
+					var he = $.ajax({
+						url: "http://localhost:3000/addArtifact",
+						type: "POST",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						data: hi,
+						success: function (result) {},
+					});
+				} else {
+					document.getElementById("submit-message").innerHTML =
+						"Fill the form out fully";
+				}
 			}
 
 			var onTypeArtifactQuery = function () {
@@ -306,7 +324,23 @@
 					},
 				});
 			};
-
+			function deleteArtifact(id) {
+				console.log(id);
+				var data = {
+					artifactID: id,
+				};
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/deleteArtifact",
+					type: "POST",
+					crossDomain: true,
+					data: data,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function (result) {
+						console.log(result);
+						document.getElementById("message").innerHTML = "Event deleted";
+					},
+				});
+			}
 			function renderQueryResult(id, imagePath, name, description, parent) {
 				var holder = document.createElement("div");
 				holder.classList.add("row");
@@ -330,7 +364,10 @@
 				nameP.innerHTML = name;
 				nameP.href = "artifact.html?id=" + id;
 				nameP.classList.add("remove-link-styling");
+				var message = document.createElement("h5");
+				message.setAttribute("id", "message");
 				holderName.appendChild(nameP);
+				holderName.appendChild(message);
 
 				var holderDescription = document.createElement("div");
 				holderDescription.classList.add("col-5");
@@ -354,13 +391,14 @@
 				editButton.classList.add("btn", "btn-primary");
 				editButton.innerHTML = "Edit Artifact";
 				editButton.setAttribute("type", "button");
-				editButton.setAttribute("onclick", "editArtifact()");
+				editButton.setAttribute("onclick", 'editArtifact("' + id + '")');
 
 				var deleteButton = document.createElement("button");
 				deleteButton.classList.add("btn", "btn-primary");
 				deleteButton.innerHTML = "Delete Artifact";
 				deleteButton.setAttribute("type", "button");
-				deleteButton.setAttribute("onclick", "deleteArtifact()");
+				deleteButton.setAttribute("id", "deleteButton");
+				deleteButton.setAttribute("onclick", 'deleteArtifact("' + id + '")');
 
 				holderButtons.appendChild(editButton);
 				holderButtons.appendChild(deleteButton);
@@ -370,6 +408,9 @@
 				holder.appendChild(holderDescription);
 				holder.appendChild(holderButtons);
 				parent.appendChild(holder);
+			}
+			function editArtifact(id) {
+				location.href = "../Project/admineditArtifacts.html?id=" + id;
 			}
 		</script>
 	</head>

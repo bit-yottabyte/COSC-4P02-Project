@@ -188,11 +188,33 @@ app.post("/insertArtifact", async (req, res) => {
 			name: req.body.name,
 			artifact_id: req.body.artifact_id,
 			event_id: -1,
-			location_id: 2,
+			location_id: req.body.location_id,
 			date: req.body.date,
 			description: req.body.description,
 			image_source: req.body.image_source,
 			artifact_tag: req.body.artifact_tag,
+		});
+
+		const savedArtifact = await newArtifact.save();
+		res.json(savedArtifact);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+//endpoint to query the amount of artifacts
+app.post("/addArtifact", async (req, res) => {
+	try {
+		var newArtifact = new Artifacts({
+			name: req.body.name,
+			artifact_id: req.body.id,
+			event_id: -1,
+			location_id: 2,
+			date: req.body.date,
+			description: req.body.description,
+			image_source: req.body.image,
+			artifact_tag: req.body.tag,
 		});
 
 		const savedArtifact = await newArtifact.save();
