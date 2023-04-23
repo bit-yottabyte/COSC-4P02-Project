@@ -33,6 +33,17 @@
 			crossorigin="anonymous"
 		></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<style>
+			.search-style {
+				background-color: #ffdaad;
+				background: rgba(255, 255, 255, 0.7);
+				border-radius: 5px;
+				border: 1px solid #000000;
+			}
+			.eButton {
+				white-space: normal;
+			}
+		</style>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				getLoggedIn();
@@ -143,6 +154,70 @@
 							divSearch.classList = divOverall.appendChild(divOverlay);
 							divOverall.appendChild(divContainer);
 							document.getElementById("admin").appendChild(divOverall);
+
+							divSearch = document.createElement("div");
+							divSearch.classList.add("row", "justify-content-center");
+							divSearch2 = document.createElement("div");
+							divSearch2.classList.add(
+								"input-group",
+								"col-sm-2",
+								"col-md-4",
+								"mb-3"
+							);
+							search = document.createElement("input");
+							search.classList.add("form-control");
+							search.setAttribute("type", "text");
+							search.setAttribute("id", "nameInput");
+							search.setAttribute("placeholder", "Search..");
+							search.setAttribute("aria-label", "Search..");
+							search.setAttribute("aria-describedby", "basic-addon2");
+							divSearch2.appendChild(search);
+							divSearch.appendChild(divSearch2);
+
+							divSearchBtn = document.createElement("div");
+							divSearchBtn.classList.add("input-group-append");
+							SearchBtn = document.createElement("button");
+							SearchBtn.classList.add("btn", "btn-secondary");
+							SearchBtn.setAttribute("type", "button");
+							searchIcon = document.createElement("i");
+							searchIcon.classList.add("fa", "fa-search");
+							searchIcon.setAttribute("arial-hidden", "true");
+							SearchBtn.appendChild(searchIcon);
+							divSearchBtn.appendChild(SearchBtn);
+							divSearch.appendChild(divSearchBtn);
+							document.getElementById("admin").appendChild(divSearch);
+
+							divHeaders = document.createElement("div");
+							divHeaders.classList.add("row", "justify-content-center");
+							divCol = document.createElement("div");
+							divCol.classList.add("col-9");
+							divRow = document.createElement("div");
+							divRow.classList.add("row");
+							divName = document.createElement("div");
+							divName.classList.add("col-9", "search-style");
+							aName = document.createElement("a");
+							aName.innerHTML = "Name";
+							divName.appendChild(aName);
+							divRow.appendChild(divName);
+							divHeaders.appendChild(divCol);
+							document.getElementById("admin").appendChild(divHeaders);
+
+							divResult = document.createElement("div");
+							divResult.classList.add("row", "justify-content-center");
+							divR = document.createElement("div");
+							divR.classList.add("col-9");
+							divR.setAttribute("id", "queryContainer");
+							divR.setAttribute(
+								"style",
+								"height: 58vh; overflow: scroll; overflow-x: hidden"
+							);
+							divResult.appendChild(divR);
+							document.getElementById("admin").appendChild(divResult);
+							document
+								.getElementById("nameInput")
+								.addEventListener("keyup", function () {
+									onTypeArtifactQuery();
+								});
 						}
 					},
 					error: function (xhr, status, error) {
@@ -162,7 +237,6 @@
 				var hi = {
 					name: form.name.value,
 					date: form.date.value,
-					location: form.location.value,
 					image: form.image.value,
 					description: form.description.value,
 				};
@@ -174,14 +248,6 @@
 					success: function (result) {},
 				});
 			}
-
-			document.addEventListener("DOMContentLoaded", function () {
-				document
-					.getElementById("nameInput")
-					.addEventListener("keyup", function () {
-						onTypeArtifactQuery();
-					});
-			});
 
 			var onTypeArtifactQuery = function () {
 				//get data from database using $.ajax post request from jquery
@@ -230,25 +296,28 @@
 				nameP.innerHTML = name;
 				nameP.href = "eventdetails.html?id=" + id;
 				nameP.classList.add("remove-link-styling");
+				var message = document.createElement("h5");
+				message.setAttribute("id", "message");
 				holderName.appendChild(nameP);
+				holderName.appendChild(message);
 
 				var holderButtons = document.createElement("div");
-				holderButtons.classList.add("col-2");
+				holderButtons.classList.add("col-3");
 				holderButtons.setAttribute(
 					"style",
 					"height: 10vh; overflow-x: hidden; overflow-y: hidden;"
 				);
 				var editButton = document.createElement("button");
-				editButton.classList.add("btn", "btn-primary");
-				editButton.innerHTML = "Edit Artifact";
+				editButton.classList.add("btn", "btn-primary", "eButton");
+				editButton.innerHTML = "Edit Event";
 				editButton.setAttribute("type", "button");
-				editButton.setAttribute("onclick", "editArtifact()");
+				editButton.setAttribute("onclick", "editEvent(id)");
 
 				var deleteButton = document.createElement("button");
-				deleteButton.classList.add("btn", "btn-primary");
-				deleteButton.innerHTML = "Delete Artifact";
+				deleteButton.classList.add("btn", "btn-primary", "eButton");
+				deleteButton.innerHTML = "Delete Event";
 				deleteButton.setAttribute("type", "button");
-				deleteButton.setAttribute("onclick", "deleteArtifact()");
+				deleteButton.setAttribute("onclick", "deleteEvent(" + id + ")");
 
 				holderButtons.appendChild(editButton);
 				holderButtons.appendChild(deleteButton);
@@ -257,12 +326,29 @@
 				holder.appendChild(holderButtons);
 				parent.appendChild(holder);
 			}
+			function deleteEvent(id) {
+				var data = {
+					eventID: id,
+				};
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/deleteEvent",
+					type: "POST",
+					crossDomain: true,
+					data: data,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function (result) {
+						console.log(result);
+						document.getElementById("message").innerHTML = "Event deleted";
+					},
+				});
+			}
+			function editEvent() {}
 		</script>
 		<style></style>
 	</head>
 	<body>
 		<div id="admin"></div>
-		<div class="row justify-content-center">
+		<!-- <div class="row justify-content-center">
 			<div class="input-group col-sm-2 col-md-4 mb-3">
 				<input
 					type="text"
@@ -283,15 +369,7 @@
 		<div class="row justify-content-center">
 			<div class="col-9">
 				<div class="row">
-					<div
-						class="col-9"
-						style="
-							background-color: #ffdaad;
-							background: rgba(255, 255, 255, 0.7);
-							border-radius: 5px;
-							border: 1px solid #000000;
-						"
-					>
+					<div class="col-9">
 						<a>Name</a>
 					</div>
 				</div>
@@ -303,6 +381,6 @@
 				style="height: 58vh; overflow: scroll; overflow-x: hidden"
 				class="col-9"
 			></div>
-		</div>
+		</div> -->
 	</body>
 </html>
