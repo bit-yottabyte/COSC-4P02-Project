@@ -70,9 +70,9 @@
 							var divContainer = document.createElement("div");
 							divContainer.classList.add("container");
 							var formHeader = document.createElement("h4");
-							formHeader.innerHTML = "Edit event";
+							formHeader.innerHTML = "Edit artifact";
 							var form = document.createElement("form");
-							form.setAttribute("id", "editEvent");
+							form.setAttribute("id", "editArtifact");
 
 							var divQ1 = document.createElement("div");
 							divQ1.classList.add("mb-3");
@@ -102,17 +102,31 @@
 							divQ2.appendChild(label2);
 							divQ2.appendChild(dateInput);
 
+							var divQ3 = document.createElement("div");
+							divQ3.classList.add("mb-3");
+							var label3 = document.createElement("label");
+							label3.classList.add("form-label", "labelQ");
+							label3.setAttribute("for", "textarea2");
+							label3.innerHTML = "Description:";
+							var textarea2 = document.createElement("textarea");
+							textarea2.classList.add("form-control");
+							textarea2.setAttribute("id", "textarea2");
+							textarea2.setAttribute("name", "description");
+							textarea2.setAttribute("rows", "3");
+							divQ3.appendChild(label3);
+							divQ3.appendChild(textarea2);
+
 							var divQ4 = document.createElement("div");
 							divQ4.classList.add("mb-3");
 							var label4 = document.createElement("label");
 							label4.classList.add("form-label", "labelQ");
 							label4.setAttribute("for", "textarea3");
-							label4.innerHTML = "Description";
+							label4.innerHTML = "Image Source:";
 							var textarea3 = document.createElement("textarea");
 							textarea3.classList.add("form-control");
 							textarea3.setAttribute("id", "textarea3");
-							textarea3.setAttribute("name", "description");
-							textarea3.setAttribute("rows", "4");
+							textarea3.setAttribute("name", "image");
+							textarea3.setAttribute("rows", "1");
 							divQ4.appendChild(label4);
 							divQ4.appendChild(textarea3);
 
@@ -121,11 +135,11 @@
 							var label5 = document.createElement("label");
 							label5.classList.add("form-label", "labelQ");
 							label5.setAttribute("for", "textarea4");
-							label5.innerHTML = "Image Source:";
+							label5.innerHTML = "Tags:";
 							var textarea4 = document.createElement("textarea");
 							textarea4.classList.add("form-control");
 							textarea4.setAttribute("id", "textarea4");
-							textarea4.setAttribute("name", "image");
+							textarea4.setAttribute("name", "tags");
 							textarea4.setAttribute("rows", "1");
 							divQ5.appendChild(label5);
 							divQ5.appendChild(textarea4);
@@ -137,7 +151,7 @@
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
-							submitButton.setAttribute("onclick", "editEvent(this.form)");
+							submitButton.setAttribute("onclick", "addArtifact(this.form)");
 							submitButton.innerHTML = "Submit";
 							divSubmit.appendChild(h4Submit);
 							divSubmit.appendChild(submitButton);
@@ -146,11 +160,15 @@
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
 							form.appendChild(divQ2);
+							form.appendChild(divQ3);
 							form.appendChild(divQ4);
 							form.appendChild(divQ5);
 							form.appendChild(divSubmit);
-							document.getElementById("admin").appendChild(divContainer);
-							event();
+
+							divOverall.appendChild(divOverlay);
+							divOverall.appendChild(divContainer);
+							document.getElementById("admin").appendChild(divOverall);
+							artifact();
 						}
 					},
 					error: function (xhr, status, error) {
@@ -166,12 +184,12 @@
 				});
 			};
 
-			function event() {
+			function artifact() {
 				const queryString = window.location.search;
 				const urlParams = new URLSearchParams(queryString);
 				const id = urlParams.get("id");
 				getInfo = $.ajax({
-					url: "http://localhost:3000/queryEventByID?id=" + id,
+					url: "http://localhost:3000/queryArtifactByID?id=" + id,
 					type: "POST",
 					crossDomain: true,
 					success: function (data) {
@@ -181,13 +199,14 @@
 						var date = data[0].date.split("T");
 						console.log(date[0]);
 						document.getElementById("date").value = date[0];
-						document.getElementById("textarea3").value = data[0].description;
-						document.getElementById("textarea4").value = data[0].image_source;
+						document.getElementById("textarea2").value = data[0].description;
+						document.getElementById("textarea3").value = data[0].image_source;
+						document.getElementById("textarea4").value = data[0].artifact_tag;
 					},
 				});
 			}
 
-			function editEvent(form) {
+			function editArtifact(form) {
 				const queryString = window.location.search;
 				const urlParams = new URLSearchParams(queryString);
 				const id = urlParams.get("id");
@@ -197,9 +216,10 @@
 					date: form.date.value,
 					image: form.image.value,
 					description: form.description.value,
+					tag: form.tag.value,
 				};
 				var he = $.ajax({
-					url: "http://localhost:3000/updateEvent",
+					url: "http://localhost:3000/updateArtifact",
 					type: "POST",
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					data: hi,

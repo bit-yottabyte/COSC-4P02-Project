@@ -188,7 +188,7 @@ app.post("/insertArtifact", async (req, res) => {
 			name: req.body.name,
 			artifact_id: req.body.artifact_id,
 			event_id: -1,
-			location_id: req.body.location_id,
+			location_id: 2,
 			date: req.body.date,
 			description: req.body.description,
 			image_source: req.body.image_source,
@@ -197,6 +197,30 @@ app.post("/insertArtifact", async (req, res) => {
 
 		const savedArtifact = await newArtifact.save();
 		res.json(savedArtifact);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+app.post("/updateArtifact", async (req, res) => {
+	try {
+		var artifact = await Artifact.findOne({ artifact_id: req.body.id });
+		if (artifact != null) {
+			await Artifacts.updateOne(
+				{
+					artifact_id: req.body.id,
+				},
+				{
+					name: req.body.name,
+					date: req.body.date,
+					description: req.body.description,
+					image_source: req.body.image,
+				}
+			);
+		}
+		artifact = await Artifacts.findOne({ artifact_id: req.body.id });
+		res.json(artifact);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -218,9 +242,11 @@ app.post("/queryArtifactByTag", async (req, res) => {
 //endpoint to add to questionnaire collection
 app.post("/deleteArtifact", async (req, res) => {
 	try {
-		var artifact = await Artifacts.findOne({ artifact_id: req.body.eventID });
+		var artifact = await Artifacts.findOne({
+			artifact_id: req.body.artifactID,
+		});
 		if (artifact != null) {
-			await Artifacts.deleteOne({ artifact_id: req.body.eventID });
+			await Artifacts.deleteOne({ artifact_id: req.body.artifactID });
 		}
 		res.json(artifact);
 	} catch (error) {
