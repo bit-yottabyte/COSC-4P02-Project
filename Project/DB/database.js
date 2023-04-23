@@ -43,6 +43,19 @@ app.post("/queryAllEvents", async (req, res) => {
 	}
 });
 
+app.post("/queryEvents", async (req, res) => {
+	try {
+		//find 10 most similar artifacts by matching name
+		const events = await Events.find({
+			name: { $regex: req.query.name, $options: "i" },
+		}).limit(10);
+		res.json(events);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to query the entire events collection
 app.post("/queryEventByID", async (req, res) => {
 	try {

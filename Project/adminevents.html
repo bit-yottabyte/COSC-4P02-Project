@@ -139,7 +139,8 @@
 							form.appendChild(divQ5);
 							form.appendChild(divSubmit);
 
-							divOverall.appendChild(divOverlay);
+							divSearch = document.createElement("div");
+							divSearch.classList = divOverall.appendChild(divOverlay);
 							divOverall.appendChild(divContainer);
 							document.getElementById("admin").appendChild(divOverall);
 						}
@@ -173,10 +174,135 @@
 					success: function (result) {},
 				});
 			}
+
+			document.addEventListener("DOMContentLoaded", function () {
+				document
+					.getElementById("nameInput")
+					.addEventListener("keyup", function () {
+						onTypeArtifactQuery();
+					});
+			});
+
+			var onTypeArtifactQuery = function () {
+				//get data from database using $.ajax post request from jquery
+				var data = $.ajax({
+					url:
+						"http://localhost:3000/queryEvents?name=" +
+						document.getElementById("nameInput").value,
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						//on success render the returned data
+						console.log(data);
+
+						var container = document.getElementById("queryContainer");
+
+						//clear all previous results
+						container.innerHTML = "";
+
+						for (var i = 0; i < data.length; i++) {
+							renderQueryResult(
+								data[i].event_id,
+								data[i].name,
+								data[i].description,
+								container
+							);
+						}
+					},
+					error: function (xhr, status, error) {
+						//on failure to fetch the request write to console
+						console.error(status + ": " + xhr.responseText);
+					},
+				});
+			};
+
+			function renderQueryResult(id, name, description, parent) {
+				var holder = document.createElement("div");
+				holder.classList.add("row");
+
+				holder.setAttribute(
+					"style",
+					"margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;"
+				);
+				var holderName = document.createElement("div");
+				holderName.classList.add("col-6");
+				var nameP = document.createElement("a");
+				nameP.innerHTML = name;
+				nameP.href = "eventdetails.html?id=" + id;
+				nameP.classList.add("remove-link-styling");
+				holderName.appendChild(nameP);
+
+				var holderButtons = document.createElement("div");
+				holderButtons.classList.add("col-2");
+				holderButtons.setAttribute(
+					"style",
+					"height: 10vh; overflow-x: hidden; overflow-y: hidden;"
+				);
+				var editButton = document.createElement("button");
+				editButton.classList.add("btn", "btn-primary");
+				editButton.innerHTML = "Edit Artifact";
+				editButton.setAttribute("type", "button");
+				editButton.setAttribute("onclick", "editArtifact()");
+
+				var deleteButton = document.createElement("button");
+				deleteButton.classList.add("btn", "btn-primary");
+				deleteButton.innerHTML = "Delete Artifact";
+				deleteButton.setAttribute("type", "button");
+				deleteButton.setAttribute("onclick", "deleteArtifact()");
+
+				holderButtons.appendChild(editButton);
+				holderButtons.appendChild(deleteButton);
+
+				holder.appendChild(holderName);
+				holder.appendChild(holderButtons);
+				parent.appendChild(holder);
+			}
 		</script>
 		<style></style>
 	</head>
 	<body>
 		<div id="admin"></div>
+		<div class="row justify-content-center">
+			<div class="input-group col-sm-2 col-md-4 mb-3">
+				<input
+					type="text"
+					class="form-control"
+					id="nameInput"
+					placeholder="Search.."
+					aria-label="Search.."
+					aria-describedby="basic-addon2"
+				/>
+				<div class="input-group-append">
+					<button class="btn btn-secondary" type="button">
+						<i class="fa fa-search" arial-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-9">
+				<div class="row">
+					<div
+						class="col-9"
+						style="
+							background-color: #ffdaad;
+							background: rgba(255, 255, 255, 0.7);
+							border-radius: 5px;
+							border: 1px solid #000000;
+						"
+					>
+						<a>Name</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div
+				id="queryContainer"
+				style="height: 58vh; overflow: scroll; overflow-x: hidden"
+				class="col-9"
+			></div>
+		</div>
 	</body>
 </html>
