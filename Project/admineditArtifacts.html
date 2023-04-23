@@ -145,16 +145,23 @@
 							divQ5.appendChild(textarea4);
 
 							divSubmit = document.createElement("div");
-							h4Submit = document.createElement("h4");
-							h4Submit.setAttribute("id", "submit-button-text");
-							h4Submit.innerHTML = "Submit Button Below";
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
 							submitButton.setAttribute("onclick", "addArtifact(this.form)");
 							submitButton.innerHTML = "Submit";
-							divSubmit.appendChild(h4Submit);
+
+							backButton = document.createElement("button");
+							backButton.classList.add("btn", "btn-primary");
+							backButton.setAttribute("type", "button");
+							backButton.setAttribute(
+								"onclick",
+								"location.href='../Project/adminartifacts.html'"
+							);
+							backButton.innerHTML = "Discard Changes";
+
 							divSubmit.appendChild(submitButton);
+							divSubmit.appendChild(backButton);
 
 							divContainer.appendChild(formHeader);
 							divContainer.appendChild(form);

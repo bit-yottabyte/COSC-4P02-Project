@@ -68,8 +68,19 @@
 							var h1 = document.createElement("h1");
 							h1.classList.add("maintitle");
 							h1.innerHTML = "Admin Page";
-							divOverlay.appendChild(h1);
 
+							divOverlay.appendChild(h1);
+							var buttonContainer = document.createElement("div");
+							buttonContainer.classList.add("container");
+							var backButton = document.createElement("button");
+							backButton.classList.add("btn", "btn-primary");
+							backButton.setAttribute("type", "button");
+							backButton.setAttribute(
+								"onclick",
+								"location.href='../Project/admin.html'"
+							);
+							backButton.innerHTML = "Back to Admin Page";
+							buttonContainer.appendChild(backButton);
 							var divContainer = document.createElement("div");
 							divContainer.classList.add("container");
 							var formHeader = document.createElement("h4");
@@ -168,6 +179,7 @@
 							form.appendChild(divSubmit);
 
 							divOverall.appendChild(divOverlay);
+							divOverall.appendChild(buttonContainer);
 							divOverall.appendChild(divContainer);
 							document.getElementById("admin").appendChild(divOverall);
 
@@ -265,7 +277,6 @@
 			function addArtifact(form) {
 				var hi = {
 					name: form.name.value,
-					id: "34",
 					date: form.date.value,
 					description: form.description.value,
 					image: form.image.value,
