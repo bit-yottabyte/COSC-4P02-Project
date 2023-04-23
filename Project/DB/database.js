@@ -90,6 +90,20 @@ app.post("/addEvent", async (req, res) => {
 });
 
 //endpoint to add to questionnaire collection
+app.post("/deleteEvent", async (req, res) => {
+	try {
+		var event = await Events.findOne({ event_id: req.body.eventID });
+		if (event != null) {
+			await Events.deleteOne({ event_id: req.body.eventID });
+		}
+		res.json(event);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+//endpoint to add to questionnaire collection
 app.post("/add", async (req, res) => {
 	try {
 		const newAnswer = new Questionnaire({
