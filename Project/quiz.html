@@ -68,6 +68,8 @@
             var option4 = document.getElementById("lblOption4");
 
             question.innerHTML = globalData[questionIndex].question;
+            document.getElementById("floorLocation").src = "Images/Room" + globalData[questionIndex].artifact_id + ".jpeg";
+            document.getElementById("floorLocation").setAttribute("style", "max-width:70%; height: auto;");
             var options = [option1, option2, option3, option4];
             assignOptionsRandomly(options);
 
@@ -267,6 +269,10 @@
             padding-right: 5px;
         }
 
+        .card {
+            margin-right: 25px;
+        }
+
     </style>
     </head>
 	<body>        
@@ -274,9 +280,15 @@
 			<h1 class="maintitle">Quiz</h1>
 		</div>
 
-        <div class="card">
-            <div class="text-center">
-                <h4 id="question">Question Description?</h4>
+        <div class="row no-gutters">
+            <div class="card col-6">
+                <div class="text-center">
+                    <h4 id="question">Question Description</h4>
+                </div>
+            </div>
+
+            <div class="col-4 float-left">
+                <img id="floorLocation">
             </div>
         </div>
 
