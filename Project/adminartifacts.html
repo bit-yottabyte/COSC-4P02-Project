@@ -18,7 +18,7 @@
 
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
-		<title>Admin Page</title>
+		<title>Admin Page Artifacts</title>
 		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 
 		<!-- Optional JavaScript -->
@@ -39,6 +39,14 @@
 			crossorigin="anonymous"
 		></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<style>
+			.search-style {
+				background-color: #ffdaad;
+				background: rgba(255, 255, 255, 0.7);
+				border-radius: 5px;
+				border: 1px solid #000000;
+			}
+		</style>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				getLoggedIn();
@@ -60,8 +68,19 @@
 							var h1 = document.createElement("h1");
 							h1.classList.add("maintitle");
 							h1.innerHTML = "Admin Page";
-							divOverlay.appendChild(h1);
 
+							divOverlay.appendChild(h1);
+							var buttonContainer = document.createElement("div");
+							buttonContainer.classList.add("container");
+							var backButton = document.createElement("button");
+							backButton.classList.add("btn", "btn-primary");
+							backButton.setAttribute("type", "button");
+							backButton.setAttribute(
+								"onclick",
+								"location.href='../Project/admin.html'"
+							);
+							backButton.innerHTML = "Back to Admin Page";
+							buttonContainer.appendChild(backButton);
 							var divContainer = document.createElement("div");
 							divContainer.classList.add("container");
 							var formHeader = document.createElement("h4");
@@ -82,6 +101,34 @@
 							textArea1.setAttribute("rows", "1");
 							divQ1.appendChild(label1);
 							divQ1.appendChild(textArea1);
+
+							var divID = document.createElement("div");
+							divID.classList.add("mb-3");
+							var labelID = document.createElement("label");
+							labelID.classList.add("form-label", "labelQ");
+							labelID.setAttribute("for", "textareaId");
+							labelID.innerHTML = "ID:";
+							var textAreaID = document.createElement("textarea");
+							textAreaID.classList.add("form-control");
+							textAreaID.setAttribute("id", "textareaid");
+							textAreaID.setAttribute("name", "id");
+							textAreaID.setAttribute("rows", "1");
+							divID.appendChild(labelID);
+							divID.appendChild(textAreaID);
+
+							var divLocationID = document.createElement("div");
+							divLocationID.classList.add("mb-3");
+							var labelLocationID = document.createElement("label");
+							labelLocationID.classList.add("form-label", "labelQ");
+							labelLocationID.setAttribute("for", "textarealocation-id");
+							labelLocationID.innerHTML = "Location ID:";
+							var textAreaLocationID = document.createElement("textarea");
+							textAreaLocationID.classList.add("form-control");
+							textAreaLocationID.setAttribute("id", "textarealocation-id");
+							textAreaLocationID.setAttribute("name", "location_id");
+							textAreaLocationID.setAttribute("rows", "1");
+							divLocationID.appendChild(labelLocationID);
+							divLocationID.appendChild(textAreaLocationID);
 
 							var divQ2 = document.createElement("div");
 							divQ2.classList.add("mb-3");
@@ -140,20 +187,21 @@
 							divQ5.appendChild(textarea4);
 
 							divSubmit = document.createElement("div");
-							h4Submit = document.createElement("h4");
-							h4Submit.setAttribute("id", "submit-button-text");
-							h4Submit.innerHTML = "Submit Button Below";
+							h4Message = document.createElement("h4");
+							h4Message.setAttribute("id", "submit-message");
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
 							submitButton.setAttribute("onclick", "addArtifact(this.form)");
 							submitButton.innerHTML = "Submit";
-							divSubmit.appendChild(h4Submit);
+							divSubmit.appendChild(h4Message);
 							divSubmit.appendChild(submitButton);
 
 							divContainer.appendChild(formHeader);
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
+							form.appendChild(divID);
+							form.appendChild(divLocationID);
 							form.appendChild(divQ2);
 							form.appendChild(divQ3);
 							form.appendChild(divQ4);
@@ -161,8 +209,86 @@
 							form.appendChild(divSubmit);
 
 							divOverall.appendChild(divOverlay);
+							divOverall.appendChild(buttonContainer);
 							divOverall.appendChild(divContainer);
 							document.getElementById("admin").appendChild(divOverall);
+
+							divSearch = document.createElement("div");
+							divSearch.classList.add("row", "justify-content-center");
+							divSearch2 = document.createElement("div");
+							divSearch2.classList.add(
+								"input-group",
+								"col-sm-2",
+								"col-md-4",
+								"mb-3"
+							);
+							search = document.createElement("input");
+							search.classList.add("form-control");
+							search.setAttribute("type", "text");
+							search.setAttribute("id", "nameInput");
+							search.setAttribute("placeholder", "Search..");
+							search.setAttribute("aria-label", "Search..");
+							search.setAttribute("aria-describedby", "basic-addon2");
+							divSearch2.appendChild(search);
+							divSearch.appendChild(divSearch2);
+
+							divSearchBtn = document.createElement("div");
+							divSearchBtn.classList.add("input-group-append");
+							SearchBtn = document.createElement("button");
+							SearchBtn.classList.add("btn", "btn-secondary");
+							SearchBtn.setAttribute("type", "button");
+							searchIcon = document.createElement("i");
+							searchIcon.classList.add("fa", "fa-search");
+							searchIcon.setAttribute("arial-hidden", "true");
+							SearchBtn.appendChild(searchIcon);
+							divSearchBtn.appendChild(SearchBtn);
+							divSearch.appendChild(divSearchBtn);
+							document.getElementById("admin").appendChild(divSearch);
+
+							divHeaders = document.createElement("div");
+							divHeaders.classList.add("row", "justify-content-center");
+							divCol = document.createElement("div");
+							divCol.classList.add("col-9");
+							divRow = document.createElement("div");
+							divRow.classList.add("row");
+							divImage = document.createElement("div");
+							divImage.classList.add("col-2", "search-style");
+							aImage = document.createElement("a");
+							aImage.innerHTML = "Image";
+							divImage.appendChild(aImage);
+							divName = document.createElement("div");
+							divName.classList.add("col-4", "search-style");
+							aName = document.createElement("a");
+							aName.innerHTML = "Name";
+							divName.appendChild(aName);
+							divDesc = document.createElement("div");
+							divDesc.classList.add("col-6", "search-style");
+							aDesc = document.createElement("a");
+							aDesc.innerHTML = "Description";
+							divDesc.appendChild(aDesc);
+							divRow.appendChild(divImage);
+							divRow.appendChild(divName);
+							divRow.appendChild(divDesc);
+							divCol.appendChild(divRow);
+							divHeaders.appendChild(divCol);
+							document.getElementById("admin").appendChild(divHeaders);
+
+							divResult = document.createElement("div");
+							divResult.classList.add("row", "justify-content-center");
+							divR = document.createElement("div");
+							divR.classList.add("col-9");
+							divR.setAttribute("id", "queryContainer");
+							divR.setAttribute(
+								"style",
+								"height: 58vh; overflow: scroll; overflow-x: hidden"
+							);
+							divResult.appendChild(divR);
+							document.getElementById("admin").appendChild(divResult);
+							document
+								.getElementById("nameInput")
+								.addEventListener("keyup", function () {
+									onTypeArtifactQuery();
+								});
 						}
 					},
 					error: function (xhr, status, error) {
@@ -181,16 +307,206 @@
 			function addArtifact(form) {
 				var hi = {
 					name: form.name.value,
+					id: form.id.value,
+					location_id: form.location_id.value,
 					date: form.date.value,
 					description: form.description.value,
 					image: form.image.value,
-					tag: form.tag.value,
+					tag: form.tags.value,
 				};
+				if (
+					!hi.name.match(/^\s*$/) &&
+					!hi.date.match(/^\s*$/) &&
+					!hi.description.match(/^\s*$/) &&
+					!hi.image.match(/^\s*$/) &&
+					!hi.tag.match(/^\s*$/) &&
+					hi.id.match(/^[0-9]+$/) &&
+					hi.location_id.match(/^[0-9]+$/)
+				) {
+					var he = $.ajax({
+						url: "http://localhost:3000/addArtifact",
+						type: "POST",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						data: hi,
+						success: function (result) {
+							if (result == "Id already in system") {
+								document.getElementById("submit-message").innerHTML =
+									"Id already in system";
+							} else {
+								document.getElementById("submit-message").innerHTML = "";
+							}
+						},
+					});
+				} else {
+					document.getElementById("submit-message").innerHTML =
+						"Fill the form out fully";
+				}
+			}
+
+			var onTypeArtifactQuery = function () {
+				//get data from database using $.ajax post request from jquery
+				var data = $.ajax({
+					url:
+						"http://localhost:3000/queryArtifacts?name=" +
+						document.getElementById("nameInput").value,
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						//on success render the returned data
+						console.log(data);
+
+						var container = document.getElementById("queryContainer");
+
+						//clear all previous results
+						container.innerHTML = "";
+
+						for (var i = 0; i < data.length; i++) {
+							renderQueryResult(
+								data[i].artifact_id,
+								data[i].image_source,
+								data[i].name,
+								data[i].description,
+								container
+							);
+						}
+					},
+					error: function (xhr, status, error) {
+						//on failure to fetch the request write to console
+						console.error(status + ": " + xhr.responseText);
+					},
+				});
+			};
+			function deleteArtifact(id) {
+				console.log(id);
+				var data = {
+					artifactID: id,
+				};
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/deleteArtifact",
+					type: "POST",
+					crossDomain: true,
+					data: data,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function (result) {
+						console.log(result);
+						document.getElementById("message").innerHTML = "Artifact deleted";
+					},
+				});
+			}
+			function renderQueryResult(id, imagePath, name, description, parent) {
+				var holder = document.createElement("div");
+				holder.classList.add("row");
+
+				holder.setAttribute(
+					"style",
+					"margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;"
+				);
+
+				var holderImage = document.createElement("div");
+				holderImage.classList.add("col-2");
+				var image = document.createElement("img");
+				image.setAttribute("src", imagePath);
+				image.setAttribute("height", "100%");
+				image.setAttribute("width", "100%");
+				holderImage.appendChild(image);
+
+				var holderName = document.createElement("div");
+				holderName.classList.add("col-3");
+				var nameP = document.createElement("a");
+				nameP.innerHTML = name;
+				nameP.href = "artifact.html?id=" + id;
+				nameP.classList.add("remove-link-styling");
+				var message = document.createElement("h5");
+				message.setAttribute("id", "message");
+				holderName.appendChild(nameP);
+				holderName.appendChild(message);
+
+				var holderDescription = document.createElement("div");
+				holderDescription.classList.add("col-5");
+				holderDescription.setAttribute(
+					"style",
+					"height: 10vh; overflow-x: hidden; overflow-y: hidden;"
+				);
+				var descriptionP = document.createElement("a");
+				descriptionP.innerHTML = description;
+				descriptionP.href = "artifact.html?id=" + id;
+				descriptionP.classList.add("remove-link-styling");
+				holderDescription.appendChild(descriptionP);
+
+				var holderButtons = document.createElement("div");
+				holderButtons.classList.add("col-2");
+				holderButtons.setAttribute(
+					"style",
+					"height: 10vh; overflow-x: hidden; overflow-y: hidden;"
+				);
+				var editButton = document.createElement("button");
+				editButton.classList.add("btn", "btn-primary");
+				editButton.innerHTML = "Edit Artifact";
+				editButton.setAttribute("type", "button");
+				editButton.setAttribute("onclick", 'editArtifact("' + id + '")');
+
+				var deleteButton = document.createElement("button");
+				deleteButton.classList.add("btn", "btn-primary");
+				deleteButton.innerHTML = "Delete Artifact";
+				deleteButton.setAttribute("type", "button");
+				deleteButton.setAttribute("id", "deleteButton");
+				deleteButton.setAttribute("onclick", 'deleteArtifact("' + id + '")');
+
+				holderButtons.appendChild(editButton);
+				holderButtons.appendChild(deleteButton);
+
+				holder.appendChild(holderImage);
+				holder.appendChild(holderName);
+				holder.appendChild(holderDescription);
+				holder.appendChild(holderButtons);
+				parent.appendChild(holder);
+			}
+			function editArtifact(id) {
+				location.href = "../Project/admineditArtifacts.html?id=" + id;
 			}
 		</script>
-		<style></style>
 	</head>
 	<body>
 		<div id="admin"></div>
+		<!-- <div class="row justify-content-center">
+			<div class="input-group col-sm-2 col-md-4 mb-3">
+				<input
+					type="text"
+					class="form-control"
+					id="nameInput"
+					placeholder="Search.."
+					aria-label="Search.."
+					aria-describedby="basic-addon2"
+				/>
+				<div class="input-group-append">
+					<button class="btn btn-secondary" type="button">
+						<i class="fa fa-search" arial-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-9">
+				<div class="row">
+					<div class="col-2 search-style">
+						<a>Image</a>
+					</div>
+					<div class="col-4 search-style">
+						<a>Name</a>
+					</div>
+					<div class="col-6 search-style">
+						<a>Description</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div
+				id="queryContainer"
+				style="height: 58vh; overflow: scroll; overflow-x: hidden"
+				class="col-9"
+			></div>
+		</div> -->
 	</body>
 </html>

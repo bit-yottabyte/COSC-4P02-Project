@@ -79,9 +79,18 @@
 								"location.href='../Project/adminevents.html'"
 							);
 							eventButton.innerHTML = "Event Page";
+							questionButton = document.createElement("button");
+							questionButton.classList.add("btn", "btn-primary");
+							questionButton.setAttribute("type", "button");
+							questionButton.setAttribute(
+								"onclick",
+								"location.href='../Project/questionnaireAnswers.html'"
+							);
+							questionButton.innerHTML = "Questionnaire Answers";
 
 							divContainer.appendChild(artifactButton);
 							divContainer.appendChild(eventButton);
+							divContainer.appendChild(questionButton);
 
 							divOverall.appendChild(divOverlay);
 							divOverall.appendChild(divContainer);
