@@ -74,6 +74,7 @@
 				*/
 
 				$(".slides").on("wheel", function(event) {
+					event.preventDefault();
 					var delta = event.originalEvent.deltaX || event.originalEvent.deltaY;
 					var direction = delta > 0 ? "prev" : "next";
 					$(".slides").slick(direction);
@@ -86,17 +87,33 @@
 					setSlickOptions(5, Math.abs(value));
 					$(".slides").slick(direction);
 					resetSlickOptions();
+
+					document.getElementsByClassName("slick-next")[0].addEventListener("click", function() {
+						if((parseInt(document.getElementById("range").value) + 1) > dataLength) {
+							document.getElementById("range").value = -(Math.floor(dataLength / 2));
+						} else {
+							document.getElementById("range").value = parseInt(document.getElementById("range").value) + 1;
+						}
+					});
+
+					document.getElementsByClassName("slick-prev")[0].addEventListener("click", function() {
+						if((parseInt(document.getElementById("range").value) - 1) < 0) {
+							document.getElementById("range").value = dataLength;
+						} else {
+							document.getElementById("range").value = parseInt(document.getElementById("range").value) - 1;
+						}
+					});
 				});
 			});
 
 			window.addEventListener("load", (event) => {
 				document.getElementById("range").value = Math.abs(dataLength / 2);
 				document.getElementsByClassName("slick-next")[0].addEventListener("click", function() {
-					document.getElementById("range").value += 1;
+					document.getElementById("range").value = parseInt(document.getElementById("range").value) + 1;
 				});
 
 				document.getElementsByClassName("slick-prev")[0].addEventListener("click", function() {
-					document.getElementById("range").value -= 1;
+					document.getElementById("range").value = parseInt(document.getElementById("range").value) - 1;
 				});
 			});
 
