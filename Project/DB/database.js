@@ -207,7 +207,7 @@ app.post("/insertArtifact", async (req, res) => {
 			date: req.body.date,
 			description: req.body.description,
 			image_source: req.body.image_source,
-			artifact_tag: req.body.artifact_tag,
+			artifact_tags: req.body.artifact_tags
 		});
 
 		const savedArtifact = await newArtifact.save();
@@ -269,17 +269,18 @@ app.post("/updateArtifact", async (req, res) => {
 	}
 });
 
-//endpoint to query the artifacts collection based on Tag
+// endpoint to query the artifacts collection based on Tag
 app.post("/queryArtifactByTag", async (req, res) => {
 	try {
-		const artifact = await Artifacts.find({
-			artifact_tag: req.query.tag,
-		});
-		res.json(artifact);
+	  const artifacts = await Artifacts.find({
+		artifact_tags: { $in: [req.query.tag] }
+	  });
+	  res.json(artifacts);
 	} catch (error) {
-		res.status(500).json({ message: error.message });
+	  res.status(500).json({ message: error.message });
 	}
 });
+  
 
 //endpoint to add to questionnaire collection
 app.post("/deleteArtifact", async (req, res) => {

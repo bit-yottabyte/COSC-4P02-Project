@@ -47,7 +47,18 @@
                     console.log(obj);
 
                     var dbDescription = obj.ObjectName + ". " + obj.GeneralDescription + ". " + obj.ContextFunction + ". " + obj.ContextTechnical;
-                    var dbTags = obj.subcategory1;
+                    var dbTags = [];
+                    if(obj.subcategory1) {
+                        dbTags.push(obj.subcategory1);
+                    }
+
+                    if(obj.subcategory2) {
+                        dbTags.push(obj.subcategory2);
+                    }
+
+                    if(obj.subcategory3) {
+                        dbTags.push(obj.subcategory3);
+                    }
                     var dbID = obj.artifactNumber;
                     var dbName = obj.GeneralDescription + " - " + obj.Manufacturer;
                     var dbImage = obj.image;
@@ -55,7 +66,7 @@
                     var dbRandLocation = Math.floor(Math.random() * (5 - 1 + 1) + 1)
                     
                     //make sure information exists
-                    if(dbImage && dbName && dbDescription && dbTags && dbID) {
+                    if(dbImage && dbName && dbDescription && (dbTags.length > 0) && dbID && dbBeginDate) {
                         $.ajax({
                             url: "http://localhost:3000/insertArtifact",
                             type: "POST",
@@ -67,7 +78,7 @@
                                 image_source: dbImage,
                                 date: dbBeginDate,
                                 location_id: dbRandLocation,
-                                artifact_tag: dbTags
+                                artifact_tags: dbTags
                             },
                             success: function (data) {
                                 console.log(data);
