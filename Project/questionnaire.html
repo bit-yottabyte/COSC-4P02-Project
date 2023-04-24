@@ -3,7 +3,7 @@
 	<head>
 		<style>
 			/* Questionnaire CSS */
-			#submit-button-text {
+			#submit-message {
 				margin: 10px 10px 10px 10px;
 				font-size: 20px;
 				color: #ffffff;
@@ -61,6 +61,8 @@
 		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 		<script>
 			function hello(form) {
+				var validEmailRegex =
+					/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 				var hi = {
 					name: form.name.value,
 					email: form.email.value,
@@ -68,15 +70,30 @@
 					like: form.like.value,
 					radio: form.radio.value,
 				};
-				var he = $.ajax({
-					url: "http://localhost:3000/add",
-					type: "POST",
-					contentType: "application/x-www-form-urlencoded; charset=utf-8",
-					data: hi,
-					success: function (result) {
-						location.href = "../Project/questionsubmit.html";
-					},
-				});
+				if (
+					!hi.name.match(/^\s*$/) &&
+					!hi.email.match(/^\s*$/) &&
+					validEmailRegex.test(hi.email) &&
+					!hi.dropdown.match(/^\s*$/) &&
+					!hi.like.match(/^\s*$/) &&
+					!hi.radio.match(/^\s*$/)
+				) {
+					var he = $.ajax({
+						url: "http://localhost:3000/add",
+						type: "POST",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						data: hi,
+						success: function (result) {
+							location.href = "../Project/questionsubmit.html";
+						},
+					});
+				} else if (!validEmailRegex.test(hi.email)) {
+					document.getElementById("submit-message").innerHTML =
+						"Enter a valid email";
+				} else {
+					document.getElementById("submit-message").innerHTML =
+						"Fill the form out fully";
+				}
 			}
 		</script>
 	</head>
@@ -191,7 +208,7 @@
 						5
 					</label>
 				</div>
-				<h4 id="submit-button-text">Submit Button Below</h4>
+				<h4 id="submit-message"></h4>
 				<button
 					type="button"
 					onclick="hello(this.form)"

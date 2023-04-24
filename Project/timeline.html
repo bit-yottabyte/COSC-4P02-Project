@@ -8,7 +8,7 @@
 		/>
 		<link rel="stylesheet" href="CSS/scroll.css" />
 		<link href="CSS/style.css" rel="stylesheet" />
-		<script src="JS/jscript_timeline.js"></script>
+		<script src="JS/jscript.js"></script>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -22,9 +22,62 @@
 		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 
 		<script>
+			// Store the default options in an object
+			const defaultOptions = {
+				centerMode: true,
+				slidesToShow: 5,
+				infinite: true,
+				arrows: true,
+				dots: false,
+				slidesToScroll: 1,
+				appendArrows: '.slider-nav',
+				prevArrow: '<button type="button" class="slick-prev"><span class="sr-text">Previous</span><img class="prev" aria-hidden="true" width="50px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
+				nextArrow: '<button type="button" class="slick-next"><span class="sr-text">Next</span><img class="next" aria-hidden="true" width="50px" src="https://assets.codepen.io/588944/noun-arrow-1920806-1a1a1a.svg" /></button>',
+				responsive: [
+					{
+					breakpoint: 1024,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 1,
+					}
+					},
+					{
+					breakpoint: 767,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1
+					}
+					}
+				]
+			};
+
 			document.addEventListener("DOMContentLoaded", function () {
 				getArtifacts();
+
+				$(".slides").on("wheel", function(event) {
+					event.preventDefault();
+					var slideAmount = parseInt(document.getElementById("inputNumber").value);
+					if(slideAmount > 1) {
+						setSlickOptions(5, slideAmount);
+					} else {
+						setSlickOptions(5, 1);
+					}
+					
+					var delta = event.originalEvent.deltaX || event.originalEvent.deltaY;
+					var direction = delta > 0 ? "prev" : "next";
+					$(".slides").slick(direction);
+					resetSlickOptions();
+				});
 			});
+
+			function setSlickOptions(show, scroll) {
+				$('.slides').slick('slickSetOption', 'slidesToShow', show, true);
+				$('.slides').slick('slickSetOption', 'slidesToScroll', scroll, true);
+			}
+
+			function resetSlickOptions() {
+				$('.slides').slick('slickSetOption', defaultOptions, true);
+			}
 
 			var getArtifacts = function () {
 				var allData = "";
@@ -99,21 +152,27 @@
 		</style>
 	</head>
 	<body>
-		<div class="row" id="main"></div>
-
-    <div class="row">
-      <div class="overlay text-center">
-          <h1 class="maintitle">Interactive Timeline System</h1>
-      </div>
-      <div class="area">
-        <div class="slider">
-          <div class="slides" id="coverContainer"></div>
-          <div class="slider-nav"></div>
-        </div>
-      </div>
-    </div>
-  
-  </body>
+		<div class="row">
+			<div class="row justify-content-center form-group col-12">
+				<div class="text-right p-3 rounded" style="background-color: bisque;">
+					<label for="inputNumber" class="col-form-label">Amount of slides to scroll by:</label>
+				</div>
+				<div class="input-group col-2 p-3">
+					<div class="input-group-prepend">
+					<span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+					</div>
+					<input type="number" class="form-control" id="inputNumber" value="3">
+				</div>
+			</div>
+			  
+			<div class="area">
+				<div class="slider">
+				<div class="slides" id="coverContainer"></div>
+				<div class="slider-nav"></div>
+				</div>
+			</div>
+		</div>
+  	</body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
