@@ -259,10 +259,10 @@
 					description: form.description.value,
 				};
 				if (
-					hi.name != "" &&
-					hi.date != "" &&
-					hi.description != "" &&
-					hi.image != ""
+					hi.name.match(/^\s*$/) &&
+					hi.date.match(/^\s*$/) &&
+					hi.description.match(/^\s*$/) &&
+					hi.image.match(/^\s*$/)
 				) {
 					var he = $.ajax({
 						url: "http://localhost:3000/addEvent",

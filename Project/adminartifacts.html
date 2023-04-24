@@ -283,11 +283,11 @@
 					tag: form.tags.value,
 				};
 				if (
-					hi.name != "" &&
-					hi.date != "" &&
-					hi.description != "" &&
-					hi.image != "" &&
-					hi.tag != ""
+					hi.name.match(/^\s*$/) &&
+					hi.date.match(/^\s*$/) &&
+					hi.description.match(/^\s*$/) &&
+					hi.image.match(/^\s*$/) &&
+					hi.tag.match(/^\s*$/)
 				) {
 					var he = $.ajax({
 						url: "http://localhost:3000/addArtifact",

@@ -71,12 +71,12 @@
 					radio: form.radio.value,
 				};
 				if (
-					hi.name != "" &&
-					hi.email != "" &&
+					!hi.name.match(/^\s*$/) &&
+					!hi.email.match(/^\s*$/) &&
 					validEmailRegex.test(hi.email) &&
-					hi.dropdown != "" &&
-					hi.like != "" &&
-					hi.radio != ""
+					!hi.dropdown.match(/^\s*$/) &&
+					!hi.like.match(/^\s*$/) &&
+					!hi.radio.match(/^\s*$/)
 				) {
 					var he = $.ajax({
 						url: "http://localhost:3000/add",
