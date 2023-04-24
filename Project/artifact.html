@@ -60,6 +60,10 @@
 			width: auto;
 			height: 250px;
 		}
+
+		.tag:hover {
+			color:  #000080;
+		}
 	</style>
 
 <script>
@@ -96,16 +100,23 @@
 
 				var floorPlan = document.createElement("img");
 				floorPlan.src = "Images/Room" + data[0].location_id + ".jpeg";
-				floorPlan.setAttribute("style", "max-width:90%;");
+				floorPlan.setAttribute("style", "max-width: 15vw;");
 				document.getElementById("roomLocation").appendChild(floorPlan);
 
-				var relatedTopic = document.getElementById("relatedTopic");
-
-				relatedTopic.innerHTML = data[0].artifact_tag;
-
-				const encodedTag = encodeURIComponent(data[0].artifact_tag);
-				relatedTopic.href = "index.html?tag=" + encodedTag;
-			
+				var relatedTopics = document.getElementById("relatedTopic");
+				relatedTopics.innerHTML = "";
+				for(var i = 0; i < data[0].artifact_tags.length; i++) {
+					var newTag = document.createElement("a");
+					newTag.classList.add("tag");
+					newTag.innerHTML = data[0].artifact_tags[i];
+					const encodedTag = encodeURIComponent(data[0].artifact_tags[i]);
+					newTag.href = "index.html?tag=" + encodedTag;
+					relatedTopics.appendChild(newTag);
+					if(i < data[0].artifact_tags.length - 1) {
+						var spacer = document.createElement("br");
+						relatedTopics.appendChild(spacer)
+					}
+				}
 			},
 		});
 	}
@@ -116,15 +127,8 @@
 		</div>
 
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-auto mx-auto mt-2">
-					<img
-						src="https://via.placeholder.com/250x250"
-						class="img-fluid"
-						alt="Artifact Image"
-						id="artifactImage"
-					/>
-				</div>
+			<div class="row justify-content-center">
+				<img src="https://via.placeholder.com/250x250" class="img-fluid" alt="Artifact Image" id="artifactImage" />
 			</div>
 		</div>
 
@@ -151,7 +155,8 @@
 				<div class="col-sm-8" id="description">
 					<a><u>Related Topics</u></a>
 					<div class="justify-content-center" style="padding-top: 5%;">
-						<a href="index.html" id="relatedTopic" class="related">Related Topics</a>
+						<div id="relatedTopic" class="related">
+						</div>
 					</div>
 				</div>
 
