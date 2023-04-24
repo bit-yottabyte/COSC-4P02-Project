@@ -227,7 +227,7 @@ app.post("/addArtifact", async (req, res) => {
 				name: req.body.name,
 				artifact_id: req.body.id,
 				event_id: -1,
-				location_id: 2,
+				location_id: req.body.location_id,
 				date: req.body.date,
 				description: req.body.description,
 				image_source: req.body.image,
