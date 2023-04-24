@@ -48,7 +48,7 @@ app.post("/queryEvents", async (req, res) => {
 		//find 10 most similar artifacts by matching name
 		const events = await Events.find({
 			name: { $regex: req.query.name, $options: "i" },
-		}).limit(10);
+		});
 		res.json(events);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
@@ -163,7 +163,7 @@ app.post("/getAnswers", async (req, res) => {
 //endpoint to query the entire artifacts collection
 app.post("/queryAllArtifacts", async (req, res) => {
 	try {
-		const artifacts = await Artifacts.find({});
+		const artifacts = await Artifacts.find({}).sort({ date : 1 });
 		res.json(artifacts);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
@@ -227,7 +227,7 @@ app.post("/addArtifact", async (req, res) => {
 				name: req.body.name,
 				artifact_id: req.body.id,
 				event_id: -1,
-				location_id: 2,
+				location_id: req.body.location_id,
 				date: req.body.date,
 				description: req.body.description,
 				image_source: req.body.image,

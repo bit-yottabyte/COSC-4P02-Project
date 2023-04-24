@@ -106,15 +106,29 @@
 							divID.classList.add("mb-3");
 							var labelID = document.createElement("label");
 							labelID.classList.add("form-label", "labelQ");
-							labelID.setAttribute("for", "textarea1");
+							labelID.setAttribute("for", "textareaId");
 							labelID.innerHTML = "ID:";
 							var textAreaID = document.createElement("textarea");
 							textAreaID.classList.add("form-control");
-							textAreaID.setAttribute("id", "textarea1");
+							textAreaID.setAttribute("id", "textareaid");
 							textAreaID.setAttribute("name", "id");
 							textAreaID.setAttribute("rows", "1");
 							divID.appendChild(labelID);
 							divID.appendChild(textAreaID);
+
+							var divLocationID = document.createElement("div");
+							divLocationID.classList.add("mb-3");
+							var labelLocationID = document.createElement("label");
+							labelLocationID.classList.add("form-label", "labelQ");
+							labelLocationID.setAttribute("for", "textarealocation-id");
+							labelLocationID.innerHTML = "Location ID:";
+							var textAreaLocationID = document.createElement("textarea");
+							textAreaLocationID.classList.add("form-control");
+							textAreaLocationID.setAttribute("id", "textarealocation-id");
+							textAreaLocationID.setAttribute("name", "location_id");
+							textAreaLocationID.setAttribute("rows", "1");
+							divLocationID.appendChild(labelLocationID);
+							divLocationID.appendChild(textAreaLocationID);
 
 							var divQ2 = document.createElement("div");
 							divQ2.classList.add("mb-3");
@@ -187,6 +201,7 @@
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
 							form.appendChild(divID);
+							form.appendChild(divLocationID);
 							form.appendChild(divQ2);
 							form.appendChild(divQ3);
 							form.appendChild(divQ4);
@@ -293,6 +308,7 @@
 				var hi = {
 					name: form.name.value,
 					id: form.id.value,
+					location_id: form.location_id.value,
 					date: form.date.value,
 					description: form.description.value,
 					image: form.image.value,
@@ -303,7 +319,9 @@
 					!hi.date.match(/^\s*$/) &&
 					!hi.description.match(/^\s*$/) &&
 					!hi.image.match(/^\s*$/) &&
-					!hi.tag.match(/^\s*$/)
+					!hi.tag.match(/^\s*$/) &&
+					hi.id.match(/^[0-9]+$/) &&
+					hi.location_id.match(/^[0-9]+$/)
 				) {
 					var he = $.ajax({
 						url: "http://localhost:3000/addArtifact",
@@ -371,7 +389,7 @@
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					success: function (result) {
 						console.log(result);
-						document.getElementById("message").innerHTML = "Event deleted";
+						document.getElementById("message").innerHTML = "Artifact deleted";
 					},
 				});
 			}
