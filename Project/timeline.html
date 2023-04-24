@@ -90,7 +90,7 @@
 					async: false,
 					success: function (data) {
 						//on success render the returned data
-						console.log(data);
+						//console.log(data);
 
 						//loop each json object and render it in HTML
 						for (var i = 0; i < data.length; i++) {
@@ -103,7 +103,7 @@
 							innerDiv.classList.add("slide-inner");
 
 							var a = document.createElement("a");
-							console.log(data[i].artifact_id);
+							//console.log(data[i].artifact_id);
 							a.href = "artifact.html?id=" + data[i].artifact_id;
 							a.dataset.slide = i + 1;
 
