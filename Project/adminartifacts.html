@@ -18,7 +18,7 @@
 
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
-		<title>Admin Page</title>
+		<title>Admin Page Artifacts</title>
 		<link rel="icon" type="image/x-icon" href="Images/museum.png" />
 
 		<!-- Optional JavaScript -->
@@ -102,6 +102,20 @@
 							divQ1.appendChild(label1);
 							divQ1.appendChild(textArea1);
 
+							var divID = document.createElement("div");
+							divID.classList.add("mb-3");
+							var labelID = document.createElement("label");
+							labelID.classList.add("form-label", "labelQ");
+							labelID.setAttribute("for", "textarea1");
+							labelID.innerHTML = "ID:";
+							var textAreaID = document.createElement("textarea");
+							textAreaID.classList.add("form-control");
+							textAreaID.setAttribute("id", "textarea1");
+							textAreaID.setAttribute("name", "id");
+							textAreaID.setAttribute("rows", "1");
+							divID.appendChild(labelID);
+							divID.appendChild(textAreaID);
+
 							var divQ2 = document.createElement("div");
 							divQ2.classList.add("mb-3");
 							var label2 = document.createElement("label");
@@ -172,6 +186,7 @@
 							divContainer.appendChild(formHeader);
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
+							form.appendChild(divID);
 							form.appendChild(divQ2);
 							form.appendChild(divQ3);
 							form.appendChild(divQ4);
@@ -277,24 +292,32 @@
 			function addArtifact(form) {
 				var hi = {
 					name: form.name.value,
+					id: form.id.value,
 					date: form.date.value,
 					description: form.description.value,
 					image: form.image.value,
 					tag: form.tags.value,
 				};
 				if (
-					hi.name != "" &&
-					hi.date != "" &&
-					hi.description != "" &&
-					hi.image != "" &&
-					hi.tag != ""
+					!hi.name.match(/^\s*$/) &&
+					!hi.date.match(/^\s*$/) &&
+					!hi.description.match(/^\s*$/) &&
+					!hi.image.match(/^\s*$/) &&
+					!hi.tag.match(/^\s*$/)
 				) {
 					var he = $.ajax({
 						url: "http://localhost:3000/addArtifact",
 						type: "POST",
 						contentType: "application/x-www-form-urlencoded; charset=utf-8",
 						data: hi,
-						success: function (result) {},
+						success: function (result) {
+							if (result == "Id already in system") {
+								document.getElementById("submit-message").innerHTML =
+									"Id already in system";
+							} else {
+								document.getElementById("submit-message").innerHTML = "";
+							}
+						},
 					});
 				} else {
 					document.getElementById("submit-message").innerHTML =
