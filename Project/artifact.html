@@ -91,11 +91,16 @@
 					var date = document.getElementById("dateText").innerHTML = t;
 				}
 
-
 				var image = document.getElementById("artifactImage");
 				image.src = data[0].image_source;
 
+				var floorPlan = document.createElement("img");
+				floorPlan.src = "Images/Room" + data[0].location_id + ".jpeg";
+				floorPlan.setAttribute("style", "max-width:90%;");
+				document.getElementById("roomLocation").appendChild(floorPlan);
+
 				var relatedTopic = document.getElementById("relatedTopic");
+
 				relatedTopic.innerHTML = data[0].artifact_tag;
 
 				const encodedTag = encodeURIComponent(data[0].artifact_tag);
@@ -144,11 +149,13 @@
 		<div class="container-fluid related-topics">
 			<div class="row w-75 mx-auto">
 				<div class="col-sm-8" id="description">
-					<a href="index.html" id="relatedTopic" class="related">related topics</a>
+					<a><u>Related Topics</u></a>
+					<div class="justify-content-center" style="padding-top: 5%;">
+						<a href="index.html" id="relatedTopic" class="related">Related Topics</a>
+					</div>
 				</div>
 
-				<div class="col" id="description-1">
-					<p>find artifacts</p>
+				<div class="col-lg-4 col-sm-12" id="roomLocation">
 				</div>
 			</div>
 		</div>
