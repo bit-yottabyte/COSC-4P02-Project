@@ -106,6 +106,20 @@
 							divQ1.appendChild(label1);
 							divQ1.appendChild(textArea1);
 
+							var divID = document.createElement("div");
+							divID.classList.add("mb-3");
+							var labelID = document.createElement("label");
+							labelID.classList.add("form-label", "labelQ");
+							labelID.setAttribute("for", "textarea1");
+							labelID.innerHTML = "ID:";
+							var textAreaID = document.createElement("textarea");
+							textAreaID.classList.add("form-control");
+							textAreaID.setAttribute("id", "textarea1");
+							textAreaID.setAttribute("name", "id");
+							textAreaID.setAttribute("rows", "1");
+							divID.appendChild(labelID);
+							divID.appendChild(textAreaID);
+
 							var divQ2 = document.createElement("div");
 							divQ2.classList.add("mb-3");
 							var label2 = document.createElement("label");
@@ -162,6 +176,7 @@
 							divContainer.appendChild(formHeader);
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
+							form.appendChild(divID);
 							form.appendChild(divQ2);
 							form.appendChild(divQ4);
 							form.appendChild(divQ5);
@@ -254,22 +269,31 @@
 			function addEvent(form) {
 				var hi = {
 					name: form.name.value,
+					id: form.id.value,
 					date: form.date.value,
 					image: form.image.value,
 					description: form.description.value,
 				};
 				if (
-					hi.name.match(/^\s*$/) &&
-					hi.date.match(/^\s*$/) &&
-					hi.description.match(/^\s*$/) &&
-					hi.image.match(/^\s*$/)
+					!hi.name.match(/^\s*$/) &&
+					!hi.date.match(/^\s*$/) &&
+					!hi.description.match(/^\s*$/) &&
+					!hi.image.match(/^\s*$/) &&
+					hi.id.match(/^[0-9]+$/)
 				) {
 					var he = $.ajax({
 						url: "http://localhost:3000/addEvent",
 						type: "POST",
 						contentType: "application/x-www-form-urlencoded; charset=utf-8",
 						data: hi,
-						success: function (result) {},
+						success: function (result) {
+							if (result == "Id already in system") {
+								document.getElementById("submit-message").innerHTML =
+									"Id already in system";
+							} else {
+								document.getElementById("submit-message").innerHTML = "";
+							}
+						},
 					});
 				} else {
 					document.getElementById("submit-message").innerHTML =

@@ -73,16 +73,21 @@ app.post("/queryEventByID", async (req, res) => {
 app.post("/addEvent", async (req, res) => {
 	var numEvents = await Events.count();
 	try {
-		const newEvent = new Events({
-			name: req.body.name,
-			event_id: numEvents,
-			location_id: 1,
-			date: req.body.date,
-			description: req.body.description,
-			image_source: req.body.image,
-		});
-		newEvent.save();
-		res.json(newEvent);
+		const id = await Events.findOne({ event_id: req.body.id });
+		if (id == null) {
+			const newEvent = new Events({
+				name: req.body.name,
+				event_id: req.body.id,
+				location_id: 1,
+				date: req.body.date,
+				description: req.body.description,
+				image_source: req.body.image,
+			});
+			newEvent.save();
+			res.json(newEvent);
+		} else {
+			res.send("Id already in system");
+		}
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -216,19 +221,24 @@ app.post("/insertArtifact", async (req, res) => {
 //endpoint to query the amount of artifacts
 app.post("/addArtifact", async (req, res) => {
 	try {
-		var newArtifact = new Artifacts({
-			name: req.body.name,
-			artifact_id: uuid.v4(),
-			event_id: -1,
-			location_id: 2,
-			date: req.body.date,
-			description: req.body.description,
-			image_source: req.body.image,
-			artifact_tag: req.body.tag,
-		});
+		var id = await Artifacts.findOne({ artifact_id: req.body.id });
+		if (id == null) {
+			var newArtifact = new Artifacts({
+				name: req.body.name,
+				artifact_id: req.body.id,
+				event_id: -1,
+				location_id: 2,
+				date: req.body.date,
+				description: req.body.description,
+				image_source: req.body.image,
+				artifact_tag: req.body.tag,
+			});
 
-		const savedArtifact = await newArtifact.save();
-		res.json(savedArtifact);
+			const savedArtifact = await newArtifact.save();
+			res.json(savedArtifact);
+		} else {
+			res.send("Id already in system");
+		}
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
