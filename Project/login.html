@@ -69,8 +69,42 @@
 							var button = document.createElement("button");
 							button.setAttribute("onclick", "logout()");
 							button.textContent = "Logout";
+							var Admin = document.createElement("button");
+							Admin.classList.add("btn", "btn-primary");
+							Admin.innerHTML = "Admin Page";
+							Admin.setAttribute(
+								"onclick",
+								"location.href='../Project/admin.html'"
+							);
 							document.getElementById("login").appendChild(button);
+							document.getElementById("login").appendChild(Admin);
 							console.log(result);
+						} else {
+							var form = document.createElement("form");
+							var labeluname = document.createElement("label");
+							labeluname.setAttribute("for", "username");
+							labeluname.innerHTML = "Username:";
+							var inputUname = document.createElement("input");
+							inputUname.setAttribute("type", "text");
+							inputUname.setAttribute("name", "username");
+							br = document.createElement("br");
+							var labelpwd = document.createElement("label");
+							labelpwd.setAttribute("for", "password");
+							labelpwd.innerHTML = "Password:";
+							var inputpwd = document.createElement("input");
+							inputpwd.setAttribute("type", "password");
+							inputpwd.setAttribute("name", "password");
+							var buttonSubmit = document.createElement("button");
+							buttonSubmit.setAttribute("type", "button");
+							buttonSubmit.setAttribute("onclick", "login(this.form)");
+							buttonSubmit.innerHTML = "Submit";
+							form.appendChild(labeluname);
+							form.appendChild(inputUname);
+							form.appendChild(br);
+							form.appendChild(labelpwd);
+							form.appendChild(inputpwd);
+							form.appendChild(buttonSubmit);
+							document.getElementById("login").appendChild(form);
 						}
 					},
 				});
@@ -94,13 +128,13 @@
 	</head>
 	<body>
 		<h1>Login</h1>
-		<form>
+		<!-- <form>
 			<label for="username">Username:</label>
 			<input type="text" name="username" /><br />
 			<label for="password">Password</label>
 			<input type="password" name="password" />
 			<button type="button" onclick="login(this.form)">Submit</button>
-		</form>
+		</form> -->
 		<div id="login">
 			<h4 id="error"></h4>
 		</div>

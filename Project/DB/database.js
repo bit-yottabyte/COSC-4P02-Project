@@ -43,6 +43,19 @@ app.post("/queryAllEvents", async (req, res) => {
 	}
 });
 
+app.post("/queryEvents", async (req, res) => {
+	try {
+		//find 10 most similar artifacts by matching name
+		const events = await Events.find({
+			name: { $regex: req.query.name, $options: "i" },
+		});
+		res.json(events);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to query the entire events collection
 app.post("/queryEventByID", async (req, res) => {
 	try {
@@ -60,16 +73,59 @@ app.post("/queryEventByID", async (req, res) => {
 app.post("/addEvent", async (req, res) => {
 	var numEvents = await Events.count();
 	try {
-		const newEvent = new Events({
-			name: req.body.name,
-			event_id: numEvents,
-			location_id: 1,
-			date: req.body.date,
-			description: req.body.description,
-			image_source: req.body.image,
-		});
-		newEvent.save();
-		res.json(newEvent);
+		const id = await Events.findOne({ event_id: req.body.id });
+		if (id == null) {
+			const newEvent = new Events({
+				name: req.body.name,
+				event_id: req.body.id,
+				location_id: 1,
+				date: req.body.date,
+				description: req.body.description,
+				image_source: req.body.image,
+			});
+			newEvent.save();
+			res.json(newEvent);
+		} else {
+			res.send("Id already in system");
+		}
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+app.post("/updateEvent", async (req, res) => {
+	try {
+		var event = await Events.findOne({ event_id: req.body.id });
+		if (event != null) {
+			await Events.updateOne(
+				{
+					event_id: req.body.id,
+				},
+				{
+					name: req.body.name,
+					date: req.body.date,
+					description: req.body.description,
+					image_source: req.body.image,
+				}
+			);
+		}
+		event = await Events.findOne({ event_id: req.body.id });
+		res.json(event);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+//endpoint to add to questionnaire collection
+app.post("/deleteEvent", async (req, res) => {
+	try {
+		var event = await Events.findOne({ event_id: req.body.eventID });
+		if (event != null) {
+			await Events.deleteOne({ event_id: req.body.eventID });
+		}
+		res.json(event);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	} finally {
@@ -94,10 +150,20 @@ app.post("/add", async (req, res) => {
 	}
 });
 
+app.post("/getAnswers", async (req, res) => {
+	try {
+		const answers = await Questionnaire.find({});
+		res.json(answers);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
 //endpoint to query the entire artifacts collection
 app.post("/queryAllArtifacts", async (req, res) => {
 	try {
-		const artifacts = await Artifacts.find({});
+		const artifacts = await Artifacts.find({}).sort({ date : 1 });
 		res.json(artifacts);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
@@ -141,7 +207,7 @@ app.post("/insertArtifact", async (req, res) => {
 			date: req.body.date,
 			description: req.body.description,
 			image_source: req.body.image_source,
-			artifact_tag: req.body.artifact_tag,
+			artifact_tags: req.body.artifact_tags
 		});
 
 		const savedArtifact = await newArtifact.save();
@@ -152,15 +218,83 @@ app.post("/insertArtifact", async (req, res) => {
 	}
 });
 
-//endpoint to query the artifacts collection based on Tag
-app.post("/queryArtifactByTag", async (req, res) => {
+//endpoint to query the amount of artifacts
+app.post("/addArtifact", async (req, res) => {
 	try {
-		const artifact = await Artifacts.find({
-			artifact_tag: req.query.tag,
-		});
+		var id = await Artifacts.findOne({ artifact_id: req.body.id });
+		if (id == null) {
+			var newArtifact = new Artifacts({
+				name: req.body.name,
+				artifact_id: req.body.id,
+				event_id: -1,
+				location_id: req.body.location_id,
+				date: req.body.date,
+				description: req.body.description,
+				image_source: req.body.image,
+				artifact_tag: req.body.tag,
+			});
+
+			const savedArtifact = await newArtifact.save();
+			res.json(savedArtifact);
+		} else {
+			res.send("Id already in system");
+		}
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+app.post("/updateArtifact", async (req, res) => {
+	try {
+		var artifact = await Artifact.findOne({ artifact_id: req.body.id });
+		if (artifact != null) {
+			await Artifacts.updateOne(
+				{
+					artifact_id: req.body.id,
+				},
+				{
+					name: req.body.name,
+					date: req.body.date,
+					description: req.body.description,
+					image_source: req.body.image,
+				}
+			);
+		}
+		artifact = await Artifacts.findOne({ artifact_id: req.body.id });
 		res.json(artifact);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
+	} finally {
+	}
+});
+
+// endpoint to query the artifacts collection based on Tag
+app.post("/queryArtifactByTag", async (req, res) => {
+	try {
+	  const artifacts = await Artifacts.find({
+		artifact_tags: { $in: [req.query.tag] }
+	  });
+	  res.json(artifacts);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+});
+  
+
+//endpoint to add to questionnaire collection
+app.post("/deleteArtifact", async (req, res) => {
+	try {
+		var artifact = await Artifacts.findOne({
+			artifact_id: req.body.artifactID,
+		});
+		if (artifact != null) {
+			await Artifacts.deleteOne({ artifact_id: req.body.artifactID });
+		}
+		res.json(artifact);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	} finally {
 	}
 });
 
@@ -237,11 +371,13 @@ app.post("/login", async (req, res) => {
 			sameSite: "none",
 			secure: true,
 			overwrite: true,
+			maxAge: 1 * 60 * 60 * 1000,
 		});
 		res.cookie("sid", usid, {
 			sameSite: "none",
 			secure: true,
 			overwrite: true,
+			maxAge: 1 * 60 * 60 * 1000,
 		});
 		res.json({ username: req.body.uname, sid: usid });
 	}

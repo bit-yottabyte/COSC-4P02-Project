@@ -10,6 +10,12 @@
 			crossorigin="anonymous"
 		/>
 
+		<!-- Add icon library -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+
 		<link rel="stylesheet" href="CSS/style.css" />
 		<script src="JS/jscript.js"></script>
 		<title>Admin Page Events</title>
@@ -33,6 +39,17 @@
 			crossorigin="anonymous"
 		></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<style>
+			.search-style {
+				background-color: #ffdaad;
+				background: rgba(255, 255, 255, 0.7);
+				border-radius: 5px;
+				border: 1px solid #000000;
+			}
+			.eButton {
+				white-space: normal;
+			}
+		</style>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				getLoggedIn();
@@ -56,6 +73,18 @@
 							h1.innerHTML = "Admin Page";
 							divOverlay.appendChild(h1);
 
+							var buttonContainer = document.createElement("div");
+							buttonContainer.classList.add("container");
+							var backButton = document.createElement("button");
+							backButton.classList.add("btn", "btn-primary");
+							backButton.setAttribute("type", "button");
+							backButton.setAttribute(
+								"onclick",
+								"location.href='../Project/admin.html'"
+							);
+							backButton.innerHTML = "Back to Admin Page";
+							buttonContainer.appendChild(backButton);
+
 							var divContainer = document.createElement("div");
 							divContainer.classList.add("container");
 							var formHeader = document.createElement("h4");
@@ -76,6 +105,20 @@
 							textArea1.setAttribute("rows", "1");
 							divQ1.appendChild(label1);
 							divQ1.appendChild(textArea1);
+
+							var divID = document.createElement("div");
+							divID.classList.add("mb-3");
+							var labelID = document.createElement("label");
+							labelID.classList.add("form-label", "labelQ");
+							labelID.setAttribute("for", "textarea1");
+							labelID.innerHTML = "ID:";
+							var textAreaID = document.createElement("textarea");
+							textAreaID.classList.add("form-control");
+							textAreaID.setAttribute("id", "textarea1");
+							textAreaID.setAttribute("name", "id");
+							textAreaID.setAttribute("rows", "1");
+							divID.appendChild(labelID);
+							divID.appendChild(textAreaID);
 
 							var divQ2 = document.createElement("div");
 							divQ2.classList.add("mb-3");
@@ -120,28 +163,94 @@
 							divQ5.appendChild(textarea4);
 
 							divSubmit = document.createElement("div");
-							h4Submit = document.createElement("h4");
-							h4Submit.setAttribute("id", "submit-button-text");
-							h4Submit.innerHTML = "Submit Button Below";
+							h4Message = document.createElement("h4");
+							h4Message.setAttribute("id", "submit-message");
 							submitButton = document.createElement("button");
 							submitButton.classList.add("btn", "btn-primary");
 							submitButton.setAttribute("type", "button");
 							submitButton.setAttribute("onclick", "addEvent(this.form)");
 							submitButton.innerHTML = "Submit";
-							divSubmit.appendChild(h4Submit);
+							divSubmit.appendChild(h4Message);
 							divSubmit.appendChild(submitButton);
 
 							divContainer.appendChild(formHeader);
 							divContainer.appendChild(form);
 							form.appendChild(divQ1);
+							form.appendChild(divID);
 							form.appendChild(divQ2);
 							form.appendChild(divQ4);
 							form.appendChild(divQ5);
 							form.appendChild(divSubmit);
 
-							divOverall.appendChild(divOverlay);
+							divSearch = document.createElement("div");
+							divSearch.classList = divOverall.appendChild(divOverlay);
+							divOverall.appendChild(buttonContainer);
 							divOverall.appendChild(divContainer);
 							document.getElementById("admin").appendChild(divOverall);
+
+							divSearch = document.createElement("div");
+							divSearch.classList.add("row", "justify-content-center");
+							divSearch2 = document.createElement("div");
+							divSearch2.classList.add(
+								"input-group",
+								"col-sm-2",
+								"col-md-4",
+								"mb-3"
+							);
+							search = document.createElement("input");
+							search.classList.add("form-control");
+							search.setAttribute("type", "text");
+							search.setAttribute("id", "nameInput");
+							search.setAttribute("placeholder", "Search..");
+							search.setAttribute("aria-label", "Search..");
+							search.setAttribute("aria-describedby", "basic-addon2");
+							divSearch2.appendChild(search);
+							divSearch.appendChild(divSearch2);
+
+							divSearchBtn = document.createElement("div");
+							divSearchBtn.classList.add("input-group-append");
+							SearchBtn = document.createElement("button");
+							SearchBtn.classList.add("btn", "btn-secondary");
+							SearchBtn.setAttribute("type", "button");
+							searchIcon = document.createElement("i");
+							searchIcon.classList.add("fa", "fa-search");
+							searchIcon.setAttribute("arial-hidden", "true");
+							SearchBtn.appendChild(searchIcon);
+							divSearchBtn.appendChild(SearchBtn);
+							divSearch.appendChild(divSearchBtn);
+							document.getElementById("admin").appendChild(divSearch);
+
+							divHeaders = document.createElement("div");
+							divHeaders.classList.add("row", "justify-content-center");
+							divCol = document.createElement("div");
+							divCol.classList.add("col-9");
+							divRow = document.createElement("div");
+							divRow.classList.add("row");
+							divName = document.createElement("div");
+							divName.classList.add("col-9", "search-style");
+							aName = document.createElement("a");
+							aName.innerHTML = "Name";
+							divName.appendChild(aName);
+							divRow.appendChild(divName);
+							divHeaders.appendChild(divCol);
+							document.getElementById("admin").appendChild(divHeaders);
+
+							divResult = document.createElement("div");
+							divResult.classList.add("row", "justify-content-center");
+							divR = document.createElement("div");
+							divR.classList.add("col-9");
+							divR.setAttribute("id", "queryContainer");
+							divR.setAttribute(
+								"style",
+								"height: 58vh; overflow: scroll; overflow-x: hidden"
+							);
+							divResult.appendChild(divR);
+							document.getElementById("admin").appendChild(divResult);
+							document
+								.getElementById("nameInput")
+								.addEventListener("keyup", function () {
+									onTypeArtifactQuery();
+								});
 						}
 					},
 					error: function (xhr, status, error) {
@@ -160,23 +269,172 @@
 			function addEvent(form) {
 				var hi = {
 					name: form.name.value,
+					id: form.id.value,
 					date: form.date.value,
-					location: form.location.value,
 					image: form.image.value,
 					description: form.description.value,
 				};
-				var he = $.ajax({
-					url: "http://localhost:3000/addEvent",
+				if (
+					!hi.name.match(/^\s*$/) &&
+					!hi.date.match(/^\s*$/) &&
+					!hi.description.match(/^\s*$/) &&
+					!hi.image.match(/^\s*$/) &&
+					hi.id.match(/^[0-9]+$/)
+				) {
+					var he = $.ajax({
+						url: "http://localhost:3000/addEvent",
+						type: "POST",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						data: hi,
+						success: function (result) {
+							if (result == "Id already in system") {
+								document.getElementById("submit-message").innerHTML =
+									"Id already in system";
+							} else {
+								document.getElementById("submit-message").innerHTML = "";
+							}
+						},
+					});
+				} else {
+					document.getElementById("submit-message").innerHTML =
+						"Fill the form out fully";
+				}
+			}
+
+			var onTypeArtifactQuery = function () {
+				//get data from database using $.ajax post request from jquery
+				var data = $.ajax({
+					url:
+						"http://localhost:3000/queryEvents?name=" +
+						document.getElementById("nameInput").value,
 					type: "POST",
-					contentType: "application/x-www-form-urlencoded; charset=utf-8",
-					data: hi,
-					success: function (result) {},
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						//on success render the returned data
+						console.log(data);
+
+						var container = document.getElementById("queryContainer");
+
+						//clear all previous results
+						container.innerHTML = "";
+
+						for (var i = 0; i < data.length; i++) {
+							renderQueryResult(
+								data[i].event_id,
+								data[i].name,
+								data[i].description,
+								container
+							);
+						}
+					},
+					error: function (xhr, status, error) {
+						//on failure to fetch the request write to console
+						console.error(status + ": " + xhr.responseText);
+					},
 				});
+			};
+
+			function renderQueryResult(id, name, description, parent) {
+				var holder = document.createElement("div");
+				holder.classList.add("row");
+
+				holder.setAttribute(
+					"style",
+					"margin: 3px; border: 2px solid black; background-color: #ffdaad; background: rgba(255,255,255,0.7); border-radius: 5px;"
+				);
+				var holderName = document.createElement("div");
+				holderName.classList.add("col-6");
+				var nameP = document.createElement("a");
+				nameP.innerHTML = name;
+				nameP.href = "eventdetails.html?id=" + id;
+				nameP.classList.add("remove-link-styling");
+				var message = document.createElement("h5");
+				message.setAttribute("id", "message");
+				holderName.appendChild(nameP);
+				holderName.appendChild(message);
+
+				var holderButtons = document.createElement("div");
+				holderButtons.classList.add("col-3");
+				holderButtons.setAttribute(
+					"style",
+					"height: 10vh; overflow-x: hidden; overflow-y: hidden;"
+				);
+				var editButton = document.createElement("button");
+				editButton.classList.add("btn", "btn-primary", "eButton");
+				editButton.innerHTML = "Edit Event";
+				editButton.setAttribute("type", "button");
+				editButton.setAttribute("onclick", "editEvent(" + id + ")");
+
+				var deleteButton = document.createElement("button");
+				deleteButton.classList.add("btn", "btn-primary", "eButton");
+				deleteButton.innerHTML = "Delete Event";
+				deleteButton.setAttribute("type", "button");
+				deleteButton.setAttribute("onclick", "deleteEvent(" + id + ")");
+
+				holderButtons.appendChild(editButton);
+				holderButtons.appendChild(deleteButton);
+
+				holder.appendChild(holderName);
+				holder.appendChild(holderButtons);
+				parent.appendChild(holder);
+			}
+			function deleteEvent(id) {
+				var data = {
+					eventID: id,
+				};
+				var loggedIn = $.ajax({
+					url: "http://localhost:3000/deleteEvent",
+					type: "POST",
+					crossDomain: true,
+					data: data,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function (result) {
+						console.log(result);
+						document.getElementById("message").innerHTML = "Event deleted";
+					},
+				});
+			}
+			function editEvent(id) {
+				location.href = "../Project/admineditEvents.html?id=" + id;
 			}
 		</script>
 		<style></style>
 	</head>
 	<body>
 		<div id="admin"></div>
+		<!-- <div class="row justify-content-center">
+			<div class="input-group col-sm-2 col-md-4 mb-3">
+				<input
+					type="text"
+					class="form-control"
+					id="nameInput"
+					placeholder="Search.."
+					aria-label="Search.."
+					aria-describedby="basic-addon2"
+				/>
+				<div class="input-group-append">
+					<button class="btn btn-secondary" type="button">
+						<i class="fa fa-search" arial-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="col-9">
+				<div class="row">
+					<div class="col-9">
+						<a>Name</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div
+				id="queryContainer"
+				style="height: 58vh; overflow: scroll; overflow-x: hidden"
+				class="col-9"
+			></div>
+		</div> -->
 	</body>
 </html>

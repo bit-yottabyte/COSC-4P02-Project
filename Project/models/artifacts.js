@@ -8,7 +8,7 @@ const artifactSchema = new mongoose.Schema({
   date: Date,
   description: String,
   image_source: String,
-  artifact_tag: String
+  artifact_tags: [String]
 });
 
 const Artifacts = mongoose.model('Artifacts', artifactSchema);
