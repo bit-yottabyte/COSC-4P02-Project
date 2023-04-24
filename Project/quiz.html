@@ -171,6 +171,13 @@
                     console.error(status + ': ' + xhr.responseText);
                 }
             });
+            
+            for (var i = 0; i < data.responseJSON.length - 1; i++) {
+                var j = i + Math.floor(Math.random() * (data.responseJSON.length - i));
+                var temp = data.responseJSON[j];
+                data.responseJSON[j] = data.responseJSON[i];
+                data.responseJSON[i] = temp;
+            }
 
             globalData = data.responseJSON;
         }
